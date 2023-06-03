@@ -1,48 +1,48 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from "react";
 
 export const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [dropdownVisible, setDropdownVisible] = useState(false)
-  const [suggestions, setSuggestions] = useState([])
-  const ref = useRef(null)
+  const [searchTerm, setSearchTerm] = useState("");
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const ref = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
-        setDropdownVisible(false)
+        setDropdownVisible(false);
       }
-    }
+    };
 
-    document.addEventListener('click', handleClickOutside)
+    document.addEventListener("click", handleClickOutside);
 
     return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const handleInputChange = (event) => {
-    const { value } = event.target
-    setSearchTerm(value)
+    const { value } = event.target;
+    setSearchTerm(value);
 
-    const mockSuggestions = ['apple', 'banana', 'cherry', 'grape', 'orange']
+    const mockSuggestions = ["apple", "banana", "cherry", "grape", "orange"];
     const filteredSuggestions = mockSuggestions.filter((suggest) =>
-      suggest.toLowerCase().includes(value.toLowerCase()),
-    )
-    setSuggestions(filteredSuggestions)
-    setDropdownVisible(value.length > 0)
-  }
+      suggest.toLowerCase().includes(value.toLowerCase())
+    );
+    setSuggestions(filteredSuggestions);
+    setDropdownVisible(value.length > 0);
+  };
 
   const handleCloseButton = () => {
-    setDropdownVisible(false)
-    setSearchTerm('')
-    setSuggestions([])
-  }
+    setDropdownVisible(false);
+    setSearchTerm("");
+    setSuggestions([]);
+  };
 
   const handleInputField = () => {
     if (suggestions.length > 0) {
-      setDropdownVisible(true)
+      setDropdownVisible(true);
     }
-  }
+  };
 
   return (
     <div ref={ref} className="absolute inset-0">
@@ -58,7 +58,7 @@ export const SearchBar = () => {
         <button className="absolute right-0 bg-green-300 p-1 sm:p-2 rounded-tr-md rounded-br-md">
           sea
         </button>
-        {searchTerm != '' && (
+        {searchTerm != "" && (
           <button
             onClick={handleCloseButton}
             className="z-10 -ml-14 sm:-ml-16 rounded-full w-4 h-4 bg-gray-300 flex items-center justify-center"
@@ -71,7 +71,7 @@ export const SearchBar = () => {
       {dropdownVisible && (
         <div
           className={`${
-            suggestions.length >= 1 && 'p-2 sm:p-4 '
+            suggestions.length >= 1 && "p-2 sm:p-4 "
           }bg-light w-[90%] sm:w-[80%] md:w-[600px] mt-2 rounded-lg`}
         >
           <ul>
@@ -87,5 +87,5 @@ export const SearchBar = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
