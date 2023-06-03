@@ -46,22 +46,22 @@ export const SearchBar = () => {
 
   return (
     <div ref={ref} className="absolute inset-0">
-      <div className="relative w-[600px] flex items-center">
+      <div className="relative w-[90%] sm:w-[80%] md:w-[600px] flex items-center">
         <input
           type="text"
           value={searchTerm}
           onChange={handleInputChange}
           onClick={handleInputField}
           placeholder="Search..."
-          className=" w-[600px] p-2 pl-4 pr-28 focus:outline-none rounded-md"
+          className="placeholder:text-xs sm:placeholder:text-sm text-xs sm:text-sm w-full p-2 pl-2 sm:pl-4 pr-16 sm:pr-20 focus:outline-none rounded-md"
         />
-        <button className="absolute right-0 bg-green-300 p-2 rounded-tr-md rounded-br-md">
-          search
+        <button className="absolute right-0 bg-green-300 p-1 sm:p-2 rounded-tr-md rounded-br-md">
+          sea
         </button>
         {searchTerm != '' && (
           <button
             onClick={handleCloseButton}
-            className="z-10 -ml-24 rounded-full w-4 h-4 bg-gray-300 flex items-center justify-center"
+            className="z-10 -ml-14 sm:-ml-16 rounded-full w-4 h-4 bg-gray-300 flex items-center justify-center"
           >
             x
           </button>
@@ -71,8 +71,8 @@ export const SearchBar = () => {
       {dropdownVisible && (
         <div
           className={`${
-            suggestions.length >= 1 && 'p-4 '
-          }bg-light w-[600px] mt-2 rounded-lg`}
+            suggestions.length >= 1 && 'p-2 sm:p-4 '
+          }bg-light w-[90%] sm:w-[80%] md:w-[600px] mt-2 rounded-lg`}
         >
           <ul>
             {suggestions.map((suggest, index) => (
