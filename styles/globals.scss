@@ -50,27 +50,24 @@ body {
   justify-content: center;
   font-size: 20px;
 }
-.main {
-  // width:30%;
-  // margin: 20px;
+.work-swiper-button-next {
+  position: absolute !important;
+  height: 57px !important;
+  width: 57px;
+  border-radius: 50px;
+  color: black;
+  background-color: #fff;
+  @apply top-1/2 right-0 z-[80] h-[40px] w-[40px] rounded-[30px] md:rounded-[50px];
 }
-.sidebar {
-  // width: 20%;
-  // margin: 20px;
-}
-.main div {
-  // width:100%;
-  // height:200px;
-  // background:linear-gradient(45deg, #feeeab 0%, #fb7eb3 60%);
-  // margin-bottom:20px;
-  // border-radius: 10px;
-}
-.sidebar .content-wrapper div {
-  // width:200px;
-  // height:250px;
-  // border-radius: 10px;
-  // background:linear-gradient(45deg, #8fd0ff 0%, #79ebe0 60%);
-  // margin-bottom:20px;
+
+.work-swiper-button-prev {
+  position: absolute !important;
+  height: 57px !important;
+  width: 57px;
+  border-radius: 50px;
+  color: black;
+  background-color: #fff;
+  @apply top-1/2 left-0 z-[80] h-[40px] w-[40px] rounded-[30px] md:rounded-[50px];
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
