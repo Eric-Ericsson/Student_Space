@@ -1,10 +1,10 @@
 
-const Business = () => {
+const Oftheday = () => {
   return (
     <div>
-      Business
+      Talents of the Day 
     </div>
   )
 }
 
-export default Business
+export default Oftheday

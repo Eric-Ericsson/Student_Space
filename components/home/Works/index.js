@@ -40,8 +40,8 @@ const Works = () => {
 
   return (
     <>
-      <div className="px-2 md:px-4 mt-10 heading">Services</div>
-      <div className="relative work-swiper px-2 md:px-4 overflow-hidden mt-4">
+      <div className="px-2 mx-4 md:mx-10 mt-10 heading">Services</div>
+      <div className="relative work-swiper px-2 mx-4 md:mx-10 overflow-hidden mt-4">
         <div className="swiper-wrapper">
           <div className="swiper-slide w-20 h-60 bg-blue-100">one</div>
           <div className="swiper-slide w-20 h-60 bg-blue-300">two</div>

@@ -16,6 +16,9 @@ export default function Home() {
         <section>
           <LandingPage />
         </section>
+        {/* <section>
+          <Business />
+        </section> */}
         <section>
           <Works />
         </section>
@@ -24,9 +27,6 @@ export default function Home() {
         </section>
         <section>
           <Products />
-        </section>
-        <section>
-          <Business />
         </section>
         <section>
           <OtherWorks />
