@@ -61,7 +61,7 @@ export const SearchBar = () => {
         {searchTerm != "" && (
           <button
             onClick={handleCloseButton}
-            className="z-10 -ml-14 sm:-ml-16 rounded-full w-4 h-4 bg-gray-300 flex items-center justify-center"
+            className="z-10 -ml-14 sm:-ml-16 rounded-full w-4 h-4 bg-gray-300 container-flex"
           >
             x
           </button>

@@ -1,6 +1,6 @@
 const HighLights = () => {
   return (
-    <div className="md:grid grid-cols-2 mt-20 px-4 md:px-10 py-20 bg-[#c7ebeb] items-center justify-center">
+    <div className="md:grid grid-cols-2 container py-20 bg-[#c7ebeb] items-center justify-center">
       <div>
         <div className="mb-6 heading">
           <span>The Best Part? <span className="font-[playball]">Everything</span></span>

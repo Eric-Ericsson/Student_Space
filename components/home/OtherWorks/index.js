@@ -1,12 +1,12 @@
 const OtherWorks = () => {
   return (
-    <div className="mt-20 mx-4 md:mx-10">
-      <div className="mb-6 heading">
+    <div className="container">
+      <div className="heading mb-6">
         Guides to help you grow
       </div>
       <div className="grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
-          <div className="w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] rounded-md text-light"></div>
+          <div className="w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] text-light rounded-md"></div>
           <div className="mt-3">
             <span className="font-semibold text-lg text-secondary_dark">
               How to start an online business from home

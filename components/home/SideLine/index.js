@@ -1,12 +1,12 @@
 const SideLine = () => {
   return (
-    <div className="mt-20 mx-4 md:mx-10 h-80 sm:h-96 bg-[#024959] text-light flex items-center rounded-md">
+    <div className="container-content h-80 sm:h-96 flex items-center bg-[#024959] text-light rounded-md">
       <div className="flex justify-between w-full px-4 md:px-10">
-        <div className="flex flex-col gap-4 ">
-          <span className="text-4xl font-semibold">
+        <div className="flex flex-col font-semibold gap-4">
+          <span className="text-4xl">
             Suddenly it's all so <span className="font-[playball]">doable</span> 
           </span>
-          <button className="bg-green-700 w-44 p-2 rounded font-semibold">
+          <button className="bg-green-700 w-44 p-2 rounded">
             Join Student Space
           </button>
         </div>
