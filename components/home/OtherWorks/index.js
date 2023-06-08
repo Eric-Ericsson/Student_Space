@@ -1,7 +1,7 @@
 const OtherWorks = () => {
   return (
     <div className="mt-20 mx-4 md:mx-10">
-      <div className="text-4xl mb-6 font-semibold text-secondary_dark">
+      <div className="font-[Poppins] text-3xl mb-6 font-semibold text-secondary_dark">
         Guides to help you grow
       </div>
       <div className="grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -12,7 +12,7 @@ const OtherWorks = () => {
               How to start an online business from home
             </span>{" "}
             <br />
-            <span className="opacity-70">
+            <span className="opacity-70 line-clamp-4">
               A step-by-step guide to learn everything you need to know about
               successfully starting an online business from home to find the
               flexibility, and freedom you desire.

@@ -2,10 +2,10 @@ const Footer = () => {
   return (
     <>
       <div className="divider"></div>
-      <div className="w-full flex items-center -mt-8 px-4 md:px-10 h-16">
+      <div className="w-full flex items-center -mt-6 sm:-mt-8 px-4 md:px-10 h-14 sm:h-16 bg-blue-60">
         <div className="flex items-center space-x-1">
           <svg
-            className="w-10 h-10"
+            className="w-6 sm:w-10 h-6 sm:h-10"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 84.85 109.92"
           >
@@ -18,7 +18,7 @@ const Footer = () => {
               />
             </g>
           </svg>
-          <span className="">Student Space, 2023</span>
+          <span className="font-[] font-semibold opacity-80">Student Space, 2023</span>
         </div>
       </div>
     </>

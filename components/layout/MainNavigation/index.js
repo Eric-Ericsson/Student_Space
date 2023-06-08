@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react";
 
 const MainNavigation = () => {
-  const [scrollHeight, setScrollHeight] = useState("on top");
   const [openMenu, setOPenMenu] = useState(false);
+  const [scrollHeight, setScrollHeight] = useState("");
 
   useEffect(() => {
+    console.log('scrollHeight = ' + scrollHeight);
     function handleScroll() {
       const { scrollHeight, scrollTop, clientHeight } =
         document.documentElement;
       const totalScrollHeight = scrollHeight - scrollTop - clientHeight;
       setScrollHeight(totalScrollHeight);
 
-      if (totalScrollHeight == 168) {
+      if (totalScrollHeight == 3486) {
         setScrollHeight("on top");
-        // console.log(totalScrollHeight)
+        console.log('on top = ' + totalScrollHeight)
       } else {
         setScrollHeight("not on top");
-        // console.log(totalScrollHeight)
+        console.log('not on top = ' + totalScrollHeight)
       }
     }
     window.addEventListener("scroll", handleScroll);
@@ -36,8 +37,8 @@ const MainNavigation = () => {
         className={`${
           scrollHeight == "on top"
             ? "bg-transparent z-50 text-white"
-            : "bg-white z-10 drop-shadow-md"
-        } ease-out delay-75 duration-300 fixed flex items-center justify-between px-4 md:px-10 w-full h-20`}
+            : "bg-white z-50 drop-shadow-md"
+        } ease-out delay-75 duration-300 fixed flex items-center justify-between px-4 md:px-10 w-full h-14 sm:16 md:h-20`}
       >
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-1">
@@ -65,7 +66,7 @@ const MainNavigation = () => {
           </div>
         </div>
         <button onClick={handleMenuButtonClick} className="md:hidden">
-          menu
+        <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="48" d="M88 152h336M88 256h336M88 360h336"/></svg>
         </button>
         <div className="hidden md:flex items-center gap-8 font-semibold">
           <span>Home</span>
@@ -78,9 +79,9 @@ const MainNavigation = () => {
         <div className="fixed w-full z-50 bg-blue-950 opacity-100 h-1/2 flex flex-col justify-center">
           <button
             onClick={handleMenuButtonClick}
-            className="absolute top-[10%] right-[12%]"
+            className="absolute top-[4%] right-[5%]"
           >
-            x
+            <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m7 7l10 10M7 17L17 7"/></svg>
           </button>
           <div className="text-light flex flex-col items-center gap-8 font-semibold">
             <span>Home</span>
