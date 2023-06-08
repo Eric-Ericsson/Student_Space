@@ -1,8 +1,8 @@
 const HighLights = () => {
   return (
-    <div className="md:grid grid-cols-2 mt-20 px-4 md:px-10 py-20 bg-[#F1FDF7] items-center justify-center">
+    <div className="md:grid grid-cols-2 mt-20 px-4 md:px-10 py-20 bg-[#c7ebeb] items-center justify-center">
       <div>
-        <div className="mb-6 text-3xl font-[Poppins] font-semibold">
+        <div className="mb-6 heading">
           <span>The Best Part? <span className="font-[playball]">Everything</span></span>
         </div>
         <div className="flex flex-col gap-3 md:w-[80%] text-lg">
@@ -46,7 +46,7 @@ const HighLights = () => {
           </div>
         </div>
       </div>
-      <div className="md:h-[90%] mt-4 md:mt-0 rounded-md h-[250px] sm:h-[300px] bg-gray-400">
+      <div className="md:h-[90%] mt-4 md:mt-0 rounded-md h-[250px] sm:h-[300px] bg-[#56c2c2]">
         image
       </div>
     </div>

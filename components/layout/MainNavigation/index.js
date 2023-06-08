@@ -66,17 +66,18 @@ const MainNavigation = () => {
           </div>
         </div>
         <button onClick={handleMenuButtonClick} className="md:hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="48" d="M88 152h336M88 256h336M88 360h336"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 512 512"><path fill="none" stroke="#012E40" stroke-linecap="round" stroke-miterlimit="10" stroke-width="48" d="M88 152h336M88 256h336M88 360h336"/></svg>
         </button>
-        <div className="hidden md:flex items-center gap-8 font-semibold">
-          <span>Home</span>
-          <span>Explore</span>
+        <div className="hidden md:flex items-center gap-8 font-semibold font-[Poppins] text-[#012E40] text-lg">
+          <span className="hover:text-[#068B01] hover:font-black">Home</span>
+          <span>Space</span>
+          <span>Exhibit</span>
           <span>Business</span>
           <span>Sign In</span>
         </div>
       </div>
       {openMenu && (
-        <div className="fixed w-full z-50 bg-blue-950 opacity-100 h-1/2 flex flex-col justify-center">
+        <div className="fixed w-full z-50 bg-[#012432] opacity-100 h-1/2 flex flex-col justify-center">
           <button
             onClick={handleMenuButtonClick}
             className="absolute top-[4%] right-[5%]"
@@ -85,7 +86,8 @@ const MainNavigation = () => {
           </button>
           <div className="text-light flex flex-col items-center gap-8 font-semibold">
             <span>Home</span>
-            <span>Explore</span>
+            <span>Space</span>
+            <span>Exhibit</span>
             <span>Business</span>
             <span>Sign In</span>
           </div>

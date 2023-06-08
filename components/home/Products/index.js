@@ -2,7 +2,7 @@
 const Products = () => {
   return (
     <div className="mt-20 px-4 md:px-10 py-">
-      <span className="font-[Poppins] font-semibold text-3xl">You need it, we've got it</span>
+      <span className="heading">You need it, we've got it</span>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-10">
         <div >Graphics & Design</div>
         <div>Digital Marketing</div>

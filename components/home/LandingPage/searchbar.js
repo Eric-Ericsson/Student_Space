@@ -53,10 +53,10 @@ export const SearchBar = () => {
           onChange={handleInputChange}
           onClick={handleInputField}
           placeholder="Search..."
-          className="placeholder:text-xs sm:placeholder:text-sm text-xs sm:text-sm w-full p-2 pl-2 sm:pl-4 pr-16 sm:pr-20 focus:outline-none rounded-md"
+          className="placeholder:text-xs sm:placeholder:text-sm text-xs sm:text-sm w-full p-2 md:p-3 pl-2 sm:pl-4 pr-16 sm:pr-20 focus:outline-none rounded-md"
         />
-        <button className="absolute right-0 bg-green-300 p-1 sm:p-2 rounded-tr-md rounded-br-md">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M14.385 15.446a6.75 6.75 0 1 1 1.06-1.06l5.156 5.155a.75.75 0 1 1-1.06 1.06l-5.156-5.155Zm-7.926-1.562a5.25 5.25 0 1 1 7.43-.005l-.005.005l-.005.004a5.25 5.25 0 0 1-7.42-.004Z" clip-rule="evenodd"/></svg>
+        <button className="absolute right-0 bg-green-500 bg-opacity-95 p-1 sm:p-[7px] md:p-[10px] rounded-tr-md rounded-br-md">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24"><path fill="#fff" fill-rule="evenodd" d="M14.385 15.446a6.75 6.75 0 1 1 1.06-1.06l5.156 5.155a.75.75 0 1 1-1.06 1.06l-5.156-5.155Zm-7.926-1.562a5.25 5.25 0 1 1 7.43-.005l-.005.005l-.005.004a5.25 5.25 0 0 1-7.42-.004Z" clip-rule="evenodd"/></svg>
         </button>
         {searchTerm != "" && (
           <button

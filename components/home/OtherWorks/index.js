@@ -1,12 +1,12 @@
 const OtherWorks = () => {
   return (
     <div className="mt-20 mx-4 md:mx-10">
-      <div className="font-[Poppins] text-3xl mb-6 font-semibold text-secondary_dark">
+      <div className="mb-6 heading">
         Guides to help you grow
       </div>
       <div className="grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
-          <div className="w-[100%] h-60 md:h-52 lg:h-60 bg-black rounded-md text-light"></div>
+          <div className="w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] rounded-md text-light"></div>
           <div className="mt-3">
             <span className="font-semibold text-lg text-secondary_dark">
               How to start an online business from home
@@ -20,7 +20,7 @@ const OtherWorks = () => {
           </div>
         </div>
         <div>
-          <div className="w-[100%] h-60 md:h-52 lg:h-60 bg-black rounded-md text-light"></div>
+          <div className="w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] rounded-md text-light"></div>
           <div className="mt-3">
             <span className="font-semibold text-lg text-secondary_dark">
               How to start an online business from home
@@ -34,7 +34,7 @@ const OtherWorks = () => {
           </div>
         </div>
         <div>
-          <div className="w-[100%] h-60 md:h-52 lg:h-60 bg-black rounded-md text-light"></div>
+          <div className="w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] rounded-md text-light"></div>
           <div className="mt-3">
             <span className="font-semibold text-lg text-secondary_dark">
               How to start an online business from home
