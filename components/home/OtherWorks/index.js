@@ -2,7 +2,7 @@ const OtherWorks = () => {
   return (
     <div className="container">
       <div className="heading mb-6">
-        Guides to help you grow
+        Guides to Help You Grow
       </div>
       <div className="grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <div>

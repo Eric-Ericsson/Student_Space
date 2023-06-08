@@ -3,7 +3,7 @@ const HighLights = () => {
     <div className="md:grid grid-cols-2 container py-20 bg-[#c7ebeb] items-center justify-center">
       <div>
         <div className="mb-6 heading">
-          <span>The Best Part? <span className="font-[playball]">Everything</span></span>
+          <span>The Greatest Advantage? <span className="font-[playball]">All-Inclusive</span></span>
         </div>
         <div className="flex flex-col gap-3 md:w-[80%] text-lg">
           <div>

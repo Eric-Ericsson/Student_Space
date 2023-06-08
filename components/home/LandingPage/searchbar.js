@@ -52,7 +52,7 @@ export const SearchBar = () => {
           value={searchTerm}
           onChange={handleInputChange}
           onClick={handleInputField}
-          placeholder="Search..."
+          placeholder="Search for talents, services, or opportunities..."
           className="placeholder:text-xs sm:placeholder:text-sm text-xs sm:text-sm w-full p-2 md:p-3 pl-2 sm:pl-4 pr-16 sm:pr-20 focus:outline-none rounded-md"
         />
         <button className="absolute right-0 bg-green-500 bg-opacity-95 p-1 sm:p-[7px] md:p-[10px] rounded-tr-md rounded-br-md">

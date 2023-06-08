@@ -2,7 +2,7 @@
 const Products = () => {
   return (
     <div className="container">
-      <span className="heading">You need it, we've got it</span>
+      <span className="heading">You Need It, We've Got It</span>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-10">
         <div >Graphics & Design</div>
         <div>Digital Marketing</div>

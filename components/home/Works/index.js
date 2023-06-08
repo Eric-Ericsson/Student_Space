@@ -40,7 +40,7 @@ const Works = () => {
 
   return (
     <>
-      <div className="container-content heading px-2">Services</div>
+      <div className="container-content heading px-2">Explore Services and Skills</div>
       <div className="relative work-swiper overflow-hidden px-2 mt-4 md:mx-10">
         <div className="swiper-wrapper">
           <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">one</div>
