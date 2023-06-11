@@ -1,47 +1,72 @@
 const HighLights = () => {
   return (
-    <div className="md:grid grid-cols-2 container py-20 bg-[#c7ebeb] items-center justify-center">
+    <div className="contain md:grid grid-cols-2 py-20 bg-[#c7ebeb] items-center justify-center">
       <div>
         <div className="mb-6 heading">
-          <span>The Greatest Advantage? <span className="font-[playball]">All-Inclusive</span></span>
+          <span>
+            The Greatest Advantage?{" "}
+            <span className="font-[playball]">All-Inclusive</span>
+          </span>
         </div>
         <div className="flex flex-col gap-3 md:w-[80%] text-lg">
           <div>
             <div>
-              <span className="font-semibold font-[Poppins]">Stick to your budget</span>
+              <span className="font-semibold font-[Poppins]">
+                Follow your interest
+              </span>
             </div>
             <span>
-              Find the right service for every price point. No hourly rates,
-              just project-based pricing.
+              Follow your interests, discover your passions, unleash your
+              potential, and embark on a fulfilling journey of personal growth
+              and success.
             </span>
           </div>
           <div>
             <div>
               <span className="font-semibold font-[Poppins]">
-                Get quality work done quickly
+                Hear what people are talking about
               </span>
             </div>
             <span>
-              Hand your project over to a talented freelancer in minutes, get
-              long-lasting results.
+              Hear the whispers and echoes of conversations that shape opinions,
+              spark curiosity, and ignite inspiration. Discover the trending
+              topics, captivating stories, and thought-provoking discussions
+              that are buzzing around.
             </span>
           </div>
           <div>
             <div>
-              <span className="font-semibold font-[Poppins]">Pay when you're happy</span>
+              <span className="font-semibold font-[Poppins]">
+                Join the conversation
+              </span>
             </div>
             <span>
-              Upfront quotes mean no surprises. Payments only get released when
-              you approve.
+              In this dynamic world of ideas and discussions, there's a place
+              for you to join in and make your voice heard. Step into a vibrant
+              community where thoughts, opinions, and experiences converge.
+              Engage with like-minded individuals, industry experts, and
+              passionate enthusiasts who share your interests.
             </span>
           </div>
           <div>
             <div>
-              <span className="font-semibold font-[Poppins]">Count on 24/7 support</span>
+              <span className="font-semibold font-[Poppins]">Do business</span>
             </div>
             <span>
-              Our round-the-clock support team is available to help anytime,
-              anywhere.
+              Discover a supportive ecosystem that nurtures your entrepreneurial
+              spirit, fuels your ambition, and propels your business forward.
+            </span>
+          </div>
+          <div>
+            <div>
+              <span className="font-semibold font-[Poppins]">
+                Be discovered
+              </span>
+            </div>
+            <span>
+              Step into the spotlight and let your abilities shine. This is the
+              platform where your creativity, skills, and passions find
+              recognition and appreciation.
             </span>
           </div>
         </div>

@@ -22,7 +22,7 @@ body {
   @apply font-[Poppins] font-semibold text-2xl sm:text-3xl text-[#012E40] opacity-90
 }
 
-.container {
+.contain {
   &-content {
     @apply mt-20 mx-4 md:mx-10
   };
@@ -31,7 +31,6 @@ body {
   };
   @apply mt-20 px-4 md:px-10;
 }
-
 
 .divider {
   @apply w-full h-[1px] bg-gray-300 my-5 sm:my-10;

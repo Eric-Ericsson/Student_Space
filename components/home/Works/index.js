@@ -40,7 +40,7 @@ const Works = () => {
 
   return (
     <>
-      <div className="container-content heading px-2">Explore Services and Skills</div>
+      <div className="contain-content heading px-2">Explore Services and Skills</div>
       <div className="relative work-swiper overflow-hidden px-2 mt-4 md:mx-10">
         <div className="swiper-wrapper">
           <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">one</div>
@@ -52,7 +52,7 @@ const Works = () => {
           <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">7</div>
           <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">8</div>
         </div>
-        <div class="work-swiper-button-prev swiper-button-prev container-flex drop-shadow-lg shadow-lg">
+        <div class="work-swiper-button-prev swiper-button-prev contain-flex drop-shadow-lg shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -69,7 +69,7 @@ const Works = () => {
             </g>
           </svg>
         </div>
-        <div class="work-swiper-button-next swiper-button-next container-flex drop-shadow-lg shadow-lg">
+        <div class="work-swiper-button-next swiper-button-next contain-flex drop-shadow-lg shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
