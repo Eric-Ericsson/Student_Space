@@ -36,6 +36,34 @@ body {
   @apply w-full h-[1px] bg-gray-300 my-5 sm:my-10;
 }
 
+p{
+  @apply my-4
+}
+
+h1{
+  @apply text-[32px] md:text-[48px] font-bold font-[poppins] text-[#012E40] text-center md:text-left;
+}
+h2{
+  @apply text-[28px] md:text-[40px] text-[#404145] font-[poppins] font-bold my-6
+}
+h3{
+  @apply text-[24px] md:text-[32px] text-[#404145] font-[poppins] font-bold mt-12 mb-4
+}
+h4{
+  @apply text-[20px] md:text-[28px] text-[#404145] font-[poppins] font-bold mt-12 mb-4
+}
+h5{
+  @apply text-[18px] md:text-[24px] text-[#404145] font-[poppins] font-bold mt-12 mb-4
+}
+
+ul li {
+  @apply list-disc list-inside;
+}
+ol li {
+  @apply list-decimal list-inside;
+}
+
+
 .parallax_container {
   background-attachment: fixed;
   background-size: cover;
