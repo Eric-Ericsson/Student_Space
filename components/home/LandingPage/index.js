@@ -1,44 +1,46 @@
-import React, { useEffect, useRef } from "react";
-import Swiper, { Autoplay, EffectFade } from "swiper";
-import { SearchBar } from "./searchbar";
+import { useEffect, useState } from "react";
 import { Content } from "./content";
-
-Swiper.use([EffectFade, Autoplay]);
+import Image from "next/image";
 
 const LandingPage = () => {
-  const swiperRef = useRef(null);
+  const [backgroundColor, setBackgroundColor] = useState('#012E40');
+  const [backgroundImage, setBackgroundImage] = useState('/girl.png');
+
 
   useEffect(() => {
-    if (!swiperRef.current) {
-      swiperRef.current = new Swiper(".landing-swiper", {
-        // speed: 50,
-        effect: "fade",
-        autoplay: {
-          delay: 4000,
-          // reverseDirection: true,
-          loop: true,
-        },
-      });
-    }
+    const colors = ['#012E40', '#8C1F28', '#3CA6A6'];
+    const images = [
+      '/girl.png',
+      '/chef.png',
+      '/camera_girl.png'
+    ];
+
+    let currentIndex = 0;
+
+    // Function to change the background color
+    const changeBackground = () => {
+      setBackgroundColor(colors[currentIndex]);
+      setBackgroundImage(images[currentIndex]);
+      currentIndex = (currentIndex + 1) % colors.length;
+    };
+
+    const interval = setInterval(changeBackground, 4000); // 2 seconds
+
+    // Clean up the interval when the component unmounts
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   return (
-    <div className="overflow-x-hidden landing-swiper w-full md:min-h-screen">
+    <div className={`w-full relative md:min-h-screen overflow-hidden transition delay-0 duration-300 ease-in bg-[${backgroundColor}]`}>
       <div className="relative h-[450px] bg-[#024864] md:hidden"></div>
-      <div className="hidden md:flex swiper-wrapper h-[450px] md:h-screen relative">
-        <div
-          className={`swiper-slide pl-10 bg-[#012E40] h-full flex flex-col gap-5 justify-center `}
-        ></div>
-        <div
-          className={`swiper-slide pl-10 bg-[#8C1F28] h-full flex flex-col gap-5 justify-center `}
-        ></div>
-        <div
-          className={`swiper-slide pl-10 bg-[#3CA6A6] h-full flex flex-col gap-5 justify-center `}
-        ></div>
-        <Content />
+      <div className="hidden absolute -right-20 bottom-0 md:flex md:h-screen w-[700px] h-[700px]">
+          <Image src={backgroundImage} fill/>
       </div>
       <Content />
-    </div>
+      </div>
+
   );
 };
 

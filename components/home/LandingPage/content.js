@@ -2,10 +2,9 @@ import { SearchBar } from "./searchbar";
 
 export const Content = () => {
   return (
-    <div className="absolute inset-0 pl-4 sm:pl-6 md:pl-10 h-[70%] md:h-full flex flex-col gap-5 justify-center">
+    <div className="absolute inset-0 pl-4 pt-32 sm:pt-0 sm:pl-6 md:pl-10 h-[70%] md:h-full flex flex-col gap-5 justify-center">
       <div>
-        <div className="font-[Poppins] text-3xl md:text-5xl font-bold text-light w-[80%] sm:w-[70%] md:w-[700px] drop-shadow-sm">
-          {/* Find the right<span className="font-[Playball]">&nbsp;freelance</span> service, right away */}
+        <div className="font-[Poppins] text-xl sm:text-3xl md:text-5xl font-bold text-light w-[80%] sm:w-[70%] md:w-[700px] drop-shadow-sm">
         Discover and be Discovered; Where <span className="font-[Playball]">Talents</span> Meet <span className="font-[Playball]">Opportunities.</span>
         </div>
       </div>

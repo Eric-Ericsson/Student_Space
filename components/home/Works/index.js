@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import Swiper, { Navigation } from "swiper";
 
@@ -38,19 +39,79 @@ const Works = () => {
     }
   }, []);
 
+  const media = [
+    {
+      id: 1,
+      title: "Artificial Intelligent",
+      image: "/eric.png",
+      data: "hello",
+      date: "12/02/2023",
+    },
+    {
+      id: 2,
+      title: "Fashionist",
+      image: "/eric.png",
+      data: "hello",
+      date: "12/02/2023",
+    },
+    {
+      id: 3,
+      title: "Graphic Designer",
+      image: "/eric.png",
+      data: "hello",
+      date: "12/02/2023",
+    },
+    {
+      id: 4,
+      title: "Artist",
+      image: "/eric.png",
+      data: "hello",
+      date: "12/02/2023",
+    },
+    {
+      id: 5,
+      title: "Riverdale",
+      image: "/eric.png",
+      data: "hello",
+      date: "12/02/2023",
+    },
+    {
+      id: 6,
+      title: "AI",
+      image: "/eric.png",
+      data: "hello",
+      date: "12/02/2023",
+    },
+    {
+      id: 7,
+      title: "Data Science",
+      image: "/eric.png",
+      data: "hello",
+      date: "12/02/2023",
+    },
+    {
+      id: 8,
+      title: "School of Business",
+      image: "/eric.png",
+      data: "hello",
+      date: "12/02/2023",
+    },
+  ];
+
   return (
     <>
-      <div className="contain-content heading px-2">Explore Services and Skills</div>
-      <div className="relative work-swiper overflow-hidden px-2 mt-4 md:mx-10">
+      <div className="contain-content heading px-2">
+        Explore Services and Skills
+      </div>
+      <div className="relative work-swiper overflow-hidden px-2 mt-4 md:px-10">
         <div className="swiper-wrapper">
-          <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">one</div>
-          <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">two</div>
-          <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">3</div>
-          <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">4</div>
-          <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">5</div>
-          <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">6</div>
-          <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">7</div>
-          <div className="swiper-slide w-20 h-60 bg-[#c7ebeb]">8</div>
+          {media.map((slide, index) => (
+            <div key={index} className="swiper-slide w-20 h-60 bg-[#c7ebeb]">
+              <Link href={`/explore/${slide.id}`}>
+                <div className="w-full h-full bg-[#c7ebeb]">{slide.title}</div>
+              </Link>
+            </div>
+          ))}
         </div>
         <div class="work-swiper-button-prev swiper-button-prev contain-flex drop-shadow-lg shadow-lg">
           <svg
