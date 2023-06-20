@@ -1,26 +1,30 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const MainNavigation = () => {
   const [openMenu, setOPenMenu] = useState(false);
-  const [scrollHeight, setScrollHeight] = useState("");
+  // const [scrollHeight, setScrollHeight] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [iconColor, setIconColor] = useState("white");
+  // let iconColor = '#243b76'
 
   useEffect(() => {
-    console.log('scrollHeight = ' + scrollHeight);
-    function handleScroll() {
-      const { scrollHeight, scrollTop, clientHeight } =
-        document.documentElement;
-      const totalScrollHeight = scrollHeight - scrollTop - clientHeight;
-      setScrollHeight(totalScrollHeight);
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-      if (totalScrollHeight == 3486) {
-        setScrollHeight("on top");
-        console.log('on top = ' + totalScrollHeight)
+      if (scrollTop > 0) {
+        setIsScrolled(true);
+        setIconColor("#243b76");
       } else {
-        setScrollHeight("not on top");
-        console.log('not on top = ' + totalScrollHeight)
+        setIsScrolled(false);
+        setIconColor("white");
       }
-    }
+    };
+
     window.addEventListener("scroll", handleScroll);
+
+    // Immediately trigger handleScroll to set initial state correctly
+    handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -35,15 +39,15 @@ const MainNavigation = () => {
     <>
       <div
         className={`${
-          scrollHeight == "on top"
-            ? "bg-transparent z-50 text-white"
-            : "bg-white z-50 drop-shadow-md"
+          isScrolled
+            ? "bg-white z-50 drop-shadow-md"
+            : "bg-transparent z-50 text-white"
         } ease-out delay-75 duration-300 fixed flex items-center justify-between px-4 md:px-10 w-full h-14 sm:16 md:h-20`}
       >
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-1">
             <svg
-              className="w-8 h-8"
+              className="w-12 h-12"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 84.85 109.92"
             >
@@ -51,14 +55,14 @@ const MainNavigation = () => {
                 <path
                   d="M80 9.75C76.9 7.68 58-4.41 34.39 1.72A56.42 56.42 0 0 0 5.46 20.36c-.82 1.25-7 10.92-3.21 22.18a25.11 25.11 0 0 0 9.64 12.54Q5.95 77.41 0 99.75a64.82 64.82 0 0 0 39.54 10 63.67 63.67 0 0 0 29.25-10C80.17 92.28 86.34 79.46 84.54 67c-1.9-13.13-11.82-20.44-13.83-21.86Z"
                   style={{
-                    fill: "#243b76",
+                    fill: iconColor,
                   }}
                 />
               </g>
             </svg>
-            <span className="">Student Space</span>
+            <span className="font-semibold font-[Poppins]">Student Space</span>
           </div>
-          <div className={`${scrollHeight == "on top" && "hidden"}`}>
+          <div className={`${!isScrolled && "hidden"}`}>
             <input
               className="hidden lg:inline inputField inputFieldContainer placeholder:italic"
               placeholder="What are you interested today?"
@@ -66,13 +70,37 @@ const MainNavigation = () => {
           </div>
         </div>
         <button onClick={handleMenuButtonClick} className="md:hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" viewBox="0 0 512 512"><path fill="none" stroke="#012E40" stroke-linecap="round" stroke-miterlimit="10" stroke-width="48" d="M88 152h336M88 256h336M88 360h336"/></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32px"
+            height="32px"
+            viewBox="0 0 512 512"
+          >
+            <path
+              fill="none"
+              stroke="#012E40"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="48"
+              d="M88 152h336M88 256h336M88 360h336"
+            />
+          </svg>
         </button>
-        <div className="hidden md:flex items-center gap-8 font-semibold font-[Poppins] text-[#012E40] text-lg">
-          <span className="hover:text-[#068B01] hover:font-black">Home</span>
+        <div
+          className={`hidden md:flex items-center gap-8 font-semibold font-[Poppins] ${
+            !isScrolled && "text-white"
+          } text-[#012E40] text-lg`}
+        >
+          <Link href="/">
+            <span className="hover:text-[#068B01] hover:font-black">Home</span>
+          </Link>
           <span>Space</span>
           <span>Exhibit</span>
-          <span>Business</span>
+          <Link href="/business">
+            <span className="hover:text-[#068B01] hover:font-black">
+              Business
+            </span>
+          </Link>
           <span>Sign In</span>
         </div>
       </div>
@@ -82,7 +110,21 @@ const MainNavigation = () => {
             onClick={handleMenuButtonClick}
             className="absolute top-[4%] right-[5%]"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="36px" height="36px" viewBox="0 0 24 24"><path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m7 7l10 10M7 17L17 7"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="36px"
+              height="36px"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="none"
+                stroke="white"
+                strokeLinecap="round"
+                stroke-linejoin="round"
+                strokeWidth="2.5"
+                d="m7 7l10 10M7 17L17 7"
+              />
+            </svg>
           </button>
           <div className="text-light flex flex-col items-center gap-8 font-semibold">
             <span>Home</span>

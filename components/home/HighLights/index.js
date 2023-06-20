@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const HighLights = () => {
   return (
     <div className="contain md:grid grid-cols-2 py-20 bg-[#c7ebeb] items-center justify-center">
@@ -71,8 +73,8 @@ const HighLights = () => {
           </div>
         </div>
       </div>
-      <div className="md:h-[90%] mt-4 md:mt-0 rounded-md h-[250px] sm:h-[300px] bg-[#56c2c2]">
-        image
+       <div className="relative md:h-[70%] mt-4 md:mt-0 rounded-md h-[250px] sm:h-[300px] bg-white">
+        <Image src={'/partnerships.gif'} fill={true} sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw" alt="aside-image" style={{objectFit: "contain"}}/>
       </div>
     </div>
   );

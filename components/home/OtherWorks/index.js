@@ -11,7 +11,8 @@ const OtherWorks = () => {
           <div className="relative w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] text-light rounded-md">
             <Image
               src={"/wordpress.png"}
-              layout="fill"
+              fill={true}
+              alt="wordpress-image-cover"
               className="absolute rounded-md"
             />
           </div>
@@ -33,7 +34,8 @@ const OtherWorks = () => {
           <div className="relative w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] rounded-md text-light">
             <Image
               src={"/logo_design.jpg"}
-              layout="fill"
+              fill={true}
+              alt="logo-design"
               className="absolute rounded-md"
             />
           </div>
@@ -53,7 +55,8 @@ const OtherWorks = () => {
           <div className="relative w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] rounded-md text-light">
             <Image
               src={"/digital_market.png"}
-              layout="fill"
+              fill={true}
+              alt="online-business"
               className="absolute rounded-md"
             />
           </div>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import Swiper, { Navigation } from "swiper";
@@ -42,58 +43,58 @@ const Works = () => {
   const media = [
     {
       id: 1,
-      title: "Artificial Intelligent",
-      image: "/eric.png",
+      title: "Artificial Intelligence",
+      image: "/ai.jpg",
       data: "hello",
       date: "12/02/2023",
     },
     {
       id: 2,
       title: "Fashionist",
-      image: "/eric.png",
+      image: "/fashion.jpg",
       data: "hello",
       date: "12/02/2023",
     },
     {
       id: 3,
-      title: "Graphic Designer",
-      image: "/eric.png",
+      title: "Art and Design",
+      image: "/art_design.jpg",
       data: "hello",
       date: "12/02/2023",
     },
     {
       id: 4,
       title: "Artist",
-      image: "/eric.png",
+      image: "/artist.png",
       data: "hello",
       date: "12/02/2023",
     },
     {
       id: 5,
-      title: "Riverdale",
-      image: "/eric.png",
+      title: "Creative Writing",
+      image: "/creative_writing.jpg",
       data: "hello",
       date: "12/02/2023",
     },
     {
       id: 6,
-      title: "AI",
-      image: "/eric.png",
-      data: "hello",
+      title: "Web Development",
+      image: "/web_development.jpg",
+      data: "Web Development",
       date: "12/02/2023",
     },
     {
       id: 7,
       title: "Data Science",
-      image: "/eric.png",
-      data: "hello",
+      image: "/data_science.jpg",
+      data: "Data Science",
       date: "12/02/2023",
     },
     {
       id: 8,
-      title: "School of Business",
-      image: "/eric.png",
-      data: "hello",
+      title: "Mobile App Development",
+      image: "/app_development.jpg",
+      data: "Hello",
       date: "12/02/2023",
     },
   ];
@@ -104,16 +105,19 @@ const Works = () => {
         Explore Services and Skills
       </div>
       <div className="relative work-swiper overflow-hidden px-2 mt-4 md:px-10">
-        <div className="swiper-wrapper">
+        <div className="swiper-wrapper rounded-lg">
           {media.map((slide, index) => (
-            <div key={index} className="swiper-slide w-20 h-60 bg-[#c7ebeb]">
+            <div key={index} className="swiper-slide w-20 h-60 bg-[#c7ebeb] rounded-lg">
               <Link href={`/explore/${slide.id}`}>
-                <div className="w-full h-full bg-[#c7ebeb]">{slide.title}</div>
+                <div className="relative w-full h-full">
+                  {/* {slide.title} */}
+                  <Image src={slide.image} fill={true} sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw" alt={slide.title} className="rounded-lg"/>
+                  </div>
               </Link>
             </div>
           ))}
         </div>
-        <div class="work-swiper-button-prev swiper-button-prev contain-flex drop-shadow-lg shadow-lg">
+        <div className="work-swiper-button-prev swiper-button-prev contain-flex drop-shadow-lg shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -124,13 +128,13 @@ const Works = () => {
               <path
                 fill="none"
                 stroke="#01364b"
-                stroke-width="6"
+                strokeWidth="6"
                 d="m7 2l10 10L7 22"
               />
             </g>
           </svg>
         </div>
-        <div class="work-swiper-button-next swiper-button-next contain-flex drop-shadow-lg shadow-lg">
+        <div className="work-swiper-button-next swiper-button-next contain-flex drop-shadow-lg shadow-lg">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -140,7 +144,7 @@ const Works = () => {
             <path
               fill="none"
               stroke="#01364b"
-              stroke-width="6"
+              strokeWidth="6"
               d="m7 2l10 10L7 22"
             />
           </svg>

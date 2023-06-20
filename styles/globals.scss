@@ -63,6 +63,9 @@ ol li {
   @apply list-decimal list-inside;
 }
 
+.layoutPadding {
+  @apply mt-20 px-[20px] sm:px-[40px] lg:px-[72px];
+}
 
 .parallax_container {
   background-attachment: fixed;

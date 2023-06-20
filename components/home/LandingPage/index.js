@@ -3,17 +3,12 @@ import { Content } from "./content";
 import Image from "next/image";
 
 const LandingPage = () => {
-  const [backgroundColor, setBackgroundColor] = useState('#012E40');
-  const [backgroundImage, setBackgroundImage] = useState('/girl.png');
-
+  const [backgroundImage, setBackgroundImage] = useState("/girl.png");
+  const [backgroundColor, setBackgroundColor] = useState("#012E40");
 
   useEffect(() => {
-    const colors = ['#012E40', '#8C1F28', '#3CA6A6'];
-    const images = [
-      '/girl.png',
-      '/chef.png',
-      '/camera_girl.png'
-    ];
+    const colors = ["#012E40", "#3CA6A6", "#8C1F28"];
+    const images = ["/girl.png", "/chef.png", "/camera_girl.png"];
 
     let currentIndex = 0;
 
@@ -21,6 +16,7 @@ const LandingPage = () => {
     const changeBackground = () => {
       setBackgroundColor(colors[currentIndex]);
       setBackgroundImage(images[currentIndex]);
+      // console.log(backgroundImage)
       currentIndex = (currentIndex + 1) % colors.length;
     };
 
@@ -33,14 +29,20 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div className={`w-full relative md:min-h-screen overflow-hidden transition delay-0 duration-300 ease-in bg-[${backgroundColor}]`}>
+    <div
+      className={`w-full relative bg-[${backgroundColor}] md:min-h-screen overflow-hidden transition delay-0 duration-300 ease-in `}
+    >
       <div className="relative h-[450px] bg-[#024864] md:hidden"></div>
-      <div className="hidden absolute -right-20 bottom-0 md:flex md:h-screen w-[700px] h-[700px]">
-          <Image src={backgroundImage} fill/>
+      <div className="hidden absolute -right-20 bottom-0 md:flex lg:h-[90%] lg:w-[650px] w-[500px] h-[500px]">
+        <Image
+          src={backgroundImage}
+          fill={true}
+          priority={true}
+          alt="landing-page-background-image"
+        />
       </div>
       <Content />
-      </div>
-
+    </div>
   );
 };
 
