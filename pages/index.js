@@ -19,9 +19,9 @@ export default function Home() {
         <section>
           <LandingPage />
         </section>
-        {/* <section>
+        <section>
           <Business/>
-        </section> */}
+        </section>
         <section>
           <Works />
         </section>
