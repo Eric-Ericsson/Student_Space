@@ -44,6 +44,7 @@ const Works = () => {
     {
       id: 1,
       title: "Artificial Intelligence",
+      username: "Eric Ericsson",
       image: "/ai.jpg",
       data: "hello",
       date: "12/02/2023",
@@ -51,6 +52,7 @@ const Works = () => {
     {
       id: 2,
       title: "Fashionist",
+      username: "Ruth Doe",
       image: "/fashion.jpg",
       data: "hello",
       date: "12/02/2023",
@@ -58,6 +60,7 @@ const Works = () => {
     {
       id: 3,
       title: "Art and Design",
+      username: "Michael Smith",
       image: "/art_design.jpg",
       data: "hello",
       date: "12/02/2023",
@@ -65,6 +68,7 @@ const Works = () => {
     {
       id: 4,
       title: "Artist",
+      username: "James Mensah",
       image: "/artist.png",
       data: "hello",
       date: "12/02/2023",
@@ -72,6 +76,7 @@ const Works = () => {
     {
       id: 5,
       title: "Creative Writing",
+      username: "Patrick Akoto",
       image: "/creative_writing.jpg",
       data: "hello",
       date: "12/02/2023",
@@ -79,6 +84,7 @@ const Works = () => {
     {
       id: 6,
       title: "Web Development",
+      username: "Joe Quaye",
       image: "/web_development.jpg",
       data: "Web Development",
       date: "12/02/2023",
@@ -86,6 +92,7 @@ const Works = () => {
     {
       id: 7,
       title: "Data Science",
+      username: "Mary Edger",
       image: "/data_science.jpg",
       data: "Data Science",
       date: "12/02/2023",
@@ -93,6 +100,7 @@ const Works = () => {
     {
       id: 8,
       title: "Mobile App Development",
+      username: "Kofi Asamoah",
       image: "/app_development.jpg",
       data: "Hello",
       date: "12/02/2023",
@@ -110,8 +118,11 @@ const Works = () => {
             <div key={index} className="swiper-slide w-20 h-60 bg-[#c7ebeb] rounded-lg">
               <Link href={`/explore/${slide.id}`}>
                 <div className="relative w-full h-full">
-                  {/* {slide.title} */}
                   <Image src={slide.image} fill={true} sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw" alt={slide.title} className="rounded-lg"/>
+                  <div className="absolute top-0 flex flex-col p-2 md:p-4 text-light text-sm font-bold bg-gray-700 bg-opacity-50 w-full">
+                    <span>{slide.username}</span>
+                    <span className="text-base md:text-xl line-clamp-2">{slide.title}</span>
+                  </div>
                   </div>
               </Link>
             </div>

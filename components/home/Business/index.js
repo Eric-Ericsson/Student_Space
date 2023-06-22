@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 const Oftheday = () => {
-  const svgCode = `<svg className="opacity-25" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M87,70.5Q74,91,50,91Q26,91,17.5,70.5Q9,50,19,32Q29,14,47,18.5Q65,23,82.5,36.5Q100,50,87,70.5Z" stroke="none" stroke-width="0" fill="#c6c5e2"></path></svg>`;
+  const svgCode = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M87,70.5Q74,91,50,91Q26,91,17.5,70.5Q9,50,19,32Q29,14,47,18.5Q65,23,82.5,36.5Q100,50,87,70.5Z" stroke="none" stroke-width="0" fill="#133441"></path></svg>`;
 
   const containerStyle = {
     background: `url("data:image/svg+xml,${encodeURIComponent(svgCode)}")`,

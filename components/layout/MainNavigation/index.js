@@ -47,7 +47,7 @@ const MainNavigation = () => {
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-1">
             <svg
-              className="w-12 h-12"
+              className="w-10 h-10 sm:w-12 sm:h-12"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 84.85 109.92"
             >
@@ -78,7 +78,7 @@ const MainNavigation = () => {
           >
             <path
               fill="none"
-              stroke="#012E40"
+              stroke={iconColor}
               strokeLinecap="round"
               strokeMiterlimit="10"
               strokeWidth="48"
@@ -87,7 +87,7 @@ const MainNavigation = () => {
           </svg>
         </button>
         <div
-          className={`hidden md:flex items-center gap-8 font-semibold font-[Poppins] ${
+          className={`hidden md:flex items-center gap-8 lg:gap-4 xl:gap-8 font-semibold font-[Poppins] ${
             !isScrolled && "text-white"
           } text-[#012E40] text-lg`}
         >
@@ -105,7 +105,7 @@ const MainNavigation = () => {
         </div>
       </div>
       {openMenu && (
-        <div className="fixed w-full z-50 bg-[#012432] opacity-100 h-1/2 flex flex-col justify-center">
+        <div className="fixed w-full z-50 bg-[#012432] rounded-br-3xl rounded-bl-3xl opacity-100 h-1/2 flex flex-col justify-center">
           <button
             onClick={handleMenuButtonClick}
             className="absolute top-[4%] right-[5%]"

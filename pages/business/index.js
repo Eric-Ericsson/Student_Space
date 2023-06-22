@@ -86,7 +86,7 @@ const Business = () => {
               className="bg-gray-300 relative h-[350px] rounded-2xl border shadow-xl sm:h-[400px] md:h-[350px]"
             >
               <Image src={slide.image} fill={true} alt={slide.title} priority className="rounded-2xl" />
-              <div className=" absolute inset-0 rounded-2xl">
+              <div className="absolute inset-0 rounded-2xl">
                 <div className="absolute bottom-10 left-0 right-0 flex flex-col gap-3 px-5 font-semibold lg:px-10">
                   <span>{slide.date}</span>
                   <Link href={`/news/${slide.id}`}>

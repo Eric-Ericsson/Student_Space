@@ -1,13 +1,12 @@
 const SideLine = () => {
   return (
-    <div className="contain-content h-80 sm:h-96 flex items-center bg-[#024959] text-light rounded-md">
+    <div className="contain-content h-60 sm:h-96 flex items-center bg-[#024959] text-light rounded-md">
       <div className="flex items-center justify-between w-full px-4 md:px-10">
         <div className="flex flex-col font-semibold gap-4">
-          <span className="text-4xl">
-            {/* Suddenly it's all so <span className="font-[playball]">doable</span>  */}
+          <span className="text-2xl sm:text-4xl">
             Suddenly, It's All Within <span className="font-[playball]">reach</span> 
           </span>
-          <button className="bg-green-700 w-44 p-2 rounded">
+          <button className="bg-green-700 text-sm sm:text-base w-40 p-2 rounded">
             Join Student Space
           </button>
         </div>
