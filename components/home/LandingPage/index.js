@@ -29,8 +29,8 @@ const LandingPage = () => {
   }, []);
 
   return (
-    <div
-      className={`w-full relative bg-[${backgroundColor}] md:min-h-screen overflow-hidden transition delay-0 duration-300 ease-in `}
+    <div style={{backgroundColor: backgroundColor}}
+      className={`w-full relative md:min-h-screen overflow-hidden transition delay-0 duration-300 ease-in `}
     >
       <div className="relative h-[450px] bg-[#024864] md:hidden"></div>
       <div className="hidden absolute -right-20 bottom-0 md:flex lg:h-[90%] lg:w-[650px] w-[500px] h-[500px]">
