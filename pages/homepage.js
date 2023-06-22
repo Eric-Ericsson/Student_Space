@@ -1,3 +1,4 @@
+import LayoutCover from '@components/components/layout/LayoutCover';
 import React, { useEffect, useRef, useState } from 'react'
 
 function Homepage() {
@@ -34,13 +35,11 @@ function Homepage() {
   }, []);
 
   return (
-    <div className="relative md:grid grid-cols-5 mx-4 sm:mx-16 md:mx-5">
-      {/* Left Sidebar */}
-      <div className="hidden lg:inline-block bg-gray-300 min-h-screen"></div>
-
+    <LayoutCover>
+    <div className="relative">
     {/* Main content */}
-      <div class="col-span-3 md:col-span-4 lg:col-span-3 border-l-[1px] border-r-[1px] border-gray-300">
-        <div className="flex justify-between border-b-[1px] border-gray-300 h-20 w-full text-[15px]">
+      <div class="mx-2 sm:mx-8 md:mx-20 lg:mx-60 border-l-[1px] border-r-[1px] border-gray-300">
+        <div className="sticky top-0 flex justify-between bg-[#024864] border-b-[1px] border-gray-300 pt-28 h-20 w-full text-[15px]">
           <div className="font-semibold ml-[10%] sm:ml-[20%] self-end pb-3 underline underline-offset-[13px] decoration-sky-500 decoration-[5px]">Space</div>
           <div className="mr-[10%] sm:mr-[20%] self-end pb-3">Following</div>
         </div>
@@ -112,86 +111,8 @@ function Homepage() {
           </div>
         </div>
       </div>
-
-      <div className='hidden sm:inline example max-h-screen md:px-4 lg:px-8 sticky top-0 overflow-y-scroll'>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold text-[15px]">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col ">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col ">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-            <div className="flex flex-col ">
-              <span className="text-[13px] opacity-80">Trending in Ghana</span>
-              <span className="font-semibold">Ayeduase Gate</span>
-            </div>
-      </div>
     </div>
+    </LayoutCover>
   )
 }
 

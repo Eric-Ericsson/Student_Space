@@ -2,34 +2,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-const MainNavigation = () => {
+const MainNavigation = ({isScrolled , iconColor}) => {
   const router = useRouter();
   const [openMenu, setOpenMenu] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [iconColor, setIconColor] = useState("white");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-
-      if (scrollTop > 0) {
-        setIsScrolled(true);
-        setIconColor("#243b76");
-      } else {
-        setIsScrolled(false);
-        setIconColor("white");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    // Immediately trigger handleScroll to set initial state correctly
-    handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll) && win;
-    };
-  }, []);
 
   const handleMenuButtonClick = () => {
     setOpenMenu(!openMenu);
