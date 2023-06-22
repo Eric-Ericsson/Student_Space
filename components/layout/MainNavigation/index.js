@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 const MainNavigation = () => {
-  const [openMenu, setOPenMenu] = useState(false);
-  // const [scrollHeight, setScrollHeight] = useState("");
+  const router = useRouter();
+  const [openMenu, setOpenMenu] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [iconColor, setIconColor] = useState("white");
-  // let iconColor = '#243b76'
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,12 +27,12 @@ const MainNavigation = () => {
     handleScroll();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", handleScroll) && win;
     };
   }, []);
 
   const handleMenuButtonClick = () => {
-    setOPenMenu(!openMenu);
+    setOpenMenu(!openMenu);
   };
 
   return (
@@ -92,20 +92,56 @@ const MainNavigation = () => {
           } text-[#012E40] text-lg`}
         >
           <Link href="/">
-            <span className="hover:text-[#068B01] hover:font-black">Home</span>
+            <span
+              className={`hover:text-[#068B01] ${
+                router.pathname == "/" && "text-[#068B01]"
+              } hover:font-black`}
+            >
+              Home
+            </span>
           </Link>
-          <span>Space</span>
-          <span>Exhibit</span>
+          <Link href="/space">
+            <span
+              className={`hover:text-[#068B01] ${
+                router.pathname == "/space" && "text-[#068B01]"
+              } hover:font-black`}
+            >
+              Space
+            </span>
+          </Link>
+          <Link href="/exhibit">
+            <span
+              className={`hover:text-[#068B01] ${
+                router.pathname == "/exhibit" && "text-[#068B01]"
+              } hover:font-black`}
+            >
+              Exhibit
+            </span>
+          </Link>
           <Link href="/business">
-            <span className="hover:text-[#068B01] hover:font-black">
+            <span
+              className={`hover:text-[#068B01] ${
+                router.pathname == "/business" && "text-[#068B01]"
+              } hover:font-black`}
+            >
               Business
             </span>
           </Link>
-          <span>Sign In</span>
+          <Link href="/signup">
+            <span
+              className={`hover:text-[#068B01] ${
+                router.pathname == "/signup" && "text-[#068B01]"
+              } hover:font-black`}
+            >
+              Sign In
+            </span>
+          </Link>
         </div>
       </div>
       {openMenu && (
-        <div className="fixed w-full z-50 bg-[#012432] rounded-br-3xl rounded-bl-3xl opacity-100 h-1/2 flex flex-col justify-center">
+        <div
+          className="fixed w-full z-50 bg-[#012432] rounded-br-3xl rounded-bl-3xl opacity-100 h-1/2 flex flex-col justify-center"
+        >
           <button
             onClick={handleMenuButtonClick}
             className="absolute top-[4%] right-[5%]"
@@ -120,18 +156,58 @@ const MainNavigation = () => {
                 fill="none"
                 stroke="white"
                 strokeLinecap="round"
-                stroke-linejoin="round"
+                strokeLinejoin="round"
                 strokeWidth="2.5"
                 d="m7 7l10 10M7 17L17 7"
               />
             </svg>
           </button>
           <div className="text-light flex flex-col items-center gap-8 font-semibold">
-            <span>Home</span>
-            <span>Space</span>
-            <span>Exhibit</span>
-            <span>Business</span>
-            <span>Sign In</span>
+            <Link href="/">
+              <span
+                className={`hover:text-[#068B01] ${
+                  router.pathname == "/" && "text-[#068B01]"
+                } hover:font-black`}
+              >
+                Home
+              </span>
+            </Link>
+            <Link href="/space">
+              <span
+                className={`hover:text-[#068B01] ${
+                  router.pathname == "/space" && "text-[#068B01]"
+                } hover:font-black`}
+              >
+                Space
+              </span>
+            </Link>
+            <Link href="/exhibit">
+              <span
+                className={`hover:text-[#068B01] ${
+                  router.pathname == "/exhibit" && "text-[#068B01]"
+                } hover:font-black`}
+              >
+                Exhibit
+              </span>
+            </Link>
+            <Link href="/business">
+              <span
+                className={`hover:text-[#068B01] ${
+                  router.pathname == "/business" && "text-[#068B01]"
+                } hover:font-black`}
+              >
+                Business
+              </span>
+            </Link>
+            <Link href="/signup">
+              <span
+                className={`hover:text-[#068B01] ${
+                  router.pathname == "/signup" && "text-[#068B01]"
+                } hover:font-black`}
+              >
+                Sign In
+              </span>
+            </Link>
           </div>
         </div>
       )}

@@ -1,8 +1,8 @@
-import Link from 'next/link'
-import Image from 'next/image'
-import LayoutCover from '@components/components/layout/LayoutCover'
+import Link from "next/link";
+import Image from "next/image";
+import LayoutCover from "@components/components/layout/LayoutCover";
 
-const Business = () => {
+const Exhibit = () => {
   const media = [
     {
       id: 1,
@@ -71,7 +71,7 @@ const Business = () => {
   ];
 
   return (
-    <LayoutCover title={'media | student clinic'}>
+    <LayoutCover title={"media | student clinic"}>
       <div
         style={{
           backgroundImage:
@@ -81,7 +81,7 @@ const Business = () => {
       >
         <div className="absolute bottom-20 left-4">
           <span className="font-['Playfair_Display'] text-3xl sm:text-5xl font-black text-dark lg:px-[72px]">
-          Product Marketplace
+            Explore
           </span>
         </div>
       </div>
@@ -93,12 +93,21 @@ const Business = () => {
               key={index}
               className="bg-gray-300 relative h-[250px] rounded-2xl border-shadow-xl sm:h-[400px] md:h-[350px]"
             >
-              <Image src={slide.image} fill={true} alt={slide.title} priority className="rounded-2xl" />
+              <Image
+                src={slide.image}
+                fill={true}
+                alt={slide.title}
+                priority
+                className="rounded-2xl"
+              />
               <div className="absolute inset-0 rounded-2xl">
                 <div className="absolute bottom-0 left-0 right-0 py-2 bg-black bg-opacity-30 flex flex-col font-semibold text-xs sm:text-sm md:text-base lg:px-4">
                   <span>{slide.date}</span>
                   <Link href={`/news/${slide.id}`}>
-                      <div dangerouslySetInnerHTML={{__html: slide.title}} className="text-sm sm:text-base" />
+                    <div
+                      dangerouslySetInnerHTML={{ __html: slide.title }}
+                      className="text-sm sm:text-base"
+                    />
                   </Link>
                 </div>
               </div>
@@ -107,7 +116,7 @@ const Business = () => {
         </div>
       </div>
     </LayoutCover>
-  )
-}
+  );
+};
 
-export default Business
+export default Exhibit;
