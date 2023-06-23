@@ -15,7 +15,7 @@ const MainNavigation = ({isScrolled , iconColor}) => {
       <div
         className={`${
           isScrolled
-            ? "bg-white z-50 drop-shadow-md"
+            ? "bg-white z-50 drop-shadow-sm"
             : "bg-transparent z-50 text-white"
         } ease-out delay-75 duration-300 fixed flex items-center justify-between px-4 md:px-10 w-full h-14 sm:16 md:h-20`}
       >

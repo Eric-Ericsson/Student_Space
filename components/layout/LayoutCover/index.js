@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import Navigation from '../MainNavigation'
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/router';
 
 
 
 const LayoutCover = ({ title, keyword, description, children }) => {
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [iconColor, setIconColor] = useState("white");
 
@@ -12,7 +14,11 @@ const LayoutCover = ({ title, keyword, description, children }) => {
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-      if (scrollTop > 0) {
+      if (router.pathname == '/homepage') {
+        setIsScrolled(true);
+        setIconColor("#243b76");
+      }
+      else if (scrollTop > 0) {
         setIsScrolled(true);
         setIconColor("#243b76");
       } else {
