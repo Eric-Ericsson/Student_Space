@@ -108,7 +108,7 @@ const MainNavigation = ({isScrolled , iconColor}) => {
                 router.pathname == "/signup" && "text-[#068B01]"
               } hover:font-black`}
             >
-              Sign In
+              Sign up
             </span>
           </Link>
         </div>
@@ -180,7 +180,7 @@ const MainNavigation = ({isScrolled , iconColor}) => {
                   router.pathname == "/signup" && "text-[#068B01]"
                 } hover:font-black`}
               >
-                Sign In
+                Sign up
               </span>
             </Link>
           </div>

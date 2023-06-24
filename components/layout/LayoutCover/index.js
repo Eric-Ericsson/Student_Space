@@ -1,9 +1,7 @@
-import Head from 'next/head'
-import Navigation from '../MainNavigation'
+import Head from "next/head";
+import Navigation from "../MainNavigation";
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/router';
-
-
+import { useRouter } from "next/router";
 
 const LayoutCover = ({ title, keyword, description, children }) => {
   const router = useRouter();
@@ -14,11 +12,10 @@ const LayoutCover = ({ title, keyword, description, children }) => {
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-      if (router.pathname == '/homepage') {
+      if (router.pathname == "/space" || router.pathname == "/profile") {
         setIsScrolled(true);
         setIconColor("#243b76");
-      }
-      else if (scrollTop > 0) {
+      } else if (scrollTop > 0) {
         setIsScrolled(true);
         setIconColor("#243b76");
       } else {
@@ -47,18 +44,18 @@ const LayoutCover = ({ title, keyword, description, children }) => {
       </Head>
 
       <div id="content">
-        <Navigation isScrolled={isScrolled} iconColor={iconColor}/>
+        <Navigation isScrolled={isScrolled} iconColor={iconColor} />
       </div>
       {children}
     </div>
-  )
-}
+  );
+};
 
-export default LayoutCover
+export default LayoutCover;
 
 LayoutCover.defaultProps = {
-  title: 'home | student space',
-  description: 'Student Space',
-  keyword: 'student space',
+  title: "home | student space",
+  description: "Student Space",
+  keyword: "student space",
   isScrolled: false,
-}
+};
