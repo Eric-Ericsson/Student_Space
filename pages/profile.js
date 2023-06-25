@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 function Profile() {
   const router = useRouter();
-  console.log(router.asPath)
+  console.log(router.pathname);
 
   const [clampedUsername, setClampedUsername] = useState(
     "Eric Ericcson @ericericsson39"
@@ -21,7 +21,7 @@ function Profile() {
       content:
         "I'll take you on a thrilling adventure through the breathtaking landscapes and hidden gems of nature. From hiking majestic mountains to discovering serene lakes, get ready to be inspired by the wonders of the great outdoors.",
       profile_icon: "/ai.jpg",
-      resource: "/art_design.jpg",
+      resource: "",
       likes: "2",
       comment: "43",
     },
@@ -43,7 +43,7 @@ function Profile() {
       content:
         "Get ready to tantalize your taste buds as I delve into the world of culinary delights. From savoring mouthwatering street food to indulging in gourmet cuisine, join me on this gastronomic journey where flavors and aromas come alive, leaving a lasting impression on your palate.",
       profile_icon: "/art_design.jpg",
-      resource: "/fashion.jpg",
+      resource: "",
       likes: "54",
       comment: "1.6K",
     },
@@ -96,7 +96,7 @@ function Profile() {
   return (
     <LayoutCover>
       <div className="relative sm:mx-8 md:mx-20 lg:mx-40 flex">
-      <SideNav path={router.pathname}/>
+        <SideNav path={router.pathname} />
         {/* Profile Section */}
         <div class="mt-14 sm:mt-20 sm:ml-16 md:ml-24 lg:ml-56 border-l-[1px] border-r-[1px] border-gray-300">
           <div className="relative w-full bg-gray-100 h-28 sm:h-44">
@@ -136,41 +136,40 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div className="bg-white sticky top-2 sm:top-5 z-10 grid grid-cols-4 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]">
+          <div className="backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-4 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]">
             <button
               onClick={() => handleActiveTab("post")}
               className={`font-semibold self-end pt-4 pb-3 ${
-                activeTab == "post" && "underline"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-gray-200`}
+                activeTab == "post" ? "underline font-semibold" : "font-normal"
+              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
             >
               Post
             </button>
             <button
               onClick={() => handleActiveTab("reply")}
               className={`font-semibold self-end pt-4 pb-3 ${
-                activeTab == "reply" && "underline"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-gray-200`}
+                activeTab == "reply" ? "underline font-semibold" : "font-normal"
+              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
             >
               Replies
             </button>
             <button
               onClick={() => handleActiveTab("media")}
               className={`font-semibold self-end pt-4 pb-3 ${
-                activeTab == "media" && "underline"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-gray-200`}
+                activeTab == "media" ? "underline font-semibold" : "font-normal"
+              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
             >
               Media
             </button>
             <button
               onClick={() => handleActiveTab("likes")}
-              className={`font-semibold self-end pt-4 hover:bg-gray-300 pb-3 ${
-                activeTab == "likes" && "underline"
+              className={`font-semibold self-end pt-4 hover:bg-slate-100 hover:bg-opacity-70 pb-3 ${
+                activeTab == "likes" ? "underline font-semibold" : "font-normal"
               } underline-offset-[13px] decoration-sky-500 decoration-[5px]`}
             >
               Likes
             </button>
           </div>
-
           <div className="mb-12 sm:mb-0">
             {users.map((slide, index) => (
               <div
@@ -186,22 +185,22 @@ function Profile() {
                     alt="profile image"
                   />
                 </div>
-                <div className="col-span-11 ml-6 flex flex-col sm:gap-4">
-                  <div className="text-xs sm:text-[15px]">
-                    <div className="sm:hidden">{slide.full_name}</div>
-                    <div className="hidden sm:inline lime line-clamp-1">
-                      {slide.username}
-                    </div>
+                <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
+                  <div className="flex gap-2 line-climp-1 text-xs sm:text-[15px] font-bold">
+                    <div className="">{slide.full_name}</div>
+                    <div className="">{slide.username}</div>
                   </div>
                   <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
                     <span className="line-clamp-5">{slide.content}</span>
-                    <div className="relative w-full h-36 sm:h-72 md:h-96 rounded-2xl">
-                      <Image
-                        className="rounded-lg"
+                    <div
+                      className={`${
+                        slide.resource == "" ? "hidden" : "image-container"
+                      } `}
+                    >
+                      <img
                         src={slide.resource}
-                        fill="true"
-                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                        alt="profile image"
+                        alt="Image"
+                        className="imageClass"
                       />
                     </div>
                   </div>

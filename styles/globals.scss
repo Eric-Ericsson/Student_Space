@@ -7,7 +7,7 @@ body {
 }
 
 .inputField {
-  @apply w-full h-6 sm:h-10 rounded-3xl hover:border-2 hover:border-primary-200 border-[1px] border-primary-200 focus:outline-none focus:border-secondary pl-2 sm:pl-4
+  @apply w-full h-10 rounded-3xl hover:border-2 hover:border-primary-200 border-[1px] border-primary-200 focus:outline-none focus:border-secondary pl-2 sm:pl-4 pr-2 sm:pr-4 text-sm sm:text-base
 }
 
 .inputFieldContainer {
@@ -33,7 +33,7 @@ body {
 }
 
 .divider {
-  @apply w-full h-[1px] bg-gray-300 my-5 sm:my-10;
+  @apply w-full h-[1px] bg-gray-300;
 }
 
 p{
@@ -70,6 +70,21 @@ ol li {
 .parallax_overlay {
   background-color: #f5f5f5;
   opacity: 0.90;
+}
+
+.image-container {
+  display: flex; /* Use flexbox */
+  justify-content: center; /* Center the image horizontally */
+  align-items: center; /* Center the image vertically */
+  width: fit-content; /* Set the container width based on the image size */
+  height: fit-content; /* Set the container height based on the image size */
+  @apply rounded-3xl;
+}
+
+.imageClass {
+  max-width: 100%; /* Ensure the image doesn't exceed the container's width */
+  max-height: 100%; /* Ensure the image doesn't exceed the container's height */
+  @apply rounded-3xl;
 }
 
 .home {

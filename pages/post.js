@@ -5,13 +5,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
-function Homepage() {
+function IndividualPost() {
   const router = useRouter();
   const [clampedUsername, setClampedUsername] = useState(
     "Eric Ericcson @ericericsson39"
   );
-  const [activeTabSPace, SetActiveTabSPace] = useState(true);
-  const [activeTabFollowing, SetActiveTabFollowing] = useState(false);
   const [postContent, setPostContent] = useState("");
 
   const users = [
@@ -105,26 +103,100 @@ function Homepage() {
       <div className="relative sm:mx-8 md:mx-20 lg:mx-40 flex">
         <SideNav path={router.pathname} />
         {/* Main content */}
-        <div className="sm:ml-16 md:ml-24 lg:ml-56 border-l-[1px] border-r-[1px] border-gray-300">
-          <div className="backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-2 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]">
-            <button
-              onClick={() => handleActiveTab("space")}
-              className={`font-semibold self-end pt-10 pb-3 ${
-                activeTabSPace ? "underline font-semibold" : "font-normal"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
-            >
-              Space
-            </button>
-            <button
-              onClick={handleActiveTab}
-              className={`font-semibold self-end pt-10 hover:bg-slate-100 hover:bg-opacity-70 pb-3 ${
-                activeTabFollowing ? "underline font-semibold" : "font-normal"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px]`}
-            >
-              Following
-            </button>
+        <div className="pt-14 sm:ml-16 md:ml-24 lg:ml-56 border-l-[1px] border-r-[1px] border-gray-300">
+          <div className="mb-5 sm:mb-0 sm:mx-10 mx-2 flex flex-col mt-6 sm:mt-14">
+            <div className="flex gap-4">
+              <Link href={"/profile"}>
+                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
+                  <Image
+                    className="rounded-lg"
+                    src={"/fashion.jpg"}
+                    fill="true"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                    alt="profile image"
+                  />
+                </div>
+              </Link>
+              <div className="flex flex-col line-climp-1 text-xs sm:text-[15px]">
+                <div className="font-semibold">Eric Ericsson</div>
+                <div className="opacity-80">@ericericsson39</div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 text-sm">
+              <div className="flex flex-col gap-4 mt-8 text-sm sm:text-[15px] ">
+                <span className="line-clamp-5">
+                  "I'll take you on a thrilling adventure through the
+                  breathtaking landscapes and hidden gems of nature. From hiking
+                  majestic mountains to discovering serene lakes, get ready to
+                  be inspired by the wonders of the great outdoors."
+                </span>
+                <div className="image-container">
+                  <img src="/fashion.jpg" alt="Image" className="imageClass" />
+                </div>
+              </div>
+              <div className="flex items-center gap-2 opacity-80">
+                <span>10:34pm</span>
+                <span>-</span>
+                <span>Jun 24, 2023</span>
+              </div>
+              <div className="divider"></div>
+              <div className="flex items-center gap-2 opacity-80">
+                <div className="flex gap-1">
+                  <span className="font-bold opacity-100">12</span>
+                  <span>comments</span>
+                </div>
+                <span>-</span>
+                <div className="flex gap-1">
+                  <span className="font-bold opacity-100">9</span>
+                  <span>likes</span>
+                </div>
+              </div>
+              <div className="divider"></div>
+              <div className="flex gap-4">
+                <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
+                  <button className="group-hover:bg-blue-200 p-2 rounded-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M12 21a9 9 0 1 0-9-9c0 1.488.36 2.89 1 4.127L3 21l4.873-1c1.236.639 2.64 1 4.127 1Z"
+                      />
+                    </svg>
+                  </button>
+                  {/* <span>35</span> */}
+                </div>
+                <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
+                  <button className="group-hover:bg-red-200 p-2 rounded-full">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 48 48"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2.5"
+                        d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8Z"
+                      />
+                    </svg>
+                  </button>
+                  {/* <span>12</span> */}
+                </div>
+              </div>
+            </div>
           </div>
-
+          <div className="divider"></div>
           <div className="mb-5 sm:mb-0 sm:mx-10 mx-2 grid grid-cols-12 mt-6 sm:mt-14">
             <div className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
               <Image
@@ -138,7 +210,7 @@ function Homepage() {
             <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
               <div className="flex flex-col gap-4 sm:mb-4">
                 <div>
-                  <span className="heading">Let's find out</span>
+                  <span className="heading">Your reply</span>
                 </div>
                 <input
                   value={postContent}
@@ -191,12 +263,13 @@ function Homepage() {
                         : "bg-opacity-100"
                     }  text-white`}
                   >
-                    post
+                    reply
                   </button>
                 </div>
               </div>
             </div>
           </div>
+
           <div className="mb-12 sm:mb-0">
             {users.map((slide, index) => (
               <div
@@ -285,4 +358,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default IndividualPost;

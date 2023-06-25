@@ -115,7 +115,7 @@ const Works = () => {
       <div className="relative work-swiper overflow-hidden px-2 mt-4 md:px-10">
         <div className="swiper-wrapper rounded-lg">
           {media.map((slide, index) => (
-            <div key={index} className="swiper-slide w-20 h-60 bg-[#c7ebeb] rounded-lg">
+            <div key={index} className="swiper-slide w-20 h-60 bg-gray-100 rounded-lg">
               <Link href={`/explore/${slide.id}`}>
                 <div className="relative w-full h-full">
                   <Image src={slide.image} fill={true} sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw" alt={slide.title} className="rounded-lg"/>

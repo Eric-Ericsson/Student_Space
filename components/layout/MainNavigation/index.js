@@ -115,7 +115,7 @@ const MainNavigation = ({isScrolled , iconColor}) => {
       </div>
       {openMenu && (
         <div
-          className="fixed w-full z-50 bg-[#012432] rounded-br-3xl rounded-bl-3xl opacity-100 h-1/2 flex flex-col justify-center"
+          className="fixed w-full z-50 bg-[#012432]  rounded-br-3xl rounded-bl-3xl opacity-100 h-1/2 flex flex-col justify-center"
         >
           <button
             onClick={handleMenuButtonClick}
