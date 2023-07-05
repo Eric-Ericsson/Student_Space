@@ -13,9 +13,10 @@ const LayoutCover = ({ title, keyword, description, children }) => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
       if (
-        router.pathname == "/space" ||
-        router.pathname == "/profile" ||
-        router.pathname == "/post"
+        router.pathname != "/"
+        // router.pathname == "/space" ||
+        // router.pathname == "/profile" ||
+        // router.pathname == "/post"
       ) {
         setIsScrolled(true);
         setIconColor("#243b76");

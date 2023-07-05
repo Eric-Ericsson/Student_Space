@@ -1,14 +1,20 @@
+import Link from "next/link";
+
 const SideLine = () => {
+
   return (
-    <div className="contain-content h-60 sm:h-96 flex items-center bg-[#024959] text-light rounded-md">
+    <div className="contain-content mb-10 h-60 sm:h-96 flex items-center bg-[#024959] text-light rounded-md">
       <div className="flex items-center justify-between w-full px-4 md:px-10">
         <div className="flex flex-col font-semibold gap-4">
           <span className="text-2xl sm:text-4xl">
             Suddenly, It's All Within <span className="font-[playball]">reach</span> 
           </span>
+          <Link href={'/generalPage'} >
           <button className="bg-green-700 text-sm sm:text-base w-40 p-2 rounded">
             Join Student Space
           </button>
+          </Link>
+
         </div>
         <div className="hidden md:inline">
         <svg
