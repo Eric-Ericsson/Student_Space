@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import InputWithLabel from "@components/components/layout/inputWithLabel";
+import Link from "next/link";
 
 const Signup = () => {
   const [fullName, setFullName] = useState("");
@@ -29,7 +30,6 @@ const Signup = () => {
     if (!username) {
       error = "Username is required";
     }
-    // Perform username validation logic here
     return error;
   };
 
@@ -43,7 +43,6 @@ const Signup = () => {
     if (!emailPattern.test(email)) {
       return "Invalid email address";
     }
-    // Perform email validation logic here
     return error;
   };
 
@@ -114,7 +113,6 @@ const Signup = () => {
       !passwordError &&
       !confirmPasswordError
     ) {
-      // Perform form submission logic here
     }
   };
 
@@ -124,25 +122,6 @@ const Signup = () => {
       [fieldName]: "",
     }));
   };
-
-  // const validateEmail = (value) => {
-
-  //   if (!value) {
-  //     return 'Email is required';
-  //   }
-
-  // const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  // if (!emailPattern.test(value)) {
-  //   return 'Invalid email address';
-  // }
-
-  //   return '';
-  // };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  // };
 
   return (
     <div className="bg-blue-600 w-full h-screen m-auto">
@@ -168,7 +147,7 @@ const Signup = () => {
         </div>
         <div className="bg-[url('/signup_bg.jpg')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-95 md:bg-white w-full h-screen flex flex-cols items-center">
-            <div className="flex flex-col items-center md:items-start md:px-16 w-full">
+            <div className="flex flex-col items-center md:px-16 w-full">
               <div>
                 <svg
                   className="w-10 h-16"
@@ -190,7 +169,7 @@ const Signup = () => {
               </div>
               <form
                 onSubmit={handleSubmit}
-                className="flex flex-col items-center md:items-start gap-8 w-full"
+                className="flex flex-col items-center gap-8 w-full"
               >
                 <InputWithLabel
                   label="Name"
@@ -248,9 +227,9 @@ const Signup = () => {
                     </svg>
                   </div>
                 </button>
-                <div className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold">
-                Don't have an acouunt? Sign up
-              </div>
+                <Link href={'/loginPage'} className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold">
+                Already have an acouunt? Login
+              </Link>
               </form>
             </div>
           </div>

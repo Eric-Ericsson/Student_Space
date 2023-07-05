@@ -6,6 +6,7 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+/* For smaller screens and below (768px and below) */
 @media (max-width: 767px) {
   input,
   select {
@@ -13,6 +14,8 @@ body {
     -webkit-text-fill-color: #fff !important;
     background-color: transparent !important;
     padding-right: 20px !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
   }
 }
 
@@ -20,8 +23,8 @@ body {
 @media (min-width: 768px) {
   input,
   select {
-    color: #000 !important; /* Dark text color for medium to larger screens */
-    -webkit-text-fill-color: #000 !important; /* Dark text color for medium to larger screens */
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
   }
