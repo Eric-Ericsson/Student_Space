@@ -2,8 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const SideNav = ({path}) => {
-  
+const SideNav = ({ path, session }) => {
   const [activeButton, setActiveButton] = useState(path);
 
   const handleButtonClick = (buttonId) => {
@@ -151,7 +150,7 @@ const SideNav = ({path}) => {
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg">
             <Image
               className="rounded-lg"
-              src={"/artist.png"}
+              src={session ? session.user.image : "/art_design.jpg"}
               fill="true"
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
               alt="profile image"
@@ -162,7 +161,10 @@ const SideNav = ({path}) => {
               activeButton == "user" && "font-bold"
             }`}
           >
-            <span className="font-bold">Eric Ericsson</span> <br />
+            <span className="font-bold">
+              {session ? session.user.name : "Eric Ericcson"}
+            </span>{" "}
+            <br />
             <span className="opacity-75 text-sm">@ericericsson39</span>
           </div>
         </div>

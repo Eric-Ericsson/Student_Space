@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import { SessionProvider } from 'next-auth/react';
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/autoplay";
@@ -26,11 +27,14 @@ const ScrollRestoration = ({ children }) => {
   return children;
 };
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps: {session, ...pageProps} }) {
   return (
+    <SessionProvider session={session}>
     <ScrollRestoration>
       <Component {...pageProps} />
     </ScrollRestoration>
+    </SessionProvider>
+
   );
 }
 

@@ -1,7 +1,10 @@
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
 const Oftheday = () => {
+  const { data: session } = useSession();
+
   const svgCode = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M87,70.5Q74,91,50,91Q26,91,17.5,70.5Q9,50,19,32Q29,14,47,18.5Q65,23,82.5,36.5Q100,50,87,70.5Z" stroke="none" stroke-width="0" fill="#133441"></path></svg>`;
 
   const containerStyle = {
@@ -21,7 +24,7 @@ const Oftheday = () => {
               <div className="flex flex-col gap-2 text-lg sm:text-xl md:text-2xl">
                 <span className="font-[playball]">Artificial Intilligence</span>
                 <span className="">James White</span>
-                <Link href={"/profile"}>
+                <Link href={session ? "/profile" : "/auth/signin"}>
                   <button className="text-xs sm:text-sm opacity-95 p-1 border-[1px] border-[#012E40] w-24 rounded-3xl">
                     View Profile
                   </button>

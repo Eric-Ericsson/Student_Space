@@ -1,13 +1,21 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 
-const MainNavigation = ({isScrolled , iconColor}) => {
+const MainNavigation = ({ isScrolled, iconColor }) => {
   const router = useRouter();
+  const { data: session } = useSession();
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleMenuButtonClick = () => {
     setOpenMenu(!openMenu);
+  };
+
+  const handleSignInOut = () => {
+    if (session) {
+      signOut();
+    } else router.pathname = "/auth/signin";
   };
 
   return (
@@ -75,9 +83,9 @@ const MainNavigation = ({isScrolled , iconColor}) => {
               Home
             </span>
           </Link>
-          <Link href="/space">
+          <Link href={session ? "/space" : "/auth/signin"}>
             <span
-              className={`hover:text-[#068B01] ${
+              className={`hover:text-[#068B01] cursor-pointer ${
                 router.pathname == "/space" && "text-[#068B01]"
               } hover:font-black`}
             >
@@ -102,21 +110,19 @@ const MainNavigation = ({isScrolled , iconColor}) => {
               Business
             </span>
           </Link>
-          <Link href="/signup">
+          <Link onClick={handleSignInOut} href="/auth/signin">
             <span
               className={`hover:text-[#068B01] ${
                 router.pathname == "/signup" && "text-[#068B01]"
               } hover:font-black`}
             >
-              Sign up
+              {session ? "Sign out" : "Sign up"}
             </span>
           </Link>
         </div>
       </div>
       {openMenu && (
-        <div
-          className="fixed w-full z-50 bg-[#012432]  rounded-br-3xl rounded-bl-3xl opacity-100 h-1/2 flex flex-col justify-center"
-        >
+        <div className="fixed w-full z-50 bg-[#012432]  rounded-br-3xl rounded-bl-3xl opacity-100 h-1/2 flex flex-col justify-center">
           <button
             onClick={handleMenuButtonClick}
             className="absolute top-[4%] right-[5%]"

@@ -3,10 +3,14 @@ import SideNav from "@components/components/layout/SideNavigation";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 function Homepage() {
   const router = useRouter();
+  const { data: session } = useSession();
+  // console.log(session.user.image)
+  // console.log('object')
   const [clampedUsername, setClampedUsername] = useState(
     "Eric Ericcson @ericericsson39"
   );
@@ -103,7 +107,7 @@ function Homepage() {
   return (
     <LayoutCover>
       <div className="relative sm:mx-8 md:mx-20 lg:mx-40 flex">
-        <SideNav path={router.pathname} />
+        <SideNav path={router.pathname} session={session} />
         {/* Main content */}
         <div className="sm:ml-16 md:ml-24 lg:ml-56 border-l-[1px] border-r-[1px] border-gray-300">
           <div className="backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-2 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]">
@@ -129,7 +133,7 @@ function Homepage() {
             <div className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
               <Image
                 className="rounded-lg"
-                src={"/artist.png"}
+                src={session ? session.user.image : "/art_design.jpg"}
                 fill="true"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                 alt="profile image"
