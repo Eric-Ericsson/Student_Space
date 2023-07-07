@@ -63,10 +63,10 @@ const GeneralPage = ({ providers }) => {
               </div>
               <div className="flex flex-col gap-5">
                 <div>
-                  {Object.values(providers).map((provider) => (
-                    <button
+                  {Object.values(providers).map((provider, index) => (
+                    <button key={index}
                       onClick={() =>
-                        signIn(provider.id, { callbackUrl: "/space" })
+                        signIn(provider.id, { callbackUrl: "/" })
                       }
                       className="flex items-center justify-center gap-2 text-[16px] md:border-primary-200 bg-white md:bg-none border-primary-600 rounded-3xl w-[90%] sm:w-[70%] md:w-[80%] lg:w-[60%] h-10 border-[2px]"
                     >

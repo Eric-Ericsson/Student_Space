@@ -12,10 +12,12 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
     setOpenMenu(!openMenu);
   };
 
-  const handleSignInOut = () => {
+  const handleSignInOut = async () => {
     if (session) {
-      signOut();
-    } else router.pathname = "/auth/signin";
+      await signOut();
+    } else {
+      router.push("/auth/signin")
+    }
   };
 
   return (
@@ -110,15 +112,13 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
               Business
             </span>
           </Link>
-          <Link onClick={handleSignInOut} href="/auth/signin">
+          <div onClick={handleSignInOut}>
             <span
-              className={`hover:text-[#068B01] ${
-                router.pathname == "/signup" && "text-[#068B01]"
-              } hover:font-black`}
+              className={`hover:text-[#068B01] hover:font-black`}
             >
               {session ? "Sign out" : "Sign up"}
             </span>
-          </Link>
+          </div>
         </div>
       </div>
       {openMenu && (

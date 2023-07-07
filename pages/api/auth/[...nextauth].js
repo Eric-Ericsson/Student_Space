@@ -13,7 +13,19 @@ export const authOptions = {
 
   pages: {
     signin: "/auth/signin"
-  }
-}
+  },
+
+  callbacks: {
+    async redirect(url, baseUrl) {
+      // Check if the redirect URL is on the same domain
+      if (typeof url === 'string' && url.startsWith(baseUrl)) {
+        return url;
+      }
+      // Redirect to the default URL if it's not on the same domain
+      return '/';
+    },
+  },
+};
 
 export default NextAuth(authOptions)
+
