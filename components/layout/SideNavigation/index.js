@@ -162,10 +162,10 @@ const SideNav = ({ path, session }) => {
             }`}
           >
             <span className="font-bold">
-              {session ? session.user.name : "Eric Ericcson"}
+              {session ? session.user.name : "Eric Ericsson"}
             </span>{" "}
             <br />
-            <span className="opacity-75 text-sm">@ericericsson39</span>
+            <span className="opacity-75 text-sm">@{session ? session.user.username : "ericricson"}</span>
           </div>
         </div>
       </div>
