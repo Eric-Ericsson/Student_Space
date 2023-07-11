@@ -10,10 +10,14 @@ import {
   doc,
   serverTimestamp,
   updateDoc,
+  orderBy,
+  query,
+  onSnapshot,
 } from "firebase/firestore";
 import { db, storage } from "@components/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import PostsData from "@components/components/space/Posts";
+import { AnimatePresence, motion } from "framer-motion";
 
 function Homepage() {
   const router = useRouter();
@@ -29,9 +33,10 @@ function Homepage() {
   const [textareaRows, setTextareaRows] = useState(1);
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
- 
+  const [posts, setPosts] = useState([]);
+
   const sendPost = async () => {
-    if(loading) return;
+    if (loading) return;
     setLoading(true);
     const docRef = await addDoc(collection(db, "posts"), {
       id: session.user.uid,
@@ -57,6 +62,17 @@ function Homepage() {
     setSelectedFile(null);
     setLoading(false);
   };
+
+  useEffect(
+    () =>
+      onSnapshot(
+        query(collection(db, "posts"), orderBy("timestamp", "desc")),
+        (snapshot) => {
+          setPosts(snapshot.docs);
+        }
+      ),
+    []
+  );
 
   useEffect(() => {
     const originalText = clampedUsername;
@@ -175,74 +191,100 @@ function Homepage() {
                 ></textarea>
                 {selectedFile && (
                   <div className="relative">
-                    <svg onClick={() => setSelectedFile(null)} className="absolute inset-2 cursor-pointer drop-shadow-md" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 20 20"><path fill="white" d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07zM11.4 10l2.83-2.83l-1.41-1.41L10 8.59L7.17 5.76L5.76 7.17L8.59 10l-2.83 2.83l1.41 1.41L10 11.41l2.83 2.83l1.41-1.41L11.41 10z"/></svg>
-                  <img src={selectedFile} className={`${loading && 'animate-pulse'}`}/>
+                    <svg
+                      onClick={() => setSelectedFile(null)}
+                      className="absolute inset-2 cursor-pointer drop-shadow-md"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill="white"
+                        d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07zM11.4 10l2.83-2.83l-1.41-1.41L10 8.59L7.17 5.76L5.76 7.17L8.59 10l-2.83 2.83l1.41 1.41L10 11.41l2.83 2.83l1.41-1.41L11.41 10z"
+                      />
+                    </svg>
+                    <img
+                      src={selectedFile}
+                      className={`${loading && "animate-pulse"}`}
+                    />
                   </div>
                 )}
                 {!loading && (
-
-                <div className="flex justify-between">
-                  <div className="flex gap-2 sm:gap-5">
-                    <div onClick={() => filePickerRef.current.click()}>
-                      <button className="hover:bg-blue-200 p-2 gap-1 text-xs rounded-full flex items-center justify-center">
+                  <div className="flex justify-between">
+                    <div className="flex gap-2 sm:gap-5">
+                      <div onClick={() => filePickerRef.current.click()}>
+                        <button className="hover:bg-blue-200 p-2 gap-1 text-xs rounded-full flex items-center justify-center">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fill="#243b76"
+                              d="M5 3h13a3 3 0 0 1 3 3v13a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3m0 1a2 2 0 0 0-2 2v11.59l4.29-4.3l2.5 2.5l5-5L20 16V6a2 2 0 0 0-2-2H5m4.79 13.21l-2.5-2.5L3 19a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-1.59l-5.21-5.2l-5 5M7.5 6A2.5 2.5 0 0 1 10 8.5A2.5 2.5 0 0 1 7.5 11A2.5 2.5 0 0 1 5 8.5A2.5 2.5 0 0 1 7.5 6m0 1A1.5 1.5 0 0 0 6 8.5A1.5 1.5 0 0 0 7.5 10A1.5 1.5 0 0 0 9 8.5A1.5 1.5 0 0 0 7.5 7Z"
+                            />
+                          </svg>{" "}
+                          image
+                        </button>
+                        <input
+                          type="file"
+                          hidden
+                          ref={filePickerRef}
+                          onChange={addImageToPost}
+                        />
+                      </div>
+                      <button className="hover:bg-red-200 p-2 gap-1 text-xs rounded-full flex items-center justify-center">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
                         >
-                          <path
-                            fill="#243b76"
-                            d="M5 3h13a3 3 0 0 1 3 3v13a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3m0 1a2 2 0 0 0-2 2v11.59l4.29-4.3l2.5 2.5l5-5L20 16V6a2 2 0 0 0-2-2H5m4.79 13.21l-2.5-2.5L3 19a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-1.59l-5.21-5.2l-5 5M7.5 6A2.5 2.5 0 0 1 10 8.5A2.5 2.5 0 0 1 7.5 11A2.5 2.5 0 0 1 5 8.5A2.5 2.5 0 0 1 7.5 6m0 1A1.5 1.5 0 0 0 6 8.5A1.5 1.5 0 0 0 7.5 10A1.5 1.5 0 0 0 9 8.5A1.5 1.5 0 0 0 7.5 7Z"
-                          />
+                          <g
+                            fill="none"
+                            stroke="#243b76"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="1"
+                          >
+                            <rect width="20" height="16" x="2" y="4" rx="4" />
+                            <path d="m15 12l-5-3v6l5-3Z" />
+                          </g>
                         </svg>{" "}
-                        image
+                        video
                       </button>
-                      <input
-                        type="file"
-                        hidden
-                        ref={filePickerRef}
-                        onChange={addImageToPost}
-                      />
                     </div>
-                    <button className="hover:bg-red-200 p-2 gap-1 text-xs rounded-full flex items-center justify-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                      >
-                        <g
-                          fill="none"
-                          stroke="#243b76"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="1"
-                        >
-                          <rect width="20" height="16" x="2" y="4" rx="4" />
-                          <path d="m15 12l-5-3v6l5-3Z" />
-                        </g>
-                      </svg>{" "}
-                      video
+                    <button
+                      onClick={sendPost}
+                      disabled={!postContent.trim()}
+                      className={`bg-[#243b76] rounded-full px-8 ${
+                        postContent.trim() == ""
+                          ? "bg-opacity-70 disabled"
+                          : "bg-opacity-100"
+                      }  text-white`}
+                    >
+                      post
                     </button>
                   </div>
-                  <button
-                    onClick={sendPost}
-                    disabled={!postContent.trim()}
-                    className={`bg-[#243b76] rounded-full px-8 ${
-                      postContent.trim() == ""
-                        ? "bg-opacity-70 disabled"
-                        : "bg-opacity-100"
-                    }  text-white`}
-                  >
-                    post
-                  </button>
-                </div>
                 )}
               </div>
             </div>
           </div>
-          <PostsData />
+          <AnimatePresence>
+            {posts.map((post, index) => (
+              <motion.div className="mb-12 sm:mb-0"
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+              >
+                <PostsData post={post} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
     </LayoutCover>

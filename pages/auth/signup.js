@@ -1,10 +1,20 @@
+import { signIn } from 'next-auth/react';
+// import {
+//   auth,
+//   db,
+//   createUserWithEmailAndPassword,
+// } from "../firebase";
+import { doc, setDoc } from 'firebase/firestore';
+import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import InputWithLabel from "@components/components/layout/inputWithLabel";
 import Link from "next/link";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from '@components/firebase';
 
 const Signup = () => {
+  const router = useRouter();
   const [fullName, setFullName] = useState("");
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -15,20 +25,10 @@ const Signup = () => {
     const trimmedFullName = fullName.trim();
     if (!trimmedFullName) {
       error = "Full name is required";
-    }
-    else if (fullName.length < 3) {
+    } else if (fullName.length < 3) {
       error = "full name is too short";
-    }
-    else if (fullName.length > 50) {
+    } else if (fullName.length > 50) {
       error = "full name is too long";
-    }
-    return error;
-  };
-
-  const validateUsername = () => {
-    let error = "";
-    if (!username) {
-      error = "Username is required";
     }
     return error;
   };
@@ -69,11 +69,6 @@ const Signup = () => {
     clearError("fullName");
   };
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    clearError("username");
-  };
-
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     clearError("email");
@@ -89,18 +84,16 @@ const Signup = () => {
     clearError("confirmPassword");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const fullNameError = validateFullName();
-    const usernameError = validateUsername();
     const emailError = validateEmail();
     const passwordError = validatePassword();
     const confirmPasswordError = validateConfirmPassword();
 
     setErrors({
       fullName: fullNameError,
-      username: usernameError,
       email: emailError,
       password: passwordError,
       confirmPassword: confirmPasswordError,
@@ -108,13 +101,47 @@ const Signup = () => {
 
     if (
       !fullNameError &&
-      !usernameError &&
       !emailError &&
       !passwordError &&
       !confirmPasswordError
     ) {
+      try {
+        const createUser = await createUserWithEmailAndPassword(auth, email, password);
+        const user = createUser.user;
+        if (user) {
+          updateProfile(user, {
+            displayName: fullName
+          })
+          const userDocRef = doc(db, `users/${user.uid}`);
+          await setDoc(userDocRef, {
+            fullName: fullName,
+            email: email,
+          });
+          const result = await signIn('credentials', {
+            email,
+            password,
+            redirect: false,
+          })
+          if (result.error) {
+            console.log(result.error)
+          } else {
+            console.log('signup successful')
+            router.push('/');
+          }
+        } else {
+          console.log('User not logged in');
+        }
+      } catch (error) {
+        console.error('Sign up error:', error);
+      }      
     }
   };
+
+  // useEffect(() => {
+
+  // }, [])
+
+  
 
   const clearError = (fieldName) => {
     setErrors((prevErrors) => ({
@@ -167,7 +194,7 @@ const Signup = () => {
                   Join Student Space today
                 </span>
               </div>
-              <form
+              <form method="post" action="/api/auth/callback/credentials"
                 onSubmit={handleSubmit}
                 className="flex flex-col items-center gap-8 w-full"
               >
@@ -177,13 +204,6 @@ const Signup = () => {
                   value={fullName}
                   onChange={handleFullNameChange}
                   error={errors.fullName}
-                />
-                <InputWithLabel
-                  label="Username"
-                  type="text"
-                  value={username}
-                  onChange={handleUsernameChange}
-                  error={errors.username}
                 />
                 <InputWithLabel
                   label="Email"
@@ -227,9 +247,12 @@ const Signup = () => {
                     </svg>
                   </div>
                 </button>
-                <Link href={'/loginPage'} className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold">
-                Already have an acouunt? Login
-              </Link>
+                <Link
+                  href={"/loginPage"}
+                  className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
+                >
+                  Already have an acouunt? Login
+                </Link>
               </form>
             </div>
           </div>
@@ -240,3 +263,6 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
+  

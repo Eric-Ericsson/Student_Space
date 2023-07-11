@@ -1,8 +1,10 @@
 import { getProviders, signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const GeneralPage = ({ providers }) => {
+  const router= useRouter();
   const [isShown, setIsShown] = useState(false);
 
   const handleActiveLogin = (e) => {
@@ -66,7 +68,13 @@ const GeneralPage = ({ providers }) => {
                   {Object.values(providers).map((provider, index) => (
                     <button key={index}
                       onClick={() =>
-                        signIn(provider.id, { callbackUrl: "/" })
+                        {
+                          if (provider.id === 'credentials') {
+                            router.push('/auth/signup');
+                          } else {
+                            signIn(provider.id, {callbackUrl: '/'})
+                          }
+                        }
                       }
                       className="flex items-center justify-center gap-2 text-[16px] md:border-primary-200 bg-white md:bg-none border-primary-600 rounded-3xl w-[90%] sm:w-[70%] md:w-[80%] lg:w-[60%] h-10 border-[2px]"
                     >

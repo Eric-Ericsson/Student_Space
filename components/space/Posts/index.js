@@ -1,78 +1,61 @@
-import { db } from "@components/firebase";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { db, storage } from "@components/firebase";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  setDoc,
+} from "firebase/firestore";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Moment from "react-moment";
+import { signIn, useSession } from "next-auth/react";
+import { deleteObject, ref } from "firebase/storage";
 
-const PostsData = () => {
-  const [posts, setPosts] = useState([]);
-  useEffect(
-    () =>
-      onSnapshot(query(collection(db, "posts"), orderBy("timestamp", "desc")),
-    (snapshot) => {
-      setPosts(snapshot.docs);
-    }),
-    []
-  );
-  const users = [
-    {
-      id: 1,
-      full_name: "Eric Ericsson",
-      username: "@ericericsson39",
-      content:
-        "I'll take you on a thrilling adventure through the breathtaking landscapes and hidden gems of nature. From hiking majestic mountains to discovering serene lakes, get ready to be inspired by the wonders of the great outdoors.",
-      profile_icon: "/ai.jpg",
-      resource: "",
-      likes: "2",
-      comment: "43",
-    },
-    {
-      id: 2,
-      full_name: "Marcus Green",
-      username: "@margreen",
-      content:
-        "Join me as I embark on a journey to explore the ancient cities of the world. From the magnificent ruins of Machu Picchu to the enchanting streets of Petra, get ready to be transported through time and witness the rich history and cultural heritage of these remarkable destinations.",
-      profile_icon: "/fashion.jpg",
-      resource: "/artist.png",
-      likes: "132",
-      comment: "1",
-    },
-    {
-      id: 3,
-      full_name: "Ruth Mensah",
-      username: "@rm231",
-      content:
-        "Get ready to tantalize your taste buds as I delve into the world of culinary delights. From savoring mouthwatering street food to indulging in gourmet cuisine, join me on this gastronomic journey where flavors and aromas come alive, leaving a lasting impression on your palate.",
-      profile_icon: "/art_design.jpg",
-      resource: "",
-      likes: "54",
-      comment: "1.6K",
-    },
-    {
-      id: 4,
-      full_name: "Daniel Frimpong",
-      username: "@danielfrimpong",
-      content:
-        "Dive into the ever-evolving world of technology as I explore the latest innovations and groundbreaking advancements that are shaping our future. From AI-powered robots to virtual reality experiences, discover how these technological marvels are revolutionizing industries and transforming our lives.",
-      profile_icon: "/artist.png",
-      resource: "/ai.jpg",
-      likes: "98",
-      comment: "123",
-    },
-  ];
+const PostsData = ({post}) => {
+  const { data: session } = useSession();
+  const [hasLikded, setHasLikded] = useState(false);
+  const [likes, setLikes] = useState([]);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      collection(db, "posts", post.id, "likes"),
+      (snapshot) => setLikes(snapshot.docs)
+    );
+  }, [post]);
+
+  useEffect(() => {
+    setHasLikded(likes.findIndex((like) => like.id === session?.user.uid) !== -1)
+  }, [likes])
+
+  async function likePost(post) {
+    if(session){
+      if(hasLikded){
+        await deleteDoc(doc(db, 'posts', post.id, 'likes', session?.user.uid))
+      } else{
+      await setDoc(doc(db, "posts", post.id, "likes", session?.user.uid), {
+        username: session.user.username,
+      })}
+    } else signIn()
+  }
+
+  async function deletePost(){
+    deleteDoc(doc(db, 'posts', post.id))
+    if(post.data().image){
+      deleteObject(ref(storage, `posts/${post.id}/image`))
+    }
+  }
 
   return (
-    <div className="mb-12 sm:mb-0">
-      {posts.map((slide, index) => (
         <div
-          key={index}
           className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12"
         >
           <Link href={"/profile"}>
             <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
               <Image
                 className="rounded-lg"
-                src={slide.data().userImg}
+                src={post.data().userImg}
                 fill="true"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                 alt="profile image"
@@ -80,18 +63,30 @@ const PostsData = () => {
             </div>
           </Link>
           <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
-            <div className="flex gap-2 line-climp-1 text-xs sm:text-[15px] font-bold">
-              <div className="">{slide.data().name}</div>
-              <div className="">@{slide.data().username}</div>
+            <div className="flex items-center gap-2 line-climp-1 text-xs sm:text-[15px]">
+              <div className="font-bold">{post.data().name}</div>
+              <div className="text-xs">@{post.data().username}</div>
+              <div className="text-xs font-thin">
+                <Moment fromNow>{post?.data().timestamp?.toDate()}</Moment>
+              </div>
             </div>
             <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
-              <span className="line-clamp-5">{slide.data().text}</span>
+              <span className="line-clamp-5">{post.data().text}</span>
               <div
                 className={`${
-                  slide.data().image == "" ? "hidden" : "image-container"
+                  post.data().image == "" ? "hidden" : "image-container"
                 } `}
               >
-                <img src={slide.data().image} alt="Image" className="imageClass" />
+                {
+                  post.data().image && (
+                    <img
+                    src={post.data().image}
+                    alt="Image"
+                    className="imageClass"
+                  />
+                  )
+                }
+               
               </div>
             </div>
             <div className="flex gap-4">
@@ -114,19 +109,19 @@ const PostsData = () => {
                   </svg>
                 </button>
                 <span>12</span>
-                {/* <span>{slide.comment}</span> */}
               </div>
               <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
-                <button className="group-hover:bg-red-200 p-2 rounded-full">
-                  <svg
+                <button
+                  onClick={() => likePost(post)}
+                  className="group-hover:bg-red-200 p-2 rounded-full"
+                >
+                  <svg className={`${hasLikded ? 'fill-red-600 stroke-red-600' : 'fill-none stroke-current group-hover:stroke-red-600'}`}
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
                     height="18"
                     viewBox="0 0 48 48"
                   >
                     <path
-                      fill="none"
-                      stroke="currentColor"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth="2.5"
@@ -134,14 +129,20 @@ const PostsData = () => {
                     />
                   </svg>
                 </button>
-                <span>2</span>
-                {/* <span>{slide.likes}</span> */}
+                {likes.length > 0 && (<span className={`${hasLikded && 'text-red-600'}`}>{likes.length}</span>)}
               </div>
+              {session?.user.uid === post?.data().id && (
+              <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
+                <button onClick={deletePost}
+                  className="group-hover:bg-red-200 p-2 rounded-full"
+                >
+                 <svg className="group-hover:fill-red-700 fill-current" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 48 48"><path d="M20 10.5v.5h8v-.5a4 4 0 0 0-8 0Zm-2.5.5v-.5a6.5 6.5 0 1 1 13 0v.5h11.25a1.25 1.25 0 1 1 0 2.5h-2.917l-2 23.856A7.25 7.25 0 0 1 29.608 44H18.392a7.25 7.25 0 0 1-7.224-6.644l-2-23.856H6.25a1.25 1.25 0 1 1 0-2.5H17.5Zm-3.841 26.147a4.75 4.75 0 0 0 4.733 4.353h11.216a4.75 4.75 0 0 0 4.734-4.353L36.324 13.5H11.676l1.983 23.647ZM21.5 20.25a1.25 1.25 0 1 0-2.5 0v14.5a1.25 1.25 0 1 0 2.5 0v-14.5ZM27.75 19c.69 0 1.25.56 1.25 1.25v14.5a1.25 1.25 0 1 1-2.5 0v-14.5c0-.69.56-1.25 1.25-1.25Z"/></svg>
+                </button>
+              </div>
+               )}
             </div>
           </div>
         </div>
-      ))}
-    </div>
   );
 };
 
