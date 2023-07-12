@@ -8,7 +8,7 @@ body {
 
 /* For smaller screens and below (768px and below) */
 @media (max-width: 767px) {
-  input,
+  .me,
   select {
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
@@ -21,7 +21,7 @@ body {
 
 /* For medium to larger screens (768px and above) */
 @media (min-width: 768px) {
-  input,
+  .me,
   select {
     color: #000 !important;
     -webkit-text-fill-color: #000 !important;

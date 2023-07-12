@@ -1,10 +1,9 @@
 import InputWithLabel from "@components/components/layout/inputWithLabel";
+import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useState } from "react";
 
 const LoginPage = () => {
-  const [activeButton, setActiveButton] = useState(true);
-  const [placeholderContent, setPlaceholderContent] = useState("Email");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -38,7 +37,7 @@ const LoginPage = () => {
     clearError("password");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const emailError = validateEmail();
@@ -50,6 +49,17 @@ const LoginPage = () => {
     });
 
     if (!emailError && !passwordError) {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
+      if (result.error) {
+        console.log(result.error)
+      } else {
+        console.log('login successful')
+        // router.push('/');
+      }
     }
   };
 
@@ -58,15 +68,6 @@ const LoginPage = () => {
       ...prevErrors,
       [fieldName]: "",
     }));
-  };
-
-  const handleEmailButtonClick = () => {
-    setActiveButton(true);
-    setPlaceholderContent("Email");
-  };
-  const handleUsernameButtonClick = () => {
-    setActiveButton(false);
-    setPlaceholderContent("Username");
   };
 
   return (
@@ -98,31 +99,9 @@ const LoginPage = () => {
                     Log in
                   </span>
                 </div>
-                <div className="my-5 inputFieldContainer">
-                  <button
-                    onClick={handleEmailButtonClick}
-                    className={`${
-                      activeButton
-                        ? "bg-blue-600 md:bg-primary-600 opacity-100 text-light font-semibold"
-                        : "bg-none opacity-70 md:text-dark"
-                    } border-2 rounded-s-xl h-10  text-light hover:bg-opacity-50 border-primary-600 w-[50%]`}
-                  >
-                    Email
-                  </button>
-                  <button
-                    onClick={handleUsernameButtonClick}
-                    className={`${
-                      activeButton
-                        ? "bg-none opacity-70 md:text-dark"
-                        : "bg-blue-600 md:bg-primary-600 opacity-100 text-light font-semibold"
-                    } border-2 rounded-e-xl h-10 hover:bg-opacity-50 text-light  border-primary-600 w-[50%]`}
-                  >
-                    Username
-                  </button>
-                </div>
                 <form
                   onSubmit={handleSubmit}
-                  className="flex flex-col items-center gap-8 w-full"
+                  className="flex flex-col items-center gap-8 my-5 w-full"
                 >
                   <InputWithLabel
                     label="Email"
@@ -160,7 +139,7 @@ const LoginPage = () => {
                     </div>
                   </button>
                   <Link
-                    href={"/signup"}
+                    href={"/auth/signup"}
                     className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
                   >
                     Don't have an acouunt? Sign up

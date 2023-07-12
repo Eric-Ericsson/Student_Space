@@ -126,7 +126,7 @@ const Signup = () => {
             console.log(result.error)
           } else {
             console.log('signup successful')
-            // router.push('/');
+            router.push('/');
           }
         } else {
           console.log('User not logged in');
@@ -136,12 +136,6 @@ const Signup = () => {
       }      
     }
   };
-
-  // useEffect(() => {
-
-  // }, [])
-
-  
 
   const clearError = (fieldName) => {
     setErrors((prevErrors) => ({
@@ -190,7 +184,7 @@ const Signup = () => {
                 </svg>
               </div>
               <div className="flex flex-col gap-2 my-5">
-                <span className="font-[Poppins] font-semibold text-xl sm:text-3xl opacity-95 md:opacity-90 text-white md:text-[#012E40]">
+                <span className="font-[Poppins] text-center font-semibold text-xl sm:text-3xl opacity-95 md:opacity-90 text-white md:text-[#012E40]">
                   Join Student Space today
                 </span>
               </div>
@@ -248,7 +242,7 @@ const Signup = () => {
                   </div>
                 </button>
                 <Link
-                  href={"/loginPage"}
+                  href={"/auth/login"}
                   className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
                 >
                   Already have an acouunt? Login
