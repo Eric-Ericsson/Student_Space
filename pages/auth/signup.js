@@ -126,7 +126,7 @@ const Signup = () => {
             console.log(result.error)
           } else {
             console.log('signup successful')
-            router.push('/');
+            // router.push('/');
           }
         } else {
           console.log('User not logged in');
