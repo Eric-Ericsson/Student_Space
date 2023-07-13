@@ -11,9 +11,6 @@ import LayoutCover from "@components/components/layout/LayoutCover";
 
 
 export default function Home() {
-  // let media = Object.values(news)
-  // media = media[0]
-  // console.log(news[0].title)
   return (
     <LayoutCover title={'home | student space'}>
       <main>
@@ -45,12 +42,3 @@ export default function Home() {
     </LayoutCover>
   )
 }
-
-// export async function getServerSideProps() {
-//   const res = await fetch('http://localhost:3000/api/resources'
-//   )
-//   const news = await res.json()
-//   return {
-//     props: {news },
-//   }
-// }

@@ -24,9 +24,6 @@ function Homepage() {
   const filePickerRef = useRef();
   const { data: session } = useSession();
   const textareaRef = useRef(null);
-  const [clampedUsername, setClampedUsername] = useState(
-    "Eric Ericcson @ericericsson39"
-  );
   const [activeTabSPace, SetActiveTabSPace] = useState(true);
   const [activeTabFollowing, SetActiveTabFollowing] = useState(false);
   const [postContent, setPostContent] = useState("");

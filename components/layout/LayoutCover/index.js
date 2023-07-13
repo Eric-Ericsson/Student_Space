@@ -41,6 +41,8 @@ const LayoutCover = ({ title, keyword, description, children }) => {
   }, []);
 
   return (
+    <>
+
     <div>
       <Head>
         <title>{title}</title>
@@ -48,13 +50,14 @@ const LayoutCover = ({ title, keyword, description, children }) => {
         <meta name="keywords" content={keyword} />
         <link rel="icon" href="" />
       </Head>
-
       <div id="content">
         <Navigation isScrolled={isScrolled} iconColor={iconColor} />
-        <CommentModal />
+        
       </div>
+        <CommentModal />
       {children}
     </div>
+    </>
   );
 };
 
