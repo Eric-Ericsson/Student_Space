@@ -1,3 +1,4 @@
+import CommentModal from "@components/components/commentModal";
 import Business from "@components/components/home/Business";
 import Footer from "@components/components/home/Footer";
 import HighLights from "@components/components/home/HighLights";
@@ -40,7 +41,6 @@ export default function Home() {
         <section>
           <Footer />
         </section>
-        
     </main>
     </LayoutCover>
   )

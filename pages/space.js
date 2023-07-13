@@ -75,35 +75,6 @@ function Homepage() {
   );
 
   useEffect(() => {
-    const originalText = clampedUsername;
-    const words = originalText.split(" ");
-
-    let clampedText = "";
-    let clampedIndex = 0;
-
-    // Manually adjust the desired word limits
-    const maxWords = 3; // Number of words before the ellipsis
-    const maxWordLength = 5; // Maximum length of each word
-    // console.log(words)
-
-    for (let i = 0; i < maxWords; i++) {
-      const word = words[i];
-
-      if (word.length > maxWordLength) {
-        clampedText += word.substring(0, maxWordLength) + ".";
-      } else {
-        clampedText += word;
-      }
-
-      if (i < maxWords - 1) {
-        clampedText += " ";
-      }
-    }
-
-    setClampedUsername(clampedText);
-  }, []);
-
-  useEffect(() => {
     adjustTextareaHeight();
   }, [postContent]);
 
@@ -216,6 +187,8 @@ function Homepage() {
                     />
                   </div>
                 )}
+        
+
                 {!loading && (
                   <div className="flex justify-between">
                     <div className="flex gap-2 sm:gap-5">

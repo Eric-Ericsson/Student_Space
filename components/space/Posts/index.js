@@ -13,11 +13,14 @@ import { signIn, useSession } from "next-auth/react";
 import { deleteObject, ref } from "firebase/storage";
 import TimeAgo from "../timeAgo";
 import moment from "moment";
+import { useRecoilState } from "recoil"
+import { modalState } from "@components/atom/modalAtom";
 
 const PostsData = ({ post }) => {
   const { data: session } = useSession();
   const [hasLikded, setHasLikded] = useState(false);
   const [likes, setLikes] = useState([]);
+  const [openModal, setOpenModal] = useRecoilState(modalState);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
@@ -91,8 +94,8 @@ const PostsData = ({ post }) => {
           </div>
         </div>
         <div className="flex gap-4">
-          <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
-            <button className="group-hover:bg-blue-200 p-2 rounded-full">
+          <div onClick={() => setOpenModal(!openModal)} className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
+            <button  className="group-hover:bg-blue-200 p-2 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"

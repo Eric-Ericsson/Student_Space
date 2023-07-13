@@ -6,6 +6,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/autoplay";
 import "tailwindcss/tailwind.css";
 import "../styles/globals.scss";
+import { RecoilRoot } from "recoil";
 
 const ScrollRestoration = ({ children }) => {
   const router = useRouter();
@@ -31,7 +32,9 @@ function App({ Component, pageProps: {session, ...pageProps} }) {
   return (
     <SessionProvider session={session}>
     <ScrollRestoration>
+    <RecoilRoot>
       <Component {...pageProps} />
+    </RecoilRoot>
     </ScrollRestoration>
     </SessionProvider>
 
