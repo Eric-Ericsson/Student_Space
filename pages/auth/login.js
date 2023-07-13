@@ -1,12 +1,18 @@
 import InputWithLabel from "@components/components/layout/inputWithLabel";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginPage = () => {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const validateEmail = () => {
     let error = "";
@@ -49,16 +55,20 @@ const LoginPage = () => {
     });
 
     if (!emailError && !passwordError) {
-      const result = await signIn('credentials', {
+      setLoading(true);
+      const result = await signIn("credentials", {
         email,
         password,
         redirect: false,
-      })
+      });
       if (result.error) {
-        console.log(result.error)
+        setLoading(false);
+        toast.error("incorrect email or password");
+        console.log(result.error);
       } else {
-        console.log('login successful')
-        // router.push('/');
+        setLoading(false);
+        toast.success("login successfull");
+        router.push("/");
       }
     }
   };
@@ -103,6 +113,18 @@ const LoginPage = () => {
                   onSubmit={handleSubmit}
                   className="flex flex-col items-center gap-8 my-5 w-full"
                 >
+                  <ToastContainer
+                    position="bottom-left"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                  />
                   <InputWithLabel
                     label="Email"
                     type="email"
@@ -112,6 +134,7 @@ const LoginPage = () => {
                   />
                   <InputWithLabel
                     label="Password"
+                    id='login'
                     type="password"
                     value={password}
                     onChange={handlePasswordChange}
@@ -138,6 +161,9 @@ const LoginPage = () => {
                       </svg>
                     </div>
                   </button>
+                  {loading && (
+                    <div class="w-8 h-8 border-4 border-t-transparent border-blue-200 rounded-full animate-spin"></div>
+                  )}
                   <Link
                     href={"/auth/signup"}
                     className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
@@ -145,25 +171,6 @@ const LoginPage = () => {
                     Don't have an acouunt? Sign up
                   </Link>
                 </form>
-                {/* <div className="flex flex-col items-center gap-4 w-full">
-            <div className="inputFieldContainer">
-              <input
-                className="inputField"
-                type="text"
-                placeholder={placeholderContent}
-              />
-            </div>
-            <div className="inputFieldContainer">
-              <input
-                className="inputField"
-                type="text"
-                placeholder="Password"
-              />
-              <div className="flex flex-col items-end mt-1 text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold">
-                forgot password?
-              </div>
-            </div>
-          </div> */}
               </div>
             </div>
           </div>

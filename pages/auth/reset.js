@@ -2,11 +2,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { auth } from "@components/firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Reset = () => {
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState("");
-  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const validateEmail = () => {
@@ -32,23 +33,50 @@ const Reset = () => {
       setLoading(true);
       sendPasswordResetEmail(auth, email)
         .then(() => {
-            setLoading(false)
-          setMessage("Check your email to reset password");
+          setLoading(false);
+          toast.info("Check your email to reset password");
         })
         .catch((error) => {
           console.log(error);
-          setLoading(false)
-          setMessage("Check your email");
+          setLoading(false);
+          toast.error("Check your email");
         });
     }
   };
 
   return (
     <div className="h-screen m-auto flex items-center justify-center">
+      
       <form
         onSubmit={handlePasswordReset}
-        className="bg-white w-[80%] sm:w-[60%] md:w-[50%] lg:w-[30%] border-[1px] drop-shadow-xl flex flex-col items-center gap-8 my-5 p-10 rounded-lg"
+        className="bg-white w-[80%] sm:w-[60%] md:w-[50%] lg:w-96 border-[1px] drop-shadow-xl flex flex-col items-center gap-8 my-5 p-10 rounded-lg"
       >
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        <div>
+                    <svg
+                      className="w-12 h-16"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 84.85 109.92"
+                    >
+                      <g
+                        className="fill-white md:fill-[#243b76]"
+                        data-name="Layer 2"
+                      >
+                        <path d="M80 9.75C76.9 7.68 58-4.41 34.39 1.72A56.42 56.42 0 0 0 5.46 20.36c-.82 1.25-7 10.92-3.21 22.18a25.11 25.11 0 0 0 9.64 12.54Q5.95 77.41 0 99.75a64.82 64.82 0 0 0 39.54 10 63.67 63.67 0 0 0 29.25-10C80.17 92.28 86.34 79.46 84.54 67c-1.9-13.13-11.82-20.44-13.83-21.86Z" />
+                      </g>
+                    </svg>
+                  </div>
         <div>
           <span className="heading">Password Reset</span>
         </div>
@@ -90,18 +118,9 @@ const Reset = () => {
             </svg>
           </div>
         </button>
-        {loading && (<div class="w-8 h-8 border-4 border-t-transparent border-blue-200 rounded-full animate-spin"></div>)}
-        <span
-          className={`${
-            message
-              ? "flex w-full h-10 bg-blue-200 rounded-lg text-center justify-center items-center"
-              : "hidden"
-          }`}
-        >
-            
-            {message}
-        </span>
-
+        {loading && (
+          <div class="w-8 h-8 border-4 border-t-transparent border-blue-200 rounded-full animate-spin"></div>
+        )}
         <Link
           href={"/auth/login"}
           className="text-xs text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"

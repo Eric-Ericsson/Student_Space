@@ -24,7 +24,7 @@ export const authOptions = {
               id: user.uid,
               name: user.displayName,
               email: user.email,
-              image: null,
+              image: '',
             }
           }
         } catch (error) {
@@ -51,7 +51,6 @@ export const authOptions = {
     async session({ session, token }) {
       session.user.uid = token.sub;
       session.user.username = session.user.name.split(' ').join('').toLowerCase();
-
       return session;
     },
   },

@@ -148,13 +148,19 @@ const SideNav = ({ path, session }) => {
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-2 p-2 text-base">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg">
-            <Image
-              className="rounded-lg"
-              src={session ? session.user.image : "/art_design.jpg"}
-              fill="true"
-              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-              alt="profile image"
-            />
+            {session.user.image === "" ? (
+              <div className="w-full h-full flex items-center justify-center text-2xl rounded-md font-semibold bg-blue-600 text-white">
+                {session.user.name.charAt(0)}
+              </div>
+            ) : (
+              <Image
+                className="rounded-lg"
+                src={session.user.image}
+                fill="true"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                alt="profile image"
+              />
+            )}
           </div>
           <div
             className={`hidden lg:inline ${
@@ -165,7 +171,9 @@ const SideNav = ({ path, session }) => {
               {session ? session.user.name : "Eric Ericsson"}
             </span>{" "}
             <br />
-            <span className="opacity-75 text-sm">@{session ? session.user.username : "ericricson"}</span>
+            <span className="opacity-75 text-sm">
+              @{session ? session.user.username : "ericricson"}
+            </span>
           </div>
         </div>
       </div>

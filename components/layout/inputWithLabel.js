@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useState } from "react";
 
 function InputWithLabel({ label, type, value, onChange, error, ...rest }) {
@@ -32,7 +33,7 @@ function InputWithLabel({ label, type, value, onChange, error, ...rest }) {
         value={value}
         onChange={onChange}
         />
-        {label == 'Password' && (<p className="mt-1 text-light opacity-90 md:text-black cursor-pointer text-xs absolute right-2 -bottom-9">forgot password?</p>)}
+        {rest.id == 'login' && (<Link href={'/auth/reset'} className=" text-light opacity-90 md:text-black cursor-pointer text-xs absolute right-2 -bottom-5 hover:text-secondary">forgot password?</Link>)}
          {error && (
         <p className="mt-1 text-red-500 text-xs absolute left-2 -bottom-9">{error}</p>
       )}

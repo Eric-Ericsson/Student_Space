@@ -1,16 +1,13 @@
-import { signIn } from 'next-auth/react';
-// import {
-//   auth,
-//   db,
-//   createUserWithEmailAndPassword,
-// } from "../firebase";
-import { doc, setDoc } from 'firebase/firestore';
+import { signIn } from "next-auth/react";
+import { doc, setDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import InputWithLabel from "@components/components/layout/inputWithLabel";
 import Link from "next/link";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from '@components/firebase';
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "@components/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const router = useRouter();
@@ -19,6 +16,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const validateFullName = () => {
     let error = "";
@@ -106,34 +104,40 @@ const Signup = () => {
       !confirmPasswordError
     ) {
       try {
-        const createUser = await createUserWithEmailAndPassword(auth, email, password);
+        const createUser = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
         const user = createUser.user;
+        setLoading(true);
         if (user) {
           updateProfile(user, {
-            displayName: fullName
-          })
+            displayName: fullName,
+          });
           const userDocRef = doc(db, `users/${user.uid}`);
           await setDoc(userDocRef, {
             fullName: fullName,
             email: email,
           });
-          const result = await signIn('credentials', {
+          await signIn("credentials", {
             email,
             password,
             redirect: false,
-          })
-          if (result.error) {
-            console.log(result.error)
-          } else {
-            console.log('signup successful')
-            router.push('/');
-          }
-        } else {
-          console.log('User not logged in');
+          }).then(() => {
+            setLoading(false);
+            toast.success("acoount created successfully");
+            router.push("/");
+          });
         }
       } catch (error) {
-        console.error('Sign up error:', error);
-      }      
+        if (error.code == "auth/email-already-in-use") {
+          toast.error("email already in use");
+        } else if (error.code == "auth/weak-password") {
+          toast.error("Password is too short");
+        }
+        toast.error("something went wrong");
+      }
     }
   };
 
@@ -188,10 +192,24 @@ const Signup = () => {
                   Join Student Space today
                 </span>
               </div>
-              <form method="post" action="/api/auth/callback/credentials"
+              <form
+                method="post"
+                action="/api/auth/callback/credentials"
                 onSubmit={handleSubmit}
                 className="flex flex-col items-center gap-8 w-full"
               >
+                <ToastContainer
+                  position="bottom-left"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  theme="light"
+                />
                 <InputWithLabel
                   label="Name"
                   type="text"
@@ -241,6 +259,9 @@ const Signup = () => {
                     </svg>
                   </div>
                 </button>
+                {loading && (
+                  <div class="w-8 h-8 border-4 border-t-transparent border-blue-200 rounded-full animate-spin"></div>
+                )}
                 <Link
                   href={"/auth/login"}
                   className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
@@ -257,6 +278,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-
-  
