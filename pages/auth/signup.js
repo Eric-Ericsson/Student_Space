@@ -104,13 +104,13 @@ const Signup = () => {
       !confirmPasswordError
     ) {
       try {
+        setLoading(true);
         const createUser = await createUserWithEmailAndPassword(
           auth,
           email,
           password
         );
         const user = createUser.user;
-        setLoading(true);
         if (user) {
           updateProfile(user, {
             displayName: fullName,

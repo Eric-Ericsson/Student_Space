@@ -68,7 +68,7 @@ const LoginPage = () => {
       } else {
         setLoading(false);
         toast.success("login successfull");
-        router.push("/");
+        router.replace("/");
       }
     }
   };

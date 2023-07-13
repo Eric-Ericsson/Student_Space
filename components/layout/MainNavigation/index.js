@@ -114,7 +114,7 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
           </Link>
           <div onClick={handleSignInOut}>
             <span
-              className={`hover:text-[#068B01] hover:font-black`}
+              className={`hover:text-[#068B01] cursor-pointer hover:font-black`}
             >
               {session ? "Sign out" : "Sign up"}
             </span>

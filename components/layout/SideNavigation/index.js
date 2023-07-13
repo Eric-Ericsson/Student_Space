@@ -9,7 +9,7 @@ const SideNav = ({ path, session }) => {
     setActiveButton(buttonId);
   };
   return (
-    <div className="z-40 w-full sm:w-16 md:w-24 lg:w-56 bg-white sm:h-screen fixed bottom-0 sm:bottom-auto flex sm:flex-col sm:gap-5 items-center lg:items-start sm:border-l-[1px] sm:mt-12 md:mt-20 py-1 text-xl font-thin">
+    <div className="z-40 w-full sm:border-r-[1px] sm:w-16 md:w-24 lg:w-56 bg-white sm:h-screen fixed bottom-0 sm:bottom-auto flex sm:flex-col sm:gap-5 items-center lg:items-start sm:border-l-[1px] sm:mt-12 md:mt-20 py-1 text-xl font-thin">
       {/*Home button */}
       <Link
         href="/space"
@@ -32,7 +32,7 @@ const SideNav = ({ path, session }) => {
           </svg>
           <span
             className={`hidden lg:inline ${
-              activeButton == "home" && "font-bold"
+              activeButton == "/space" && "font-bold"
             }`}
           >
             Home
@@ -41,13 +41,13 @@ const SideNav = ({ path, session }) => {
       </Link>
       {/*Explore button */}
       <div
-        onClick={() => handleButtonClick("explore")}
+        onClick={() => handleButtonClick("/explore")}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
-              activeButton == "explore"
+              activeButton == "/explore"
                 ? "fill-[#012432]"
                 : "fill-none stroke-[#012432]"
             } `}
@@ -60,7 +60,7 @@ const SideNav = ({ path, session }) => {
           </svg>
           <span
             className={`hidden lg:inline ${
-              activeButton == "explore" && "font-bold"
+              activeButton == "/explore" && "font-bold"
             }`}
           >
             Explore
@@ -95,7 +95,7 @@ const SideNav = ({ path, session }) => {
           </svg>
           <span
             className={`hidden lg:inline ${
-              activeButton == "profile" && "font-bold"
+              activeButton == "/profile" && "font-bold"
             }`}
           >
             Profile
@@ -110,7 +110,7 @@ const SideNav = ({ path, session }) => {
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
-              activeButton == "post"
+              activeButton == "/post"
                 ? "fill-none stroke-[#012432] stroke-[24]"
                 : "fill-none stroke-current stroke-[8]"
             } `}
@@ -134,7 +134,7 @@ const SideNav = ({ path, session }) => {
           </svg>
           <span
             className={`hidden lg:inline ${
-              activeButton == "post" && "font-bold"
+              activeButton == "/post" && "font-bold"
             }`}
           >
             Post
@@ -148,14 +148,14 @@ const SideNav = ({ path, session }) => {
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-2 p-2 text-base">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg">
-            {session.user.image === "" ? (
+            {session?.user.image === "" ? (
               <div className="w-full h-full flex items-center justify-center text-2xl rounded-md font-semibold bg-blue-600 text-white">
-                {session.user.name.charAt(0)}
+                {session?.user.name.charAt(0)}
               </div>
             ) : (
               <Image
                 className="rounded-lg"
-                src={session.user.image}
+                src={session?.user.image}
                 fill="true"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                 alt="profile image"
@@ -168,11 +168,11 @@ const SideNav = ({ path, session }) => {
             }`}
           >
             <span className="font-bold">
-              {session ? session.user.name : "Eric Ericsson"}
+              {session?.user.name}
             </span>{" "}
             <br />
             <span className="opacity-75 text-sm">
-              @{session ? session.user.username : "ericricson"}
+              @{session?.user.username}
             </span>
           </div>
         </div>

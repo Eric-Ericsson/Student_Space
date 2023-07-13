@@ -142,10 +142,10 @@ function Homepage() {
 
   return (
     <LayoutCover>
-      <div className="relative sm:mx-8 md:mx-20 lg:mx-40 flex">
+      <div className="relative mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen">
         <SideNav path={router.pathname} session={session} />
         {/* Main content */}
-        <div className="sm:ml-16 md:ml-24 lg:ml-56 border-l-[1px] border-r-[1px] border-gray-300">
+        <div className="sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div className="backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-2 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]">
             <button
               onClick={() => handleActiveTab("space")}
@@ -167,14 +167,14 @@ function Homepage() {
 
           <div className="mb-5 sm:mb-0 sm:mx-10 mx-2 grid grid-cols-12 mt-6 sm:mt-14">
             <div className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
-              {session.user.image === "" ? (
-                <div className="w-full h-full flex items-center justify-center text-2xl rounded-md font-semibold bg-blue-600 text-white">
-                  {session.user.name.charAt(0)}
+              {session?.user.image === "" ? (
+                <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
+                  {session?.user.name.charAt(0)}
                 </div>
               ) : (
                 <Image
                   className="rounded-lg"
-                  src={session.user.image}
+                  src={session?.user.image}
                   fill="true"
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                   alt="profile image"
@@ -265,13 +265,14 @@ function Homepage() {
                     <button
                       onClick={sendPost}
                       disabled={!postContent.trim()}
-                      className={`bg-[#243b76] rounded-full px-8 ${
+                      className={`${
                         postContent.trim() == ""
-                          ? "bg-opacity-70 disabled"
-                          : "bg-opacity-100"
-                      }  text-white`}
+                          ? "cursor-not-allowed disabled"
+                          : "group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 hover:text-blue-500 focus:text-blue-500"
+                      } h-10 border-2 border-solid px-8 rounded-md relative inline-flex items-center justify-center bg-blue-500 text-white border-blue-500`}
                     >
-                      post
+                      <strong className="font-medium text-base">Post</strong>
+                      <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1] group-focus:w-[105%]"></span>
                     </button>
                   </div>
                 )}
@@ -281,7 +282,7 @@ function Homepage() {
           <AnimatePresence>
             {posts.map((post, index) => (
               <motion.div
-                className="mb-12 sm:mb-0"
+                className="sm:mb-0"
                 key={index}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
