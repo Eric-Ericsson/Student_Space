@@ -118,7 +118,7 @@ const GeneralPage = ({ providers }) => {
                     Sign up
                   </button>
                 </Link>
-                <Link href={"/loginPage"}>
+                <Link href={"/auth/login"}>
                   <button
                     onMouseEnter={handleActiveLogin}
                     onMouseLeave={handleUnActiveLogin}

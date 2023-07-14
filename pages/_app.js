@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { SessionProvider } from 'next-auth/react';
+import { RecoilRoot } from "recoil";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/autoplay";
 import "tailwindcss/tailwind.css";
 import "../styles/globals.scss";
-import { RecoilRoot } from "recoil";
 
 const ScrollRestoration = ({ children }) => {
   const router = useRouter();

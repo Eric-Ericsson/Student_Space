@@ -2,11 +2,15 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
+import { navZIndex } from "@components/atom/modalAtom";
+import { useRecoilState } from "recoil";
 
 const MainNavigation = ({ isScrolled, iconColor }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const [openMenu, setOpenMenu] = useState(false);
+  const [headerZIndex] = useRecoilState(navZIndex);
+
 
   const handleMenuButtonClick = () => {
     setOpenMenu(!openMenu);
@@ -25,9 +29,9 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
       <div
         className={`${
           isScrolled
-            ? "bg-white z-50 drop-shadow-sm"
-            : "bg-transparent z-50 text-white"
-        } ease-out delay-75 duration-300 fixed flex items-center justify-between px-4 md:px-10 w-full h-14 sm:16 md:h-20`}
+            ? "bg-white drop-shadow-sm"
+            : "bg-transparent text-white"
+        } ${headerZIndex} fixed flex items-center justify-between px-4 md:px-10 w-full h-14 sm:16 md:h-20`}
       >
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-1">

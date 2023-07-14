@@ -163,7 +163,7 @@ const Products = () => {
               <circle cx="7" cy="7.5" r="2.25" />
             </g>
           </svg>
-          <spa className="opacity-95">Photography</spa>
+          <span className="opacity-95">Photography</span>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ const nextConfig = {
     scrollRestoration: true,
   },
   images: {
-    domains: ['i.pinimg.com', 'lh3.googleusercontent.com', 'lh5.googleusercontent.com', 'res.cloudinary.com'],
+    domains: ['i.pinimg.com', 'lh3.googleusercontent.com', 'lh5.googleusercontent.com', 'res.cloudinary.com', 'firebasestorage.googleapis.com'],
   },
 }
 

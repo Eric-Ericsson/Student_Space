@@ -15,9 +15,6 @@ const LayoutCover = ({ title, keyword, description, children }) => {
 
       if (
         router.pathname != "/"
-        // router.pathname == "/space" ||
-        // router.pathname == "/profile" ||
-        // router.pathname == "/post"
       ) {
         setIsScrolled(true);
         setIconColor("#243b76");
@@ -32,7 +29,6 @@ const LayoutCover = ({ title, keyword, description, children }) => {
 
     window.addEventListener("scroll", handleScroll);
 
-    // Immediately trigger handleScroll to set initial state correctly
     handleScroll();
 
     return () => {
@@ -42,7 +38,7 @@ const LayoutCover = ({ title, keyword, description, children }) => {
 
   return (
     <>
-
+      <CommentModal />
     <div>
       <Head>
         <title>{title}</title>
@@ -52,9 +48,7 @@ const LayoutCover = ({ title, keyword, description, children }) => {
       </Head>
       <div id="content">
         <Navigation isScrolled={isScrolled} iconColor={iconColor} />
-        
       </div>
-        <CommentModal />
       {children}
     </div>
     </>

@@ -1,15 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { containerZIndex } from "@components/atom/modalAtom";
+import { useRecoilState } from "recoil";
+
 
 const SideNav = ({ path, session }) => {
   const [activeButton, setActiveButton] = useState(path);
+  const [conZIndex] = useRecoilState(containerZIndex);
+
 
   const handleButtonClick = (buttonId) => {
     setActiveButton(buttonId);
   };
   return (
-    <div className="z-40 w-full sm:border-r-[1px] sm:w-16 md:w-24 lg:w-56 bg-white sm:h-screen fixed bottom-0 sm:bottom-auto flex sm:flex-col sm:gap-5 items-center lg:items-start sm:border-l-[1px] sm:mt-12 md:mt-20 py-1 text-xl font-thin">
+    <div className={`${conZIndex} w-full sm:border-r-[1px] sm:w-16 md:w-24 lg:w-56 bg-white sm:h-screen fixed bottom-0 sm:bottom-auto flex sm:flex-col sm:gap-5 items-center lg:items-start sm:border-l-[1px] sm:mt-12 md:mt-20 py-1 text-xl font-thin`}>
       {/*Home button */}
       <Link
         href="/space"

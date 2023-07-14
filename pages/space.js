@@ -18,6 +18,8 @@ import { db, storage } from "@components/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import PostsData from "@components/components/space/Posts";
 import { AnimatePresence, motion } from "framer-motion";
+import { containerZIndex } from "@components/atom/modalAtom";
+import { useRecoilState } from "recoil";
 
 function Homepage() {
   const router = useRouter();
@@ -31,6 +33,8 @@ function Homepage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [conZIndex] = useRecoilState(containerZIndex);
+  const [imageLoading, setImageLoading] = useState(false);
 
   const sendPost = async () => {
     if (loading) return;
@@ -66,10 +70,12 @@ function Homepage() {
         query(collection(db, "posts"), orderBy("timestamp", "desc")),
         (snapshot) => {
           setPosts(snapshot.docs);
+          setImageLoading(true)
         }
       ),
     []
   );
+
 
   useEffect(() => {
     adjustTextareaHeight();
@@ -83,7 +89,6 @@ function Homepage() {
 
   const handleTextareaChange = (event) => {
     setPostContent(event?.target?.value ?? "");
-    // setTextareaValue(event.target.value);
     setTextareaRows(event.target.value.split("\n").length);
   };
 
@@ -114,7 +119,7 @@ function Homepage() {
         <SideNav path={router.pathname} session={session} />
         {/* Main content */}
         <div className="sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
-          <div className="backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-2 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]">
+          <div className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 ${conZIndex} grid grid-cols-2 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]`}>
             <button
               onClick={() => handleActiveTab("space")}
               className={`font-semibold self-end pt-10 pb-3 ${
@@ -142,7 +147,7 @@ function Homepage() {
               ) : (
                 <Image
                   className="rounded-lg"
-                  src={session?.user.image}
+                  src={session?.user?.image}
                   fill="true"
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                   alt="profile image"
@@ -259,7 +264,7 @@ function Homepage() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1 }}
               >
-                <PostsData post={post} />
+                <PostsData post={post}/>
               </motion.div>
             ))}
           </AnimatePresence>

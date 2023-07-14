@@ -11,52 +11,21 @@ import { useSession } from "next-auth/react";
 
 function Profile() {
   const router = useRouter();
-
-  const [clampedUsername, setClampedUsername] = useState(
-    "Eric Ericcson @ericericsson39"
-  );
   const [activeTab, SetActiveTab] = useState("post");
   const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
 
-  useEffect(
-    () =>
+  useEffect(()=> {
+    try {
       onSnapshot(
         query(collection(db, "posts"), orderBy("timestamp", "desc")),
         (snapshot) => {
           setPosts(snapshot.docs);
         }
-      ),
-    []
-  );
-
-  useEffect(() => {
-    const originalText = clampedUsername;
-    const words = originalText.split(" ");
-
-    let clampedText = "";
-    let clampedIndex = 0;
-
-    // Manually adjust the desired word limits
-    const maxWords = 3; // Number of words before the ellipsis
-    const maxWordLength = 5; // Maximum length of each word
-    // console.log(words)
-
-    for (let i = 0; i < maxWords; i++) {
-      const word = words[i];
-
-      if (word.length > maxWordLength) {
-        clampedText += word.substring(0, maxWordLength) + ".";
-      } else {
-        clampedText += word;
-      }
-
-      if (i < maxWords - 1) {
-        clampedText += " ";
-      }
+      )
+    } catch(error){
+        // console.log(error)
     }
-
-    setClampedUsername(clampedText);
   }, []);
 
   const handleActiveTab = (activetab) => {
@@ -68,11 +37,11 @@ function Profile() {
       <div className="relative mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen">
         <SideNav path={router.pathname} session={session} />
         {/* Profile Section */}
-        <div class="mt-14 sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
+        <div className="mt-14 sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div className="relative w-full bg-gray-100 h-28 sm:h-44">
             {/* cover image */}
             <div> </div>
-            <div className="absolute top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-full bg-gray-200">
+            <div className="relative top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-full bg-gray-200">
               {session?.user.image === "" ? (
                 <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
                   {session?.user.name.charAt(0)}
@@ -80,7 +49,7 @@ function Profile() {
               ) : (
                 <Image
                   className="rounded-lg"
-                  src={session?.user.image}
+                  src={session?.user?.image || '/'}
                   fill="true"
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                   alt="profile image"
@@ -88,7 +57,7 @@ function Profile() {
               )}
             </div>
             <div className="absolute -bottom-16 right-4 sm:right-10">
-              <div class="max-w-md mx-auto space-y-6 flex justify-center">
+              <div className="max-w-md mx-auto space-y-6 flex justify-center">
                 <button className="group font-medium tracking-wide select-none text-base relative inline-flex items-center justify-center cursor-pointer h-10 border-2 border-solid py-0 px-2 rounded-md overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 bg-blue-500 text-white border-blue-500 hover:text-blue-500 focus:text-blue-500">
                   <strong className="font-medium text-sm">Edit Profile</strong>
                   <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1] group-focus:w-[105%]"></span>
