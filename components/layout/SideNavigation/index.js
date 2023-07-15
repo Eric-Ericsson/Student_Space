@@ -172,11 +172,11 @@ const SideNav = ({ path, session }) => {
               activeButton == "user" && "font-bold"
             }`}
           >
-            <span className="font-bold">
+            <span className="font-bold line-clamp-1">
               {session?.user.name}
             </span>{" "}
-            <br />
-            <span className="opacity-75 text-sm">
+            {/* <br /> */}
+            <span className="opacity-75 text-sm line-clamp-1">
               @{session?.user.username}
             </span>
           </div>

@@ -8,12 +8,17 @@ import PostsData from "@components/components/space/Posts";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "@components/firebase";
 import { useSession } from "next-auth/react";
+import { useRecoilState } from "recoil";
+import { containerZIndex } from "@components/atom/modalAtom";
+
 
 function Profile() {
   const router = useRouter();
   const [activeTab, SetActiveTab] = useState("post");
   const [posts, setPosts] = useState([]);
   const { data: session } = useSession();
+  const [conZIndex] = useRecoilState(containerZIndex);
+
 
   useEffect(()=> {
     try {
@@ -34,14 +39,14 @@ function Profile() {
 
   return (
     <LayoutCover>
-      <div className="relative mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen">
+      <div className={`relative mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen ${conZIndex}`}>
         <SideNav path={router.pathname} session={session} />
         {/* Profile Section */}
         <div className="mt-14 sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div className="relative w-full bg-gray-100 h-28 sm:h-44">
             {/* cover image */}
             <div> </div>
-            <div className="relative top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-full bg-gray-200">
+            <div className="relative top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-md bg-gray-200">
               {session?.user.image === "" ? (
                 <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
                   {session?.user.name.charAt(0)}
@@ -85,7 +90,7 @@ function Profile() {
               </div>
             </div>
           </div>
-          <div className="backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-4 pt-2 h-24 sm:h-28 w-full text-[15px]">
+          <div className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-4 pt-2 h-24 sm:h-28 w-full text-[15px]`}>
             <button
               onClick={() => handleActiveTab("post")}
               className={`font-semibold self-end pt-4 pb-3 ${

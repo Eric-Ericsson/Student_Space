@@ -13,9 +13,7 @@ const LayoutCover = ({ title, keyword, description, children }) => {
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
-      if (
-        router.pathname != "/"
-      ) {
+      if (router.pathname != "/") {
         setIsScrolled(true);
         setIconColor("#243b76");
       } else if (scrollTop > 0) {
@@ -39,18 +37,18 @@ const LayoutCover = ({ title, keyword, description, children }) => {
   return (
     <>
       <CommentModal />
-    <div>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={keyword} />
-        <link rel="icon" href="" />
-      </Head>
-      <div id="content">
-        <Navigation isScrolled={isScrolled} iconColor={iconColor} />
+      <div>
+        <Head>
+          <title>{title}</title>
+          <meta name="description" content={description} />
+          <meta name="keywords" content={keyword} />
+          <link rel="icon" href="" />
+        </Head>
+        <div id="content">
+          <Navigation isScrolled={isScrolled} iconColor={iconColor} />
+        </div>
+        {children}
       </div>
-      {children}
-    </div>
     </>
   );
 };

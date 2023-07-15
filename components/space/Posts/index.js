@@ -11,10 +11,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { deleteObject, ref } from "firebase/storage";
-import TimeAgo from "../timeAgo";
-import moment from "moment";
-import { useRecoilState } from "recoil"
+import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "@components/atom/modalAtom";
+import IdentityFormat from "./identityFormat";
 
 const PostsData = ({ post }) => {
   const { data: session } = useSession();
@@ -59,29 +58,23 @@ const PostsData = ({ post }) => {
     <div className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
       <Link href={"/profile"}>
         <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
-        {post.data().userImg === "" ? (
-                <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                  {post.data().name.charAt(0)}
-                </div>
-              ) : (
-                <Image
-                  className="rounded-lg"
-                  src={post.data().userImg}
-                  fill="true"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                  alt="profile image"
-                />
-              )}
+          {post.data().userImg === "" ? (
+            <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
+              {post.data().name.charAt(0)}
+            </div>
+          ) : (
+            <Image
+              className="rounded-lg"
+              src={post.data().userImg}
+              fill="true"
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+              alt="profile image"
+            />
+          )}
         </div>
       </Link>
       <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
-        <div className="flex items-center gap-2 line-climp-1 text-xs sm:text-[15px]">
-          <div className="font-bold">{post.data().name}</div>
-          <div className="text-xs">@{post.data().username}</div>
-          <div className="text-xs font-thin">
-            <TimeAgo date={moment(post?.data().timestamp?.toDate()).startOf('hour').fromNow()}/>
-          </div>
-        </div>
+        <IdentityFormat post={post}/>
         <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
           <span className="line-clamp-5">{post.data().text}</span>
           <div
@@ -95,11 +88,14 @@ const PostsData = ({ post }) => {
           </div>
         </div>
         <div className="flex gap-4">
-          <div onClick={() =>{
-            setPostId(post.id);
-            setOpenModal(!openModal)
-          } } className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
-            <button  className="group-hover:bg-blue-200 p-2 rounded-full">
+          <div
+            onClick={() => {
+              setPostId(post.id);
+              setOpenModal(!openModal);
+            }}
+            className="flex items-center text-sm gap-1 group cursor-pointer opacity-80"
+          >
+            <button className="group-hover:bg-blue-200 p-2 rounded-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"

@@ -11,8 +11,7 @@ import { useEffect, useState, useRef } from "react";
 import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from "@components/firebase";
 import Image from "next/image";
-import TimeAgo from "./space/timeAgo";
-import moment from "moment";
+import IdentityFormat from "./space/Posts/identityFormat";
 
 function CommentModal() {
   const { data: session } = useSession();
@@ -59,7 +58,6 @@ function CommentModal() {
       textarea.style.height = `${textarea.scrollHeight}px`;
     }
   };
-  
 
   const handleTextareaChange = (event) => {
     setPostContent(event?.target?.value ?? "");
@@ -70,6 +68,17 @@ function CommentModal() {
     <>
       {openCommentModal && (
         <Modal
+          style={{
+            overlay: {
+              position: "fixed",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(50, 50, 50, 0.75)",
+              backdropFilter: "blur(5px)",
+            },
+          }}
           isOpen={openCommentModal}
           preventScroll={true}
           ariaHideApp={false}
@@ -86,36 +95,38 @@ function CommentModal() {
             window.scrollTo(0, parseInt(scrollY || "0") * -1);
             setConZIndex("z-10");
             setheaderZIndex("z-50");
+            setPostContent("");
           }}
           onRequestClose={() => setOpenCommentmodal(false)}
           className={
-            "max-w-lg w-[90%] overflow-scroll ease-in-out example delay-75 duration-300 max-h-[25rem] absolute top-44 left-[50%] translate-x-[-50%] bg-white border-2 rounded-xl"
+            "max-w-lg w-[90%] overflow-scroll ease-in-out drop-shadow-2xl example delay-75 duration-300 max-h-[25rem] absolute top-28 left-[50%] translate-x-[-50%] bg-white rounded-xl"
           }
         >
-          <div className="p-1 drop-shadow-2xl">
+          <div className="p-1 border-[1px] border-gray-300">
             <div className="border-b-[1px] p-2">
-              <div>
-                <svg onClick={() => setOpenCommentmodal(false)}
-                className="cursor-pointer"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 32 32"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14s14-6.2 14-14S23.8 2 16 2zm0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12s-5.4 12-12 12z"
-                  />
-                  <path
-                    fill="currentColor"
-                    d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"
-                  />
-                </svg>
-              </div>
+              <svg
+                onClick={() => setOpenCommentmodal(false)}
+                className="cursor-pointer opacity-75"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 32 32"
+              >
+                <path
+                  fill="currentColor"
+                  d="M16 2C8.2 2 2 8.2 2 16s6.2 14 14 14s14-6.2 14-14S23.8 2 16 2zm0 26C9.4 28 4 22.6 4 16S9.4 4 16 4s12 5.4 12 12s-5.4 12-12 12z"
+                />
+                <path
+                  fill="currentColor"
+                  d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"
+                />
+              </svg>
             </div>
-            <div className="flex flex-col gap-4 p-3">
-              <div className="flex space-x-2">
-                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
+            <div className="flex flex-col p-3">
+              <div
+                className={`relative grid grid-cols-12 before:ml-4 before:sm:ml-6 before:absolute before:w-[1px] before:h-full before:border-l-[1px] before:border-black before:opacity-80 pb-10`}
+              >
+                <div className="sticky top-0 bg-white/30 w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
                   {post?.data()?.userImg === "" ? (
                     <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
                       {post?.data()?.name.charAt(0)}
@@ -130,19 +141,29 @@ function CommentModal() {
                     />
                   )}
                 </div>
-                <div className="flex items-center gap-2 line-climp-1 text-xs sm:text-[15px]">
-                  <div className="font-bold">{post?.data()?.name}</div>
-                  <div className="text-xs">@{post?.data()?.username}</div>
-                  <div className="text-xs font-thin">
-                    <TimeAgo
-                      date={moment(post?.data()?.timestamp?.toDate())
-                        .startOf("hour")
-                        .fromNow()}
-                    />
+                <div className="col-span-11 ml-3 sm:ml-5 flex flex-col gap-2 line-climp-1 text-xs sm:text-[15px]">
+                  <div className="sticky top-0 py-3 backdrop-blur-md bg-white/30 flex items-center gap-2 line-climp-1 text-xs sm:text-[15px]">
+                  <IdentityFormat post={post}/>
+                  </div>
+                  <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
+                    <span className="line-clamp-5">{post?.data()?.text}</span>
+                    <div
+                      className={`${
+                        post?.data()?.image == "" ? "hidden" : "image-container"
+                      } `}
+                    >
+                      {post?.data()?.image && (
+                        <img
+                          src={post.data().image}
+                          alt="Image"
+                          className="imageClass"
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="flex space-x-2">
+              <div className="grid grid-cols-12 ">
                 <div className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
                   {session?.user?.image === "" ? (
                     <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
@@ -158,18 +179,20 @@ function CommentModal() {
                     />
                   )}
                 </div>
-                <textarea
-                  ref={textareaRef}
-                  value={postContent}
-                  onChange={handleTextareaChange}
-                  className="w-full h-10 bg-inherit resize-none example border-b-[1px] focus:outline-none focus:border-b-secondary text-sm sm:text-base placeholder:text-xs"
-                  type="text"
-                  rows={textareaRows}
-                  placeholder="enter your post"
-                ></textarea>
+                <div className="col-span-11 ml-3 sm:ml-5 flex items-center">
+                  <textarea
+                    ref={textareaRef}
+                    value={postContent}
+                    onChange={handleTextareaChange}
+                    className="w-full h-10 bg-inherit resize-none example border-b-[1px] focus:outline-none focus:border-b-secondary text-sm sm:text-base placeholder:text-xs"
+                    type="text"
+                    rows={textareaRows}
+                    placeholder="enter your comment"
+                  ></textarea>
+                </div>
               </div>
               {!loading && (
-                <div className="flex justify-end">
+                <div className="flex justify-end mt-3">
                   <button
                     onClick={sendPost}
                     disabled={!postContent.trim()}
