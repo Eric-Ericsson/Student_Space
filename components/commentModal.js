@@ -8,13 +8,15 @@ import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
 import Modal from "react-modal";
 import { useEffect, useState, useRef } from "react";
-import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
+import { useRouter } from "next/router";
+import { addDoc, collection, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { db } from "@components/firebase";
 import Image from "next/image";
 import IdentityFormat from "./space/Posts/identityFormat";
 
 function CommentModal() {
   const { data: session } = useSession();
+  const router = useRouter()
   const textareaRef = useRef(null);
   const [openCommentModal, setOpenCommentmodal] = useRecoilState(modalState);
   const [postId] = useRecoilState(postIdState);
@@ -25,20 +27,18 @@ function CommentModal() {
   const [postContent, setPostContent] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const sendPost = async () => {
-    if (loading) return;
-    setLoading(true);
-    const docRef = await addDoc(collection(db, "posts"), {
-      id: session.user.uid,
-      text: postContent,
-      userImg: session.user.image,
-      timestamp: serverTimestamp(),
-      name: session.user.name,
-      username: session.user.username,
-    });
+  const sendComment = async () => {
+      await addDoc(collection(db, 'posts', postId, 'comments'), {
+        comment: postContent,
+        name: session?.user?.name,
+        username: session?.user?.username,
+        userImg: session?.user?.image,
+        timestamp: serverTimestamp(),
+      });
 
-    setPostContent("");
-    setLoading(false);
+      setPostContent('');
+      setOpenCommentmodal(false);
+      router.push(`posts/${postId}`)
   };
 
   useEffect(() => {
@@ -79,8 +79,8 @@ function CommentModal() {
               backdropFilter: "blur(5px)",
             },
           }}
+          shouldCloseOnEsc={true}
           isOpen={openCommentModal}
-          preventScroll={true}
           ariaHideApp={false}
           onAfterOpen={() => {
             document.body.style.top = `-${window.scrollY}px`;
@@ -103,13 +103,13 @@ function CommentModal() {
           }
         >
           <div className="p-1 border-[1px] border-gray-300">
-            <div className="border-b-[1px] p-2">
+            <div className="border-b-[1px] p-2 ">
               <svg
                 onClick={() => setOpenCommentmodal(false)}
-                className="cursor-pointer opacity-75"
+                className="cursor-pointer hover:bg-gray-200 rounded-full p-2 opacity-75"
                 xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
+                width="38"
+                height="38"
                 viewBox="0 0 32 32"
               >
                 <path
@@ -194,7 +194,7 @@ function CommentModal() {
               {!loading && (
                 <div className="flex justify-end mt-3">
                   <button
-                    onClick={sendPost}
+                    onClick={sendComment}
                     disabled={!postContent.trim()}
                     className={`${
                       postContent.trim() == ""

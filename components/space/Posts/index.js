@@ -19,6 +19,7 @@ const PostsData = ({ post }) => {
   const { data: session } = useSession();
   const [hasLikded, setHasLikded] = useState(false);
   const [likes, setLikes] = useState([]);
+  const [comments, setComments] = useState([]);
   const [openModal, setOpenModal] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
 
@@ -27,7 +28,14 @@ const PostsData = ({ post }) => {
       collection(db, "posts", post.id, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );
-  }, [post]);
+  }, [db]);
+
+  useEffect(() => {
+    const unSubscribe = onSnapshot(
+      collection(db, "posts", post.id, "comments"),
+      (snapshot) => setComments(snapshot.docs)
+    );
+  }, [db]);
 
   useEffect(() => {
     setHasLikded(
@@ -96,23 +104,11 @@ const PostsData = ({ post }) => {
             className="flex items-center text-sm gap-1 group cursor-pointer opacity-80"
           >
             <button className="group-hover:bg-blue-200 p-2 rounded-full">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="1.5"
-                  d="M12 21a9 9 0 1 0-9-9c0 1.488.36 2.89 1 4.127L3 21l4.873-1c1.236.639 2.64 1 4.127 1Z"
-                />
-              </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path fill="currentColor" d="M10 2a8 8 0 1 1-3.613 15.14l-.121-.065l-3.645.91a.5.5 0 0 1-.62-.441v-.082l.014-.083l.91-3.644l-.063-.12a7.95 7.95 0 0 1-.83-2.887l-.025-.382L2 10a8 8 0 0 1 8-8Zm0 1a7 7 0 0 0-6.106 10.425a.5.5 0 0 1 .063.272l-.014.094l-.756 3.021l3.024-.754a.502.502 0 0 1 .188-.01l.091.021l.087.039A7 7 0 1 0 10 3Zm.5 8a.5.5 0 0 1 .09.992L10.5 12h-3a.5.5 0 0 1-.09-.992L7.5 11h3Zm2-3a.5.5 0 0 1 .09.992L12.5 9h-5a.5.5 0 0 1-.09-.992L7.5 8h5Z"/></svg>
             </button>
-            <span>12</span>
+            {comments.length > 0 && (
+              <span>{comments.length}</span>
+            )}
           </div>
           <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
             <button
