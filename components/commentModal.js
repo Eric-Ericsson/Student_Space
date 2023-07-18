@@ -134,7 +134,7 @@ function CommentModal() {
                   ) : (
                     <Image
                       className="rounded-lg"
-                      src={post?.data()?.userImg}
+                      src={post?.data()?.userImg || '/'}
                       fill="true"
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                       alt="profile image"

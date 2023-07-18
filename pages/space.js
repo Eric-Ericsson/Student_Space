@@ -20,6 +20,7 @@ import PostsData from "@components/components/space/Posts";
 import { AnimatePresence, motion } from "framer-motion";
 import { containerZIndex } from "@components/atom/modalAtom";
 import { useRecoilState } from "recoil";
+import LoadingState from "@components/components/space/loadingState";
 
 function Homepage() {
   const router = useRouter();
@@ -34,7 +35,7 @@ function Homepage() {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [conZIndex] = useRecoilState(containerZIndex);
-  const [imageLoading, setImageLoading] = useState(false)
+  const [postLoading, setPostLoading] = useState(true)
 
   const sendPost = async () => {
     if (loading) return;
@@ -70,7 +71,7 @@ function Homepage() {
         query(collection(db, "posts"), orderBy("timestamp", "desc")),
         (snapshot) => {
           setPosts(snapshot.docs);
-          setImageLoading(true)
+          setPostLoading(false)
         }
       ),
     []
@@ -254,20 +255,24 @@ function Homepage() {
               </div>
             </div>
           </div>
-          <AnimatePresence>
-            {posts.map((post, index) => (
-              <motion.div
-                className="sm:mb-0"
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-              >
-                <PostsData post={post}/>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          {
+            postLoading ? (<LoadingState />) : (<AnimatePresence>
+              {posts.map((post, index) => (
+                <motion.div
+                  className="sm:mb-0"
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                >
+                  <PostsData post={post} id={post.id}/>
+                </motion.div>
+              ))}
+            </AnimatePresence>)
+          }
+         
+          
         </div>
       </div>
     </LayoutCover>

@@ -15,7 +15,7 @@ import { useRecoilState } from "recoil";
 import { modalState, postIdState } from "@components/atom/modalAtom";
 import IdentityFormat from "./identityFormat";
 
-const PostsData = ({ post }) => {
+const PostsData = ({ post, id }) => {
   const { data: session } = useSession();
   const [hasLikded, setHasLikded] = useState(false);
   const [likes, setLikes] = useState([]);
@@ -25,14 +25,14 @@ const PostsData = ({ post }) => {
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
-      collection(db, "posts", post.id, "likes"),
+      collection(db, "posts", id, "likes"),
       (snapshot) => setLikes(snapshot.docs)
     );
   }, [db]);
 
   useEffect(() => {
     const unSubscribe = onSnapshot(
-      collection(db, "posts", post.id, "comments"),
+      collection(db, "posts", id, "comments"),
       (snapshot) => setComments(snapshot.docs)
     );
   }, [db]);
@@ -43,12 +43,12 @@ const PostsData = ({ post }) => {
     );
   }, [likes]);
 
-  async function likePost(post) {
+  async function likePost() {
     if (session) {
       if (hasLikded) {
-        await deleteDoc(doc(db, "posts", post.id, "likes", session?.user.uid));
+        await deleteDoc(doc(db, "posts", id, "likes", session?.user.uid));
       } else {
-        await setDoc(doc(db, "posts", post.id, "likes", session?.user.uid), {
+        await setDoc(doc(db, "posts", id, "likes", session?.user.uid), {
           username: session.user.username,
         });
       }
@@ -56,24 +56,25 @@ const PostsData = ({ post }) => {
   }
 
   async function deletePost() {
-    deleteDoc(doc(db, "posts", post.id));
+    deleteDoc(doc(db, "posts", id));
     if (post.data().image) {
-      deleteObject(ref(storage, `posts/${post.id}/image`));
+      deleteObject(ref(storage, `posts/${id}/image`));
     }
   }
 
   return (
-    <div className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
+    <>
+      <div className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
       <Link href={"/profile"}>
         <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
-          {post.data().userImg === "" ? (
+          {post?.data()?.userImg === "" ? (
             <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-              {post.data().name.charAt(0)}
+              {post?.data()?.name.charAt(0)}
             </div>
           ) : (
             <Image
               className="rounded-lg"
-              src={post.data().userImg}
+              src={post?.data()?.userImg}
               fill="true"
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
               alt="profile image"
@@ -84,21 +85,21 @@ const PostsData = ({ post }) => {
       <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
         <IdentityFormat post={post}/>
         <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
-          <span className="line-clamp-5">{post.data().text}</span>
+          <span className="line-clamp-5">{post?.data()?.text}</span>
           <div
             className={`${
-              post.data().image == "" ? "hidden" : "image-container"
+              post?.data()?.image == "" ? "hidden" : "image-container"
             } `}
           >
-            {post.data().image && (
-              <img src={post.data().image} alt="Image" className="imageClass" />
+            {post?.data()?.image && (
+              <img src={post?.data()?.image} alt="Image" className="imageClass" />
             )}
           </div>
         </div>
         <div className="flex gap-4">
           <div
             onClick={() => {
-              setPostId(post.id);
+              setPostId(id);
               setOpenModal(!openModal);
             }}
             className="flex items-center text-sm gap-1 group cursor-pointer opacity-80"
@@ -140,7 +141,7 @@ const PostsData = ({ post }) => {
               </span>
             )}
           </div>
-          {session?.user.uid === post?.data().id && (
+          {session?.user.uid === post?.data()?.id && (
             <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
               <button
                 onClick={deletePost}
@@ -161,6 +162,7 @@ const PostsData = ({ post }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
