@@ -117,8 +117,12 @@ const Signup = () => {
           });
           const userDocRef = doc(db, `users/${user.uid}`);
           await setDoc(userDocRef, {
-            fullName: fullName,
             email: email,
+            name: fullName,
+            username: fullName.split(' ').join('').toLowerCase(),
+            interest: '',
+            phone: '',
+            image: '',
           });
           await signIn("credentials", {
             email,

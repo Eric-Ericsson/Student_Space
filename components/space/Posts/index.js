@@ -24,32 +24,36 @@ const PostsData = ({ post, id }) => {
   const [postId, setPostId] = useRecoilState(postIdState);
 
   useEffect(() => {
-    const unSubscribe = onSnapshot(
-      collection(db, "posts", id, "likes"),
-      (snapshot) => setLikes(snapshot.docs)
-    );
+    if(id){
+      const unSubscribe = onSnapshot(
+        collection(db, "posts", id, "likes"),
+        (snapshot) => setLikes(snapshot.docs)
+      );
+    }
   }, [db]);
 
   useEffect(() => {
-    const unSubscribe = onSnapshot(
-      collection(db, "posts", id, "comments"),
-      (snapshot) => setComments(snapshot.docs)
-    );
+    if(id){
+      const unSubscribe = onSnapshot(
+        collection(db, "posts", id, "comments"),
+        (snapshot) => setComments(snapshot.docs)
+      );
+    }
   }, [db]);
 
   useEffect(() => {
     setHasLikded(
       likes.findIndex((like) => like.id === session?.user.uid) !== -1
     );
-  }, [likes, session.user]);
+  }, [likes, session?.user]);
 
   async function likePost() {
-    if (session.user) {
+    if (session?.user) {
       if (hasLikded) {
         await deleteDoc(doc(db, "posts", id, "likes", session?.user.uid));
       } else {
         await setDoc(doc(db, "posts", id, "likes", session?.user.uid), {
-          username: session.user.username,
+          username: session?.user?.username,
         });
       }
     } else signIn();
@@ -65,7 +69,7 @@ const PostsData = ({ post, id }) => {
   return (
     <>
       <div className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
-        <Link href={"/profile"}>
+        <Link href={`/profile/${post?.data()?.id}`}>
           <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
             {post?.data()?.userImg === "" ? (
               <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">

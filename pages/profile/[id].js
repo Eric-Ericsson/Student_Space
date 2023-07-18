@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { AnimatePresence, motion } from "framer-motion";
 import PostsData from "@components/components/space/Posts";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { collection, doc, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "@components/firebase";
 import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
@@ -14,12 +14,24 @@ import { containerZIndex } from "@components/atom/modalAtom";
 
 function Profile() {
   const router = useRouter();
+  const { id } = router.query;
   const [activeTab, SetActiveTab] = useState("post");
   const [posts, setPosts] = useState([]);
+  const [user, setuser] = useState(null);
   const { data: session } = useSession();
   const [conZIndex] = useRecoilState(containerZIndex);
 
-
+//retrieving a single user
+  useEffect(() => {
+    if (id) {
+      const unsubscribe = onSnapshot(doc(db, "users", id), (snapshot) =>
+        setuser(snapshot.data()),
+      );
+    //   setPostLoading(false);
+      return () => unsubscribe();
+    }
+  }, [db, id]);
+  
   useEffect(()=> {
     try {
       onSnapshot(
@@ -47,14 +59,14 @@ function Profile() {
             {/* cover image */}
             <div> </div>
             <div className="relative top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-md bg-gray-200">
-              {session?.user.image === "" ? (
+              {user?.image === "" ? (
                 <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                  {session?.user.name.charAt(0)}
+                  {user?.name.charAt(0)}
                 </div>
               ) : (
                 <Image
                   className="rounded-lg"
-                  src={session?.user?.image || '/'}
+                  src={user?.image || '/'}
                   fill="true"
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                   alt="profile image"
@@ -74,20 +86,20 @@ function Profile() {
             <div className="col-span-4 flex flex-col gap-2 sm:ml-6">
               <div className="flex flex-col">
                 <span className="font-semibold text-base md:text-[20px]">
-                  {session?.user.name}
+                  {user?.name}
                 </span>
-                <span>@{session?.user.username}</span>
+                <span>@{user?.username}</span>
               </div>
               <span className="text-xs">
-                Kwame Nkhrumah University of Science and Technology
+                {user?.interest}
               </span>
             </div>
             <div className="col-span-2">
-              <span>Contact Info</span>
-              <div className="flex space-x-2 text-xs">
+              <span className="cursor-pointer">Contact Info</span>
+              {/* <div className="flex space-x-2 text-xs">
                 <span>Follow</span>
                 <span>Following</span>
-              </div>
+              </div> */}
             </div>
           </div>
           <div className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-4 pt-2 h-24 sm:h-28 w-full text-[15px]`}>
@@ -145,3 +157,17 @@ function Profile() {
 }
 
 export default Profile;
+
+// import { useRouter } from "next/router";
+// const Profile = () => {
+//     const router = useRouter();
+//     const { id } = router.query;
+//   return (
+//     <div>
+//       {console.log(id)}
+//     </div>
+//   )
+// }
+
+// export default Profile
+
