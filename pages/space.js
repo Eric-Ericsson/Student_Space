@@ -35,7 +35,7 @@ function Homepage() {
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
   const [conZIndex] = useRecoilState(containerZIndex);
-  const [postLoading, setPostLoading] = useState(true)
+  const [postLoading, setPostLoading] = useState(true);
 
   const sendPost = async () => {
     if (loading) return;
@@ -71,12 +71,11 @@ function Homepage() {
         query(collection(db, "posts"), orderBy("timestamp", "desc")),
         (snapshot) => {
           setPosts(snapshot.docs);
-          setPostLoading(false)
+          setPostLoading(false);
         }
       ),
     []
   );
-
 
   useEffect(() => {
     adjustTextareaHeight();
@@ -116,11 +115,15 @@ function Homepage() {
 
   return (
     <LayoutCover>
-      <div className={`relative ${conZIndex} mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen`}>
+      <div
+        className={`relative ${conZIndex} mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen`}
+      >
         <SideNav path={router.pathname} session={session} />
-        {/* Main content */} 
+        {/* Main content */}
         <div className="sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
-          <div className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-2 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]`}>
+          <div
+            className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-2 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]`}
+          >
             <button
               onClick={() => handleActiveTab("space")}
               className={`font-semibold self-end pt-10 pb-3 ${
@@ -190,7 +193,6 @@ function Homepage() {
                     />
                   </div>
                 )}
-        
 
                 {!loading && (
                   <div className="flex justify-between">
@@ -255,8 +257,10 @@ function Homepage() {
               </div>
             </div>
           </div>
-          {
-            postLoading ? (<LoadingState />) : (<AnimatePresence>
+          {postLoading ? (
+            <LoadingState />
+          ) : (
+            <AnimatePresence>
               {posts.map((post, index) => (
                 <motion.div
                   className="sm:mb-0"
@@ -266,13 +270,11 @@ function Homepage() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1 }}
                 >
-                  <PostsData post={post} id={post.id}/>
+                  <PostsData post={post} id={post.id} />
                 </motion.div>
               ))}
-            </AnimatePresence>)
-          }
-         
-          
+            </AnimatePresence>
+          )}
         </div>
       </div>
     </LayoutCover>

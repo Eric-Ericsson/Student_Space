@@ -9,14 +9,20 @@ import { useRecoilState } from "recoil";
 import Modal from "react-modal";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
-import { addDoc, collection, doc, onSnapshot, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "@components/firebase";
 import Image from "next/image";
 import IdentityFormat from "./space/Posts/identityFormat";
 
 function CommentModal() {
   const { data: session } = useSession();
-  const router = useRouter()
+  const router = useRouter();
   const textareaRef = useRef(null);
   const [openCommentModal, setOpenCommentmodal] = useRecoilState(modalState);
   const [postId] = useRecoilState(postIdState);
@@ -28,17 +34,18 @@ function CommentModal() {
   const [loading, setLoading] = useState(false);
 
   const sendComment = async () => {
-      await addDoc(collection(db, 'posts', postId, 'comments'), {
-        comment: postContent,
-        name: session?.user?.name,
-        username: session?.user?.username,
-        userImg: session?.user?.image,
-        timestamp: serverTimestamp(),
-      });
+    await addDoc(collection(db, "posts", postId, "comments"), {
+      comment: postContent,
+      name: session?.user?.name,
+      username: session?.user?.username,
+      userImg: session?.user?.image,
+      timestamp: serverTimestamp(),
+      userId: session.user.uid,
+    });
 
-      setPostContent('');
-      setOpenCommentmodal(false);
-      router.push(`posts/${postId}`)
+    setPostContent("");
+    setOpenCommentmodal(false);
+    router.push(`/posts/${postId}`);
   };
 
   useEffect(() => {
@@ -134,7 +141,7 @@ function CommentModal() {
                   ) : (
                     <Image
                       className="rounded-lg"
-                      src={post?.data()?.userImg || '/'}
+                      src={post?.data()?.userImg || "/"}
                       fill="true"
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                       alt="profile image"
@@ -143,7 +150,7 @@ function CommentModal() {
                 </div>
                 <div className="col-span-11 ml-3 sm:ml-5 flex flex-col gap-2 line-climp-1 text-xs sm:text-[15px]">
                   <div className="sticky top-0 py-3 backdrop-blur-md bg-white/30 flex items-center gap-2 line-climp-1 text-xs sm:text-[15px]">
-                  <IdentityFormat post={post}/>
+                    <IdentityFormat post={post} />
                   </div>
                   <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
                     <span className="line-clamp-5">{post?.data()?.text}</span>

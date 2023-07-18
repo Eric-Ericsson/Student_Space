@@ -41,13 +41,15 @@ function PostPage() {
 
   //get comments of the post
   useEffect(() => {
-    onSnapshot(
-      query(
-        collection(db, "posts", id, "comments"),
-        orderBy("timestamp", "desc")
-      ),
-      (snapshot) => setComments(snapshot.docs)
-    );
+    if (id) {
+      onSnapshot(
+        query(
+          collection(db, "posts", id, "comments"),
+          orderBy("timestamp", "desc")
+        ),
+        (snapshot) => setComments(snapshot.docs)
+      );
+    }
   }, [db, id]);
 
   const handleActiveTab = (tab) => {
@@ -90,11 +92,15 @@ function PostPage() {
           </div>
           {postLoading && <LoadingState />}
           {post && post.data && <PostsData post={post} id={id} />}
-          {comments.length > 0 && (
-            comments.map((comment, index) => (  
-              <Comments key={index} id={comment.id} comment={comment.data()}/>
-            ))
-          )}
+          {comments.length > 0 &&
+            comments.map((comment) => (
+              <Comments
+                key={comment.id}
+                commentId={comment.id}
+                originalPostId={id}
+                comment={comment}
+              />
+            ))}
         </div>
       </div>
     </LayoutCover>
