@@ -78,12 +78,10 @@ function ContactInfoModal() {
         });
         toast.success('contact info updated successfully')
       } catch (error) {
-        console.log(error.message)
         toast.error(error.message)
       }
     }
   };
-console.log(aModalIsOpened)
   const handleOtherModalIsOpen = () => {
     if(aModalIsOpened){
       setOpenProfileoModal(!openProfileoModal)

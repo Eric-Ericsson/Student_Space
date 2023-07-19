@@ -46,7 +46,7 @@ import {
         setInterest(user?.interest);
         return () => unsubscribe();
       }
-    }, [db, id]);
+    }, [db, id, openProfileoModal]);
   
     const handleInterestChange = (e) => {
       setInterest(e.target.value);
@@ -66,7 +66,6 @@ import {
           });
           toast.success('Profile updated successfully')
         } catch (error) {
-          console.log(error.message)
           toast.error(error.message)
         }
       }
@@ -150,7 +149,7 @@ import {
                     <input
                         type="text"
                         maxLength={256}
-                        value={name}
+                        value={user?.name}
                         onChange={handleNameChange}
                         className="w-full h-9 text-base px-4 rounded-md ring-1 ring-black focus:ring-blue-400 focus:outline-none placeholder:text-sm"
                       />

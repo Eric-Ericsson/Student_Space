@@ -15,6 +15,11 @@ export const profileModalState = atom({
   default: false, 
 });
 
+export const imageBannerModalState = atom({
+  key: 'imageBannerModalState',
+  default: false, 
+});
+
 export const aModalOpened = atom({
   key: 'aModalOpened',
   default: false, 

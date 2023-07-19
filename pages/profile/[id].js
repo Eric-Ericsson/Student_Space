@@ -9,7 +9,7 @@ import { collection, doc, onSnapshot, orderBy, query } from "firebase/firestore"
 import { db } from "@components/firebase";
 import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
-import { contactInfoModalState, containerZIndex, postIdState, profileModalState } from "@components/atom/modalAtom";
+import { contactInfoModalState, containerZIndex, imageBannerModalState, profileModalState } from "@components/atom/modalAtom";
 
 
 function Profile() {
@@ -22,6 +22,9 @@ function Profile() {
   const [conZIndex] = useRecoilState(containerZIndex);
   const [openModal, setOpenModal] = useRecoilState(contactInfoModalState);
   const [openProfileModal, setOpenProfileModal] = useRecoilState(profileModalState);
+  const [openImageBannerModal, setOpenImageBannerModal] = useRecoilState(
+    imageBannerModalState
+);
   // const [postId, setPostId] = useRecoilState(postIdState);
 
 
@@ -62,7 +65,12 @@ function Profile() {
         <div className="mt-14 sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div className="relative w-full bg-gray-100 h-28 sm:h-44">
             {/* cover image */}
-            <div> </div>
+            <div className="bg-blue-200 w-full h-full absolute">
+             
+            </div>
+            <button onClick={()=> setOpenImageBannerModal(!openImageBannerModal)} className="absolute top-8 right-5 h-8 w-8 rounded-full flex justify-center items-center bg-gray-100">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256"><path fill="currentColor" d="M208 60h-29.87l-14.81-22.22A4 4 0 0 0 160 36H96a4 4 0 0 0-3.32 1.78L77.85 60H48a20 20 0 0 0-20 20v112a20 20 0 0 0 20 20h160a20 20 0 0 0 20-20V80a20 20 0 0 0-20-20Zm12 132a12 12 0 0 1-12 12H48a12 12 0 0 1-12-12V80a12 12 0 0 1 12-12h32a4 4 0 0 0 3.33-1.78L98.13 44h59.72l14.82 22.22A4 4 0 0 0 176 68h32a12 12 0 0 1 12 12ZM128 92a40 40 0 1 0 40 40a40 40 0 0 0-40-40Zm0 72a32 32 0 1 1 32-32a32 32 0 0 1-32 32Z"/></svg>
+              </button>
             <div className="relative top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-md bg-gray-200">
               {user?.image === "" ? (
                 <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
