@@ -9,7 +9,7 @@ import { collection, doc, onSnapshot, orderBy, query } from "firebase/firestore"
 import { db } from "@components/firebase";
 import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
-import { containerZIndex } from "@components/atom/modalAtom";
+import { contactInfoModalState, containerZIndex, postIdState, profileModalState } from "@components/atom/modalAtom";
 
 
 function Profile() {
@@ -20,6 +20,11 @@ function Profile() {
   const [user, setuser] = useState(null);
   const { data: session } = useSession();
   const [conZIndex] = useRecoilState(containerZIndex);
+  const [openModal, setOpenModal] = useRecoilState(contactInfoModalState);
+  const [openProfileModal, setOpenProfileModal] = useRecoilState(profileModalState);
+  // const [postId, setPostId] = useRecoilState(postIdState);
+
+
 
 //retrieving a single user
   useEffect(() => {
@@ -75,7 +80,7 @@ function Profile() {
             </div>
             <div className="absolute -bottom-16 right-4 sm:right-10">
               <div className="max-w-md mx-auto space-y-6 flex justify-center">
-                <button className="group font-medium tracking-wide select-none text-base relative inline-flex items-center justify-center cursor-pointer h-10 border-2 border-solid py-0 px-2 rounded-md overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 bg-blue-500 text-white border-blue-500 hover:text-blue-500 focus:text-blue-500">
+                <button onClick={()=> setOpenProfileModal(!openProfileModal)} className="group font-medium tracking-wide select-none text-base relative inline-flex items-center justify-center cursor-pointer h-10 border-2 border-solid py-0 px-2 rounded-md overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 bg-blue-500 text-white border-blue-500 hover:text-blue-500 focus:text-blue-500">
                   <strong className="font-medium text-sm">Edit Profile</strong>
                   <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1] group-focus:w-[105%]"></span>
                 </button>
@@ -95,7 +100,9 @@ function Profile() {
               </span>
             </div>
             <div className="col-span-2">
-              <span className="cursor-pointer">Contact Info</span>
+              <span onClick={() => {
+                setOpenModal(!openModal);
+              }} className="cursor-pointer text-blue-600 text-[15px] hover:underline">Contact Info</span>
               {/* <div className="flex space-x-2 text-xs">
                 <span>Follow</span>
                 <span>Following</span>

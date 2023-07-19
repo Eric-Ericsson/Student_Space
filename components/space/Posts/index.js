@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
-import { modalState, postIdState } from "@components/atom/modalAtom";
+import { contactInfoModalState, postIdState } from "@components/atom/modalAtom";
 import IdentityFormat from "./identityFormat";
 
 const PostsData = ({ post, id }) => {
@@ -20,7 +20,7 @@ const PostsData = ({ post, id }) => {
   const [hasLikded, setHasLikded] = useState(false);
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
-  const [openModal, setOpenModal] = useRecoilState(modalState);
+  const [openModal, setOpenModal] = useRecoilState(contactInfoModalState);
   const [postId, setPostId] = useRecoilState(postIdState);
 
   useEffect(() => {

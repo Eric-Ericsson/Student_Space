@@ -123,6 +123,7 @@ const Signup = () => {
             interest: '',
             phone: '',
             image: '',
+            address: ''
           });
           await signIn("credentials", {
             email,

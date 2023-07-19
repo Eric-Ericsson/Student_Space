@@ -5,6 +5,21 @@ export const modalState = atom({
     default: false, 
   });
 
+export const contactInfoModalState = atom({
+  key: 'contactInfoModalState',
+  default: false, 
+});
+
+export const profileModalState = atom({
+  key: 'profileModalState',
+  default: false, 
+});
+
+export const aModalOpened = atom({
+  key: 'aModalOpened',
+  default: false, 
+})
+
 export const postIdState = atom({
     key: 'postIdState',
     default: 'id', 

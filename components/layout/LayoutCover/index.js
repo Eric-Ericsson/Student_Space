@@ -2,7 +2,9 @@ import Head from "next/head";
 import Navigation from "../MainNavigation";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import CommentModal from "@components/components/commentModal";
+import CommentModal from "@components/components/Modals/commentModal";
+import ContactInfoModal from "@components/components/Modals/contactInfo";
+import ProfileModal from "@components/components/Modals/profileModal";
 
 const LayoutCover = ({ title, keyword, description, children }) => {
   const router = useRouter();
@@ -37,6 +39,8 @@ const LayoutCover = ({ title, keyword, description, children }) => {
   return (
     <>
       <CommentModal />
+      <ContactInfoModal />
+      <ProfileModal />
       <div>
         <Head>
           <title>{title}</title>

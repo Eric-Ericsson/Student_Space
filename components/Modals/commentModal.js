@@ -18,7 +18,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@components/firebase";
 import Image from "next/image";
-import IdentityFormat from "./space/Posts/identityFormat";
+import IdentityFormat from "../space/Posts/identityFormat";
 
 function CommentModal() {
   const { data: session } = useSession();
