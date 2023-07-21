@@ -162,23 +162,21 @@ useEffect(() => {
           </div>
 
           <div className="mb-5 sm:mb-0 sm:mx-10 mx-2 grid grid-cols-12 mt-6 sm:mt-14">
-            {user && 
             <Link href={`/profile/${session?.user?.uid}`} className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
-              {user?.profileImage === "" ? (
-                <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                  {user?.name.charAt(0)}
-                </div>
-              ) : (
-                <Image
+              {user?.profileImage ? (
+                  <Image
                   className="rounded-lg"
                   src={user?.profileImage}
                   fill="true"
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                   alt="profile image"
                 />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
+                  {user?.name.charAt(0)}
+                </div>
               )}
             </Link>
-            }
             <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
               <div className="flex flex-col gap-4 sm:mb-4">
                 <div>

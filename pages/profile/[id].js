@@ -29,7 +29,12 @@ function Profile() {
   const [activeTab, SetActiveTab] = useState("post");
   const [posts, setPosts] = useState([]);
   const [user, setuser] = useState(null);
-  const { data: session } = useSession();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.replace('/')
+    }
+  });
   const [conZIndex] = useRecoilState(containerZIndex);
   const [openModal, setOpenModal] = useRecoilState(contactInfoModalState);
   const [openProfileModal, setOpenProfileModal] =
@@ -75,14 +80,15 @@ function Profile() {
           <div className="relative w-full bg-gray-100 h-28 sm:h-44">
             {/* cover image */}
             <div className="bg-blue-200 opacity-80 w-full h-full absolute">
-              {user?.bannerImage != "" && (
+               {user && user?.bannerImage ? (
                 <Image
-                  className=""
-                  src={user?.bannerImage || "/"}
-                  fill="true"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                  alt="image banner"
-                />
+                src={user?.bannerImage}
+                fill="true"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                alt="image banner"
+              />
+              ) : (
+                <div className="bg-blue-200 opacity-80 w-full h-full"></div>
               )}
             </div>
             {session?.user?.uid == id && (
@@ -113,18 +119,18 @@ function Profile() {
               }}
               className={`relative top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-md bg-white ${session?.user?.uid == id && 'cursor-pointer'}`}
             >
-              {user?.profileImage === "" ? (
+              {user && user?.profileImage ? (
+                <Image
+                className="rounded-lg p-1"
+                src={user?.profileImage}
+                fill="true"
+                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                alt="profile image"
+              />
+              ) : (
                 <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
                   {user?.name.charAt(0)}
                 </div>
-              ) : (
-                <Image
-                  className="rounded-lg p-1"
-                  src={user?.profileImage || "/"}
-                  fill="true"
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                  alt="profile image"
-                />
               )}
             </div>
             {session?.user?.uid == id && 
@@ -147,13 +153,11 @@ function Profile() {
                 <span className="font-semibold text-base md:text-[20px]">
                   {user?.name}
                 </span>
-                <span>@{user?.username}</span>
+                <span>{user?.username}</span>
               </div>
               <span className="text-xs">{user?.interest}</span>
             </div>
-            {/* {
-              session.user.uid == user.id
-            } */}
+        
             <div className="col-span-2">
               <span
                 onClick={() => {

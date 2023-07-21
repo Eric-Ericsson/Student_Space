@@ -175,25 +175,25 @@ useEffect(() => {
         </div>
       </div>
       {/* User button*/}
-      {user &&
       <div
         onClick={() => { handleButtonClick("user"); signOutUser() }}
         className="w-full hidden sm:flex absolute bottom-24 group cursor-pointer items-center justify-center lg:justify-start"
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-2 p-2 text-base">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg">
-            {user?.profileImage === "" ? (
-              <div className="w-full h-full flex items-center justify-center text-2xl rounded-md font-semibold bg-blue-600 text-white">
-                {user?.name.charAt(0)}
-              </div>
-            ) : (
-              <Image
+            {user?.profileImage ? (
+                <Image
                 className="rounded-lg"
                 src={user?.profileImage}
                 fill="true"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                 alt="profile image"
               />
+            
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-2xl rounded-md font-semibold bg-blue-600 text-white">
+                {user?.name.charAt(0)}
+              </div>
             )}
           </div>
           <div
@@ -205,12 +205,11 @@ useEffect(() => {
               {user?.name}
             </span>{" "}
             <span className="opacity-75 text-sm line-clamp-1">
-              @{user?.username}
+              {user?.username}
             </span>
           </div>
         </div>
       </div>
-}
     </div>
   );
 };

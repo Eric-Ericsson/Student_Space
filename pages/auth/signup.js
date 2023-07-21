@@ -119,7 +119,7 @@ const Signup = () => {
           await setDoc(userDocRef, {
             email: email,
             name: fullName,
-            username: fullName.split(' ').join('').toLowerCase(),
+            username: '@' + fullName.split(' ').join('').toLowerCase(),
             interest: '',
             phone: '',
             profileImage: '',
