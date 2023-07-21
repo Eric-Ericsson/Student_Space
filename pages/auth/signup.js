@@ -122,8 +122,9 @@ const Signup = () => {
             username: fullName.split(' ').join('').toLowerCase(),
             interest: '',
             phone: '',
-            image: '',
-            address: ''
+            profileImage: '',
+            bannerImage: '',
+            address: '',
           });
           await signIn("credentials", {
             email,

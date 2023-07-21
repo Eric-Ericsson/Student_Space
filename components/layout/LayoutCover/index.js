@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import CommentModal from "@components/components/Modals/commentModal";
 import ContactInfoModal from "@components/components/Modals/contactInfo";
 import ProfileModal from "@components/components/Modals/profileModal";
-import ImageBannerModal from "@components/components/Modals/imageBannerModal";
+import ImageBannerModal from "@components/components/Modals/profileImageModal";
 
 const LayoutCover = ({ title, keyword, description, children }) => {
   const router = useRouter();

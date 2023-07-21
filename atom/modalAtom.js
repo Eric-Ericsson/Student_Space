@@ -20,6 +20,11 @@ export const imageBannerModalState = atom({
   default: false, 
 });
 
+export const imageCategory = atom({
+  key: 'imageCategory',
+  default: ''
+})
+
 export const aModalOpened = atom({
   key: 'aModalOpened',
   default: false, 

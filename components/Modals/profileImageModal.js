@@ -1,19 +1,17 @@
 import {
-    aModalOpened,
-    contactInfoModalState,
     containerZIndex,
     imageBannerModalState,
     navZIndex,
-    profileModalState,
+    imageCategory,
   } from "@components/atom/modalAtom";
   import { useSession } from "next-auth/react";
   import { useRecoilState } from "recoil";
   import Modal from "react-modal";
   import { useRouter } from "next/router";
   import { useEffect, useState } from "react";
-  import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+  import { doc, onSnapshot } from "firebase/firestore";
   import { db } from "@components/firebase";
-  import { ToastContainer, toast } from "react-toastify";
+  import { ToastContainer } from "react-toastify";
   import "react-toastify/dist/ReactToastify.css";
 import ImageUploader from "../ImageUploader";
   
@@ -27,6 +25,7 @@ import ImageUploader from "../ImageUploader";
     );
     const [headerZIndex, setheaderZIndex] = useRecoilState(navZIndex);
     const [conZIndex, setConZIndex] = useRecoilState(containerZIndex);
+const [imageCat] = useRecoilState(imageCategory)
     const [phoneNumber, setPhoneNumber] = useState("");
     const [address, setAddress] = useState("");
     const [error, setError] = useState();
@@ -83,7 +82,7 @@ import ImageUploader from "../ImageUploader";
           >
             <div className="p-1 border-[1px] border-gray-300">
               <div className="flex items-center justify-between border-b-[1px] p-2 ">
-                <span className="font-semibold">Edit Image Background</span>
+                <span className="font-semibold">Update profile image</span>
                 <svg
                   onClick={() => setOpenImageBannerModal(!openImageBannerModal)}
                   className="cursor-pointer hover:bg-gray-200 rounded-full p-2 opacity-75"
@@ -114,7 +113,7 @@ import ImageUploader from "../ImageUploader";
                     pauseOnHover
                     theme="light"
                   />
-                  <ImageUploader />
+                  <ImageUploader imageUser={imageCat == 'profileImage' ? user?.profileImage : user?.bannerImage}/>
             </div>
           </Modal>
         )}

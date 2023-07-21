@@ -149,7 +149,8 @@ import {
                     <input
                         type="text"
                         maxLength={256}
-                        value={user?.name}
+                        value={name}
+                        placeholder="your name"
                         onChange={handleNameChange}
                         className="w-full h-9 text-base px-4 rounded-md ring-1 ring-black focus:ring-blue-400 focus:outline-none placeholder:text-sm"
                       />

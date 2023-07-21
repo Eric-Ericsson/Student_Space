@@ -1,14 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { containerZIndex } from "@components/atom/modalAtom";
-import { useRecoilState } from "recoil";
+import { useRecoilState } from "recoil"
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "@components/firebase";
 
 
 const SideNav = ({ path, session }) => {
   const [activeButton, setActiveButton] = useState(path);
   const [conZIndex] = useRecoilState(containerZIndex);
+  const [user, setuser] = useState(null);
 
+//retrieving a single user
+useEffect(() => {
+  if (session?.user?.uid) {
+    const unsubscribe = onSnapshot(doc(db, "users", session?.user?.uid), (snapshot) => {
+      setuser(snapshot.data())
+    }
+    );
+    return () => unsubscribe();
+  }
+}, [db, session?.user?.uid]);
 
   const handleButtonClick = (buttonId) => {
     setActiveButton(buttonId);
@@ -74,14 +87,14 @@ const SideNav = ({ path, session }) => {
       </div>
       {/*Profile button */}
       <Link
-        href="/profile"
-        onClick={() => handleButtonClick("/profile")}
+        href={`/profile/${session?.user?.uid}`}
+        onClick={() => handleButtonClick(`/profile/${session?.user?.uid}`)}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
-              activeButton == "/profile"
+              activeButton == `/profile/${session?.user?.uid}`
                 ? "fill-[#012432] stroke-[#012432]"
                 : "fill-none stroke-[#012432]"
             } `}
@@ -100,7 +113,7 @@ const SideNav = ({ path, session }) => {
           </svg>
           <span
             className={`hidden lg:inline ${
-              activeButton == "/profile" && "font-bold"
+              activeButton == `/profile/${session?.user?.uid}` && "font-bold"
             }`}
           >
             Profile
@@ -153,14 +166,14 @@ const SideNav = ({ path, session }) => {
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-2 p-2 text-base">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg">
-            {session?.user.image === "" ? (
+            {user?.profileImage === "" ? (
               <div className="w-full h-full flex items-center justify-center text-2xl rounded-md font-semibold bg-blue-600 text-white">
-                {session?.user.name.charAt(0)}
+                {user?.name.charAt(0)}
               </div>
             ) : (
               <Image
                 className="rounded-lg"
-                src={session?.user.image}
+                src={user?.profileImage}
                 fill="true"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                 alt="profile image"
@@ -173,11 +186,10 @@ const SideNav = ({ path, session }) => {
             }`}
           >
             <span className="font-bold line-clamp-1">
-              {session?.user.name}
+              {user?.name}
             </span>{" "}
-            {/* <br /> */}
             <span className="opacity-75 text-sm line-clamp-1">
-              @{session?.user.username}
+              @{user?.username}
             </span>
           </div>
         </div>
