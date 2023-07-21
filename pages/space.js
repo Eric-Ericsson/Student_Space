@@ -20,12 +20,18 @@ import PostsData from "@components/components/space/Posts";
 import { AnimatePresence, motion } from "framer-motion";
 import { containerZIndex } from "@components/atom/modalAtom";
 import { useRecoilState } from "recoil";
-import LoadingState from "@components/components/space/loadingState";
+import LoadingState from "@components/components/space/loadingState"
+import Link from "next/link";
 
 function Homepage() {
   const router = useRouter();
   const filePickerRef = useRef();
-  const { data: session } = useSession();
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.replace('/')
+    }
+  });
   const textareaRef = useRef(null);
   const [activeTabSPace, SetActiveTabSPace] = useState(true);
   const [activeTabFollowing, SetActiveTabFollowing] = useState(false);
@@ -36,17 +42,30 @@ function Homepage() {
   const [posts, setPosts] = useState([]);
   const [conZIndex] = useRecoilState(containerZIndex);
   const [postLoading, setPostLoading] = useState(true);
+  const [user, setuser] = useState(null);
+
+
+  //retrieving a single user
+useEffect(() => {
+  if (session?.user?.uid) {
+    const unsubscribe = onSnapshot(doc(db, "users", session?.user?.uid), (snapshot) => {
+      setuser(snapshot.data())
+    }
+    );
+    return () => unsubscribe();
+  }
+}, [db, session?.user?.uid]);
 
   const sendPost = async () => {
     if (loading) return;
     setLoading(true);
     const docRef = await addDoc(collection(db, "posts"), {
-      id: session.user.uid,
+      id: session?.user?.uid,
       text: postContent,
-      userImg: session.user.image,
+      userImg: user?.profileImage,
       timestamp: serverTimestamp(),
-      name: session.user.name,
-      username: session.user.username,
+      name: user?.name,
+      username: user?.username,
     });
 
     const imageRef = ref(storage, `posts/${docRef.id}/image`);
@@ -143,21 +162,23 @@ function Homepage() {
           </div>
 
           <div className="mb-5 sm:mb-0 sm:mx-10 mx-2 grid grid-cols-12 mt-6 sm:mt-14">
-            <div className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
-              {session?.user.image === "" ? (
+            {user && 
+            <Link href={`/profile/${session?.user?.uid}`} className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
+              {user?.profileImage === "" ? (
                 <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                  {session?.user.name.charAt(0)}
+                  {user?.name.charAt(0)}
                 </div>
               ) : (
                 <Image
                   className="rounded-lg"
-                  src={session?.user?.image}
+                  src={user?.profileImage}
                   fill="true"
                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                   alt="profile image"
                 />
               )}
-            </div>
+            </Link>
+            }
             <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
               <div className="flex flex-col gap-4 sm:mb-4">
                 <div>
@@ -257,7 +278,8 @@ function Homepage() {
               </div>
             </div>
           </div>
-          {postLoading ? (
+         
+          {postLoading || loading ? (
             <LoadingState />
           ) : (
             <AnimatePresence>
@@ -275,6 +297,7 @@ function Homepage() {
               ))}
             </AnimatePresence>
           )}
+          
         </div>
       </div>
     </LayoutCover>

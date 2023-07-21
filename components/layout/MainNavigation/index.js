@@ -20,7 +20,7 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
     if (session) {
       await signOut();
     } else {
-      router.push("/auth/signin")
+      router.replace("/auth/signin")
     }
   };
 
@@ -157,15 +157,15 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
                 Home
               </span>
             </Link>
-            <Link href="/space">
-              <span
-                className={`hover:text-[#068B01] ${
-                  router.pathname == "/space" && "text-[#068B01]"
-                } hover:font-black`}
-              >
-                Space
-              </span>
-            </Link>
+            <Link href={session ? "/space" : "/auth/signin"}>
+            <span
+              className={`hover:text-[#068B01] cursor-pointer ${
+                router.pathname == "/space" && "text-[#068B01]"
+              } hover:font-black`}
+            >
+              Space
+            </span>
+          </Link>
             <Link href="/exhibit">
               <span
                 className={`hover:text-[#068B01] ${
@@ -184,15 +184,13 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
                 Business
               </span>
             </Link>
-            <Link href="/signup">
-              <span
-                className={`hover:text-[#068B01] ${
-                  router.pathname == "/signup" && "text-[#068B01]"
-                } hover:font-black`}
-              >
-                Sign up
-              </span>
-            </Link>
+            <div onClick={handleSignInOut}>
+            <span
+              className={`hover:text-[#068B01] cursor-pointer hover:font-black`}
+            >
+              {session ? "Sign out" : "Sign up"}
+            </span>
+          </div>
           </div>
         </div>
       )}

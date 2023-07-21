@@ -165,6 +165,7 @@ function ContactInfoModal() {
               <div className="p-5 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-lg">Contact Info</span>
+                  {session?.user?.uid == id && 
                   <svg onClick={() =>setEditComponent(true)}
                     className="cursor-pointer"
                     xmlns="http://www.w3.org/2000/svg"
@@ -180,6 +181,7 @@ function ContactInfoModal() {
                       d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0L5 16ZM15 6l3 3m-5 11h8"
                     />
                   </svg>
+                  }
                 </div>
                 <div className="flex flex-col">
                   <div className="grid grid-cols-12 items-center">
@@ -194,7 +196,7 @@ function ContactInfoModal() {
                         </g>
                       </svg>
                     </div>
-                    <div className="col-span-11">Your Profile</div>
+                    <div className="col-span-11">Profile</div>
                   </div>
                   <div className="grid grid-cols-12 items-center">
                     <div></div>

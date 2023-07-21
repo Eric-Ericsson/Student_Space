@@ -9,8 +9,7 @@ const IdentityFormat = ({ post }) => {
         <div className="text-xs hover:underline">@{post?.data()?.username}</div>
         <div className="text-xs font-thin hover:underline">
           <TimeAgo
-            date={moment(post?.data()?.timestamp?.toDate())
-              .startOf("hour")
+            date={moment(post?.data()?.timestamp?.toDate().toLocaleString())
               .fromNow()}
           />
         </div>
