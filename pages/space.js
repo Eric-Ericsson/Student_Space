@@ -233,31 +233,12 @@ useEffect(() => {
                         </button>
                         <input
                           type="file"
+                          accept="image/*"
                           hidden
                           ref={filePickerRef}
                           onChange={addImageToPost}
                         />
                       </div>
-                      <button className="hover:bg-red-200 p-2 gap-1 text-xs rounded-full flex items-center justify-center">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                        >
-                          <g
-                            fill="none"
-                            stroke="#243b76"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="1"
-                          >
-                            <rect width="20" height="16" x="2" y="4" rx="4" />
-                            <path d="m15 12l-5-3v6l5-3Z" />
-                          </g>
-                        </svg>{" "}
-                        video
-                      </button>
                     </div>
                     <button
                       onClick={sendPost}

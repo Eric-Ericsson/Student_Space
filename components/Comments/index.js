@@ -70,7 +70,6 @@ const Comments = ({ comment, commentId, originalPostId }) => {
         );
       }
     } else {
-      // signIn();
       router.push("/auth/signin");
     }
   }
@@ -140,9 +139,6 @@ const Comments = ({ comment, commentId, originalPostId }) => {
                   />
                 </svg>
               </button>
-              {/* {comments.length > 0 && (
-              <span>{comments.length}</span>
-            )} */}
               <span>{comment.length}</span>
             </div>
             <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">

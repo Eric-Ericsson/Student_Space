@@ -48,7 +48,7 @@ function Profile() {
   useEffect(() => {
     if (id) {
       const unsubscribe = onSnapshot(doc(db, "users", id), (snapshot) => {
-        setuser(snapshot.data()), console.log(snapshot);
+        setuser(snapshot.data());
       });
       return () => unsubscribe();
     }
@@ -74,7 +74,7 @@ function Profile() {
       <div
         className={`relative mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen ${conZIndex}`}
       >
-        <SideNav path={router.pathname} session={session} />
+        <SideNav path={'/profile'} session={session} />
         {/* Profile Section */}
         <div className="mt-14 sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div className="relative w-full bg-gray-100 h-28 sm:h-44">

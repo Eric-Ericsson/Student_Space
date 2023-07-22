@@ -103,13 +103,13 @@ useEffect(() => {
       {/*Profile button */}
       <Link
         href={`/profile/${session?.user?.uid}`}
-        onClick={() => handleButtonClick(`/profile/${session?.user?.uid}`)}
+        onClick={() => handleButtonClick(`/profile`)}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
-              activeButton == `/profile/${session?.user?.uid}`
+              activeButton === `/profile`
                 ? "fill-[#012432] stroke-[#012432]"
                 : "fill-none stroke-[#012432]"
             } `}
@@ -128,7 +128,7 @@ useEffect(() => {
           </svg>
           <span
             className={`hidden lg:inline ${
-              activeButton == `/profile/${session?.user?.uid}` && "font-bold"
+              activeButton === `/profile` && "font-bold"
             }`}
           >
             Profile
@@ -137,13 +137,13 @@ useEffect(() => {
       </Link>
       {/*Post button */}
       <div
-        onClick={() => handleButtonClick("post")}
+        onClick={() => handleButtonClick("/posts")}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
-              activeButton == "/post"
+              activeButton == "/posts"
                 ? "fill-none stroke-[#012432] stroke-[24]"
                 : "fill-none stroke-current stroke-[8]"
             } `}
@@ -167,7 +167,7 @@ useEffect(() => {
           </svg>
           <span
             className={`hidden lg:inline ${
-              activeButton == "/post" && "font-bold"
+              activeButton == "/posts" && "font-bold"
             }`}
           >
             Post

@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
-import { contactInfoModalState, postIdState } from "@components/atom/modalAtom";
+import { modalState, postIdState, ueser_id } from "@components/atom/modalAtom";
 import IdentityFormat from "./identityFormat";
 
 const PostsData = ({ post, id }) => {
@@ -20,8 +20,9 @@ const PostsData = ({ post, id }) => {
   const [hasLikded, setHasLikded] = useState(false);
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
-  const [openModal, setOpenModal] = useRecoilState(contactInfoModalState);
+  const [openModal, setOpenModal] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
+  const [userId, setUserId] = useRecoilState(ueser_id);
 
   useEffect(() => {
     if(id){
@@ -68,7 +69,7 @@ const PostsData = ({ post, id }) => {
 
   return (
     <>
-      <div className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
+      <Link href={`/posts/${id}`} className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
         <Link href={`/profile/${post?.data()?.id}`}>
           <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
             {post?.data()?.userImg === "" ? (
@@ -108,6 +109,7 @@ const PostsData = ({ post, id }) => {
             <div
               onClick={() => {
                 setPostId(id);
+                setUserId(post?.data()?.id);
                 setOpenModal(!openModal);
               }}
               className="flex items-center text-sm gap-1 group cursor-pointer opacity-80"
@@ -177,7 +179,7 @@ const PostsData = ({ post, id }) => {
             )}
           </div>
         </div>
-      </div>
+      </Link>
     </>
   );
 };

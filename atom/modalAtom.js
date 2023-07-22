@@ -35,6 +35,11 @@ export const postIdState = atom({
     default: 'id', 
   });
 
+export const ueser_id = atom({
+    key: 'ueser_id',
+    default: 'id', 
+  });
+
 export const navZIndex = atom({
   key: 'navZIndex',
   default: 'z-50 ease-out delay-75 duration-300',

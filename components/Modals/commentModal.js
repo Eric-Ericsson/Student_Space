@@ -3,6 +3,7 @@ import {
   modalState,
   navZIndex,
   postIdState,
+  ueser_id,
 } from "@components/atom/modalAtom";
 import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
@@ -26,12 +27,26 @@ function CommentModal() {
   const textareaRef = useRef(null);
   const [openCommentModal, setOpenCommentmodal] = useRecoilState(modalState);
   const [postId] = useRecoilState(postIdState);
+  const [id] = useRecoilState(ueser_id);
   const [headerZIndex, setheaderZIndex] = useRecoilState(navZIndex);
   const [conZIndex, setConZIndex] = useRecoilState(containerZIndex);
   const [post, setPost] = useState();
   const [textareaRows, setTextareaRows] = useState(1);
   const [postContent, setPostContent] = useState("");
   const [loading, setLoading] = useState(false);
+  const [user, setuser] = useState(null);
+
+
+  //retrieving a single user
+  useEffect(() => {
+    if (id) {
+      const unsubscribe = onSnapshot(doc(db, "users", id), (snapshot) => {
+        setuser(snapshot.data())
+      });
+      console.log(id)
+      return () => unsubscribe();
+    }
+  }, [db, id]);
 
   const sendComment = async () => {
     await addDoc(collection(db, "posts", postId, "comments"), {
@@ -134,18 +149,18 @@ function CommentModal() {
                 className={`relative grid grid-cols-12 before:ml-4 before:sm:ml-6 before:absolute before:w-[1px] before:h-full before:border-l-[1px] before:border-black before:opacity-80 pb-10`}
               >
                 <div className="sticky top-0 bg-white/30 w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
-                  {post?.data()?.userImg === "" ? (
-                    <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                      {post?.data()?.name.charAt(0)}
-                    </div>
+                  {user?.profileImage ? (
+                     <Image
+                     className="rounded-lg"
+                     src={user?.profileImage}
+                     fill="true"
+                     sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                     alt="profile image"
+                   />
                   ) : (
-                    <Image
-                      className="rounded-lg"
-                      src={post?.data()?.userImg || "/"}
-                      fill="true"
-                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                      alt="profile image"
-                    />
+                    <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
+                    {user?.name.charAt(0)}
+                  </div>
                   )}
                 </div>
                 <div className="col-span-11 ml-3 sm:ml-5 flex flex-col gap-2 line-climp-1 text-xs sm:text-[15px]">

@@ -1,3 +1,4 @@
+import WritingEffect from "@components/components/writingEffect";
 import { SearchBar } from "./searchbar";
 
 export const Content = () => {
@@ -9,13 +10,14 @@ export const Content = () => {
         </div>
       </div>
       <div className="relative">
-        <SearchBar />
+      <WritingEffect />
+        {/* <SearchBar /> */}
       </div>
-      <div className="pt-8 sm:pt-10 flex gap-2 sm:gap-4 text-xs sm:text-sm text-white">
+      {/* <div className="pt-8 sm:pt-10 flex gap-2 sm:gap-4 text-xs sm:text-sm text-white">
         <button className="rounded-3xl border-[1px] px-2">Intenships</button>
         <button className="rounded-3xl border-[1px] px-2">Business</button>
         <button className="rounded-3xl border-[1px] px-2">Programming</button>
-      </div>
+      </div> */}
     </div>
   );
 };
