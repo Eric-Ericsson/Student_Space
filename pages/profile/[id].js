@@ -70,7 +70,7 @@ function Profile() {
   };
 
   return (
-    <LayoutCover>
+    <LayoutCover title='profile | student space'>
       <div
         className={`relative mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen ${conZIndex}`}
       >

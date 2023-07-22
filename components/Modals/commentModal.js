@@ -43,19 +43,19 @@ function CommentModal() {
       const unsubscribe = onSnapshot(doc(db, "users", id), (snapshot) => {
         setuser(snapshot.data())
       });
-      console.log(id)
       return () => unsubscribe();
     }
   }, [db, id]);
 
+  //sending user comment
   const sendComment = async () => {
     await addDoc(collection(db, "posts", postId, "comments"), {
       comment: postContent,
-      name: session?.user?.name,
-      username: session?.user?.username,
-      userImg: session?.user?.image,
+      // name: session?.user?.name,
+      // username: session?.user?.username,
+      // userImg: session?.user?.image,
       timestamp: serverTimestamp(),
-      userId: session.user.uid,
+      userId: session?.user?.uid,
     });
 
     setPostContent("");
@@ -63,12 +63,14 @@ function CommentModal() {
     router.push(`/posts/${postId}`);
   };
 
+  //retrieving a particular post item
   useEffect(() => {
     onSnapshot(doc(db, "posts", postId), (snapshort) => {
       setPost(snapshort);
     });
   }, [postId, db]);
 
+  //increasing the height of the textarea whiles the user types
   useEffect(() => {
     adjustTextareaHeight();
   }, [postContent]);
@@ -81,6 +83,7 @@ function CommentModal() {
     }
   };
 
+  //dynamically render the text and the textarea height
   const handleTextareaChange = (event) => {
     setPostContent(event?.target?.value ?? "");
     setTextareaRows(event.target.value.split("\n").length);
@@ -165,7 +168,7 @@ function CommentModal() {
                 </div>
                 <div className="col-span-11 ml-3 sm:ml-5 flex flex-col gap-2 line-climp-1 text-xs sm:text-[15px]">
                   <div className="sticky top-0 py-3 backdrop-blur-md bg-white/30 flex items-center gap-2 line-climp-1 text-xs sm:text-[15px]">
-                    <IdentityFormat post={post} />
+                    <IdentityFormat post={post} user={user}/>
                   </div>
                   <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
                     <span className="line-clamp-5">{post?.data()?.text}</span>

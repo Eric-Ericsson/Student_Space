@@ -45,7 +45,7 @@ function Homepage() {
   const [user, setuser] = useState(null);
 
 
-  //retrieving a single user
+//retrieving a single user
 useEffect(() => {
   if (session?.user?.uid) {
     const unsubscribe = onSnapshot(doc(db, "users", session?.user?.uid), (snapshot) => {
@@ -56,20 +56,22 @@ useEffect(() => {
   }
 }, [db, session?.user?.uid]);
 
+//sending a post content to firebase
   const sendPost = async () => {
     if (loading) return;
     setLoading(true);
     const docRef = await addDoc(collection(db, "posts"), {
       id: session?.user?.uid,
       text: postContent,
-      userImg: user?.profileImage,
+      // userImg: user?.profileImage,
       timestamp: serverTimestamp(),
-      name: user?.name,
-      username: user?.username,
+      // name: user?.name,
+      // username: user?.username,
     });
 
     const imageRef = ref(storage, `posts/${docRef.id}/image`);
 
+    //adding an image to post if an image is selected
     if (selectedFile) {
       await uploadString(imageRef, selectedFile, "data_url").then(async () => {
         const downloadURL = await getDownloadURL(imageRef);
@@ -84,6 +86,7 @@ useEffect(() => {
     setLoading(false);
   };
 
+  //retrieving all post content in descending order
   useEffect(
     () =>
       onSnapshot(
@@ -96,6 +99,7 @@ useEffect(() => {
     []
   );
 
+  //increasing the height of the textarea as the user types
   useEffect(() => {
     adjustTextareaHeight();
   }, [postContent]);
@@ -106,11 +110,13 @@ useEffect(() => {
     textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
+  //handle the textarea and its text as the user types
   const handleTextareaChange = (event) => {
     setPostContent(event?.target?.value ?? "");
     setTextareaRows(event.target.value.split("\n").length);
   };
 
+  //selects an image from the file explorer
   const addImageToPost = (e) => {
     const reader = new FileReader();
     if (e.target.files[0]) {
@@ -122,6 +128,8 @@ useEffect(() => {
     };
   };
 
+
+  //show the state of the active tab when clicked on
   const handleActiveTab = (tab) => {
     if (tab == "space") {
       SetActiveTabSPace(true);
@@ -133,7 +141,7 @@ useEffect(() => {
   };
 
   return (
-    <LayoutCover>
+    <LayoutCover title='space | student space'>
       <div
         className={`relative ${conZIndex} mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen`}
       >

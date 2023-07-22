@@ -2,7 +2,7 @@ const Products = () => {
   return (
     <div className="contain">
       <span className="heading">You Need It?, That's What we're About</span>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-10 text-center">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-10 text-center text-sm sm:text-base">
         <div className="flex flex-col items-center">
           <svg
           className="underline"

@@ -7,8 +7,9 @@ import {
   setDoc,
 } from "firebase/firestore";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { deleteObject, ref } from "firebase/storage";
 import { useRecoilState } from "recoil";
@@ -23,9 +24,26 @@ const PostsData = ({ post, id }) => {
   const [openModal, setOpenModal] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
   const [userId, setUserId] = useRecoilState(ueser_id);
+  const [showMore, setShowMore] = useState(false);
+  const contentRef = useRef(null);
+  const router = useRouter();
+  const [user, setuser] = useState(null);
 
+
+  //retrieving a single user
+useEffect(() => {
+  if (post?.data()?.id) {
+    const unsubscribe = onSnapshot(doc(db, "users", post?.data()?.id), (snapshot) => {
+      setuser(snapshot.data())
+    }
+    );
+    return () => unsubscribe();
+  }
+}, [db, post?.data()?.id]);
+
+  //retrieving likes on a particular post
   useEffect(() => {
-    if(id){
+    if (id) {
       const unSubscribe = onSnapshot(
         collection(db, "posts", id, "likes"),
         (snapshot) => setLikes(snapshot.docs)
@@ -33,8 +51,9 @@ const PostsData = ({ post, id }) => {
     }
   }, [db]);
 
+  //retrieving commemts on a particular post
   useEffect(() => {
-    if(id){
+    if (id) {
       const unSubscribe = onSnapshot(
         collection(db, "posts", id, "comments"),
         (snapshot) => setComments(snapshot.docs)
@@ -42,24 +61,27 @@ const PostsData = ({ post, id }) => {
     }
   }, [db]);
 
+  //checking if user as already liked post content
   useEffect(() => {
     setHasLikded(
       likes.findIndex((like) => like.id === session?.user.uid) !== -1
     );
   }, [likes, session?.user]);
 
+  //Adding a like if user has not liked post content already
   async function likePost() {
     if (session?.user) {
       if (hasLikded) {
         await deleteDoc(doc(db, "posts", id, "likes", session?.user.uid));
       } else {
         await setDoc(doc(db, "posts", id, "likes", session?.user.uid), {
-          username: session?.user?.username,
+          userId: session?.user?.uid,
         });
       }
     } else signIn();
   }
 
+  //deleting a particular post content
   async function deletePost() {
     deleteDoc(doc(db, "posts", id));
     if (post.data().image) {
@@ -67,30 +89,67 @@ const PostsData = ({ post, id }) => {
     }
   }
 
+  //checking if text if being truncated
+  useEffect(() => {
+    const checkTruncation = () => {
+      const element = contentRef.current;
+      if (element) {
+        setShowMore(element.scrollHeight > element.clientHeight);
+      }
+    };
+
+    // Check truncation on mount and when content changes
+    checkTruncation();
+    window.addEventListener("resize", checkTruncation);
+    return () => {
+      window.removeEventListener("resize", checkTruncation);
+    };
+  }, [content]);
+
   return (
     <>
-      <Link href={`/posts/${id}`} className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
-        <Link href={`/profile/${post?.data()?.id}`}>
-          <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
-            {post?.data()?.userImg === "" ? (
-              <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                {post?.data()?.name.charAt(0)}
-              </div>
-            ) : (
-              <Image
-                className="rounded-lg"
-                src={post?.data()?.userImg}
-                fill="true"
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                alt="profile image"
-              />
-            )}
-          </div>
+      <div className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
+        <Link
+          href={`/profile/${post?.data()?.id}`}
+          className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative"
+        >
+          {user?.profileImage === "" ? (
+            <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
+              {user?.name.charAt(0)}
+            </div>
+          ) : (
+            <Image
+              className="rounded-lg"
+              src={user?.profileImage}
+              fill="true"
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+              alt="profile image"
+            />
+          )}
         </Link>
         <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
-          <IdentityFormat post={post} />
-          <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
-            <span className="line-clamp-5">{post?.data()?.text}</span>
+          <IdentityFormat post={post} id={id} user={user}/>
+          <Link
+            href={`/posts/${id}`}
+            className="flex flex-col gap-4 text-sm sm:text-[15px] "
+          >
+            <span>
+
+            <span
+              ref={contentRef}
+              className={`${
+                router.pathname.includes("/posts")
+                  ? "line-clamp-none"
+                  : "line-clamp-5"
+              }`}
+            >
+              {post?.data()?.text}
+            </span>
+            {showMore && (
+              <span className="text-blue-600 text-opacity-70">Show more</span>
+            )}
+            </span>
+
             <div
               className={`${
                 post?.data()?.image == "" ? "hidden" : "image-container"
@@ -104,7 +163,7 @@ const PostsData = ({ post, id }) => {
                 />
               )}
             </div>
-          </div>
+          </Link>
           <div className="flex gap-4">
             <div
               onClick={() => {
@@ -179,7 +238,7 @@ const PostsData = ({ post, id }) => {
             )}
           </div>
         </div>
-      </Link>
+      </div>
     </>
   );
 };

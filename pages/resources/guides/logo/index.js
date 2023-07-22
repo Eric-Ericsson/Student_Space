@@ -3,7 +3,7 @@ import LayoutCover from "@components/components/layout/LayoutCover";
 const LogoDesign = () => {
     return (
       <>
-      <LayoutCover>
+      <LayoutCover title='how-to-design-a-logo-12-steps-to-creating-a-business-logo-from-scratch'>
       <div className="w-[90%] sm:w-[80%] md:w-[75%] lg:w-[70%] pt-28 pb-10 mx-auto text-[20px] text-[#62646a]">
         <header>
           <h1>

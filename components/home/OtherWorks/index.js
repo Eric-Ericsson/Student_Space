@@ -5,7 +5,7 @@ const OtherWorks = () => {
   return (
     <div className="contain">
       <div className="heading mb-6">Guides to Help You Grow</div>
-      <div className="grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-4">
+      <div className="grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 gap-10 sm:gap-4 text-sm sm:text-base">
       <Link href="/resources/guides/wordpress">
         <div>
           <div className="relative w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] text-light rounded-md">

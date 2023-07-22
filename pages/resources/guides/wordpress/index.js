@@ -3,7 +3,7 @@ import LayoutCover from "@components/components/layout/LayoutCover";
 const Wordpress = () => {
     return (
       <>
-      <LayoutCover>
+      <LayoutCover title='what-is-wordpress-and-why-should-small-businesses-use-it'>
         <div className="w-[90%] sm:w-[80%] md:w-[75%] lg:w-[70%] pt-28 pb-10 mx-auto text-[20px] text-[#62646a]">
           <h2>
             <b>What is WordPress and why should small businesses use it?</b>
@@ -494,23 +494,17 @@ const Wordpress = () => {
           </p>
           <ul>
             <li>
-              <p>
                 <span>
                   Download and install a theme from an external repository. (This
                   is more common than you might think because external
                   repositories hold excellent premium themes.)
                 </span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>Customize the theme more than its options allow.</span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>Debug the theme. </span>
-              </p>
             </li>
           </ul>
           <p>
@@ -544,17 +538,13 @@ const Wordpress = () => {
           </p>
           <ul>
             <li>
-              <p>
                 <span>
                   The page looks different on the customization page than it does
                   when you're viewing the live version. 
                 </span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>The option you want changed doesn't exist. </span>
-              </p>
             </li>
           </ul>
           <p>
@@ -698,16 +688,12 @@ const Wordpress = () => {
           </p>
           <ul>
             <li>
-              <p>
                 <span>Plugin/theme conflicts</span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>
                   Potential security holes if they are not regularly maintained
                 </span>
-              </p>
             </li>
           </ul>
           <p>
@@ -718,12 +704,9 @@ const Wordpress = () => {
           </p>
           <ul>
             <li>
-              <p>
                 <span>SEO Plugin such RankMath and Yoast SEO. </span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>Security Plugin such as </span>
                 <a
                   href="https://www.wordfence.com/"
@@ -737,10 +720,8 @@ const Wordpress = () => {
                   </span>
                 </a>
                 <span> or Sucuri. </span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>Tracking plugins such as </span>
                 <a
                   href="https://wordpress.org/plugins/ga-google-analytics/"
@@ -754,10 +735,8 @@ const Wordpress = () => {
                   </span>
                 </a>
                 <span>, Jetpack, or HotJar</span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>A forms plugin such as </span>
                 <a
                   href="https://ninjaforms.com/"
@@ -783,10 +762,8 @@ const Wordpress = () => {
                   </span>
                 </a>
                 <span>. </span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>
                   Appearance-related plugins, depending on your needs. This could
                   be a carousel plugin for image galleries, a "
@@ -806,10 +783,8 @@ const Wordpress = () => {
                   " plugin for image-heavy websites, or a menu plugin for
                   better-looking menus. 
                 </span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>A cookie and privacy plugin to block cookies such as </span>
                 <a
                   href="https://wordpress.org/plugins/wp-gdpr-compliance/"
@@ -835,10 +810,8 @@ const Wordpress = () => {
                   </span>
                 </a>
                 <span>. </span>
-              </p>
             </li>
             <li>
-              <p>
                 <span>
                   <b>Use with caution:</b>
                 </span>
@@ -863,7 +836,6 @@ const Wordpress = () => {
                   to choose the right caching plugin, and configure it so it
                   results in minimal conflict with other plugins. 
                 </span>
-              </p>
             </li>
           </ul>
           <p>

@@ -9,9 +9,12 @@ const SideLine = () => {
             Suddenly, It's All Within{" "}
             <span className="font-[playball]">reach</span>
           </span>
-          <Link href={"/auth/sigin"}>
-            <button className="bg-green-700 text-sm sm:text-base w-40 p-2 rounded">
-              Join Student Space
+          <Link href={"/auth/signin"}>
+          <button
+              className={`group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 hover:text-white h-10 border-[1px] border-solid px-8 rounded-3xl relative inline-flex items-center justify-center bg-white text-blue-600 border-blue-600`}
+            >
+              <strong className="font-bold text-xs sm:text-sm">Join Student Space</strong>
+              <span className="absolute bg-blue-600 bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1]"></span>
             </button>
           </Link>
         </div>

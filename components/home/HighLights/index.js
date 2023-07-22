@@ -10,10 +10,10 @@ const HighLights = () => {
             <span className="font-[playball]">All-Inclusive</span>
           </span>
         </div>
-        <div className="flex flex-col gap-3 lg:w-[80%] text-lg">
+        <div className="flex flex-col gap-3 lg:w-[80%] text-sm sm:text-base">
           <div>
             <div>
-              <span className="font-semibold font-[Poppins]">
+              <span className="text-lg font-semibold font-[Poppins]">
                 Follow your interest
               </span>
             </div>
@@ -25,7 +25,7 @@ const HighLights = () => {
           </div>
           <div>
             <div>
-              <span className="font-semibold font-[Poppins]">
+              <span className="text-lg font-semibold font-[Poppins]">
                 Hear what people are talking about
               </span>
             </div>
@@ -38,7 +38,7 @@ const HighLights = () => {
           </div>
           <div>
             <div>
-              <span className="font-semibold font-[Poppins]">
+              <span className="text-lg font-semibold font-[Poppins]">
                 Join the conversation
               </span>
             </div>
@@ -52,7 +52,7 @@ const HighLights = () => {
           </div>
           <div>
             <div>
-              <span className="font-semibold font-[Poppins]">Do business</span>
+              <span className="text-lg font-semibold font-[Poppins]">Do business</span>
             </div>
             <span>
               Discover a supportive ecosystem that nurtures your entrepreneurial
@@ -61,7 +61,7 @@ const HighLights = () => {
           </div>
           <div>
             <div>
-              <span className="font-semibold font-[Poppins]">
+              <span className="text-lg font-semibold font-[Poppins]">
                 Be discovered
               </span>
             </div>

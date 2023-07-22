@@ -61,7 +61,7 @@ body {
 }
 
 p {
-  @apply my-4;
+  @apply my-4 text-sm sm:text-base;
 }
 
 h1 {
@@ -81,10 +81,10 @@ h5 {
 }
 
 ul li {
-  @apply list-disc list-inside;
+  @apply list-disc list-inside text-sm sm:text-base;
 }
 ol li {
-  @apply list-decimal list-inside;
+  @apply list-decimal list-inside text-sm sm:text-base;
 }
 
 .layoutPadding {

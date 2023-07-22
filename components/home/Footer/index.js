@@ -18,7 +18,9 @@ const Footer = () => {
               />
             </g>
           </svg>
-          <span className="text-xs sm:text-sm font-semibold opacity-80">Student Space, 2023</span>
+          <span className="text-xs sm:text-sm font-semibold opacity-80">
+            Student Space, {new Date().getFullYear()}
+          </span>
         </div>
       </div>
     </>

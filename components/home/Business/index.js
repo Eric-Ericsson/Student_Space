@@ -25,21 +25,25 @@ const Oftheday = () => {
                 <span className="font-[playball]">Artificial Intilligence</span>
                 <span className="">James White</span>
                 <Link href={session ? "/profile" : "/auth/signin"}>
-                  <button className="text-xs sm:text-sm opacity-95 p-1 border-[1px] border-[#012E40] w-24 rounded-3xl">
-                    View Profile
-                  </button>
+                   <button
+              className={`group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 hover:text-white h-10 border-[1px] border-solid px-8 rounded-3xl relative inline-flex items-center justify-center bg-white text-blue-600 border-blue-600`}
+            >
+              <strong className="font-medium text-xs sm:text-sm">View Profile</strong>
+              <span className="absolute bg-blue-600 bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1]"></span>
+            </button>
                 </Link>
               </div>
             </div>
           </div>
           <div className="relative md:col-span-2 w-[100%] sm:w-[80%] md:w-full lg:w-[700px] h-80 sm:h-96 md:h-[400px] lg:h-[500px] rounded-3xl bg-gray-100">
-            <Image
-              src={"/fashion.jpg"}
-              fill={true}
-              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-              alt="content-of-the-day"
-              className="rounded-3xl"
-            />
+            <div
+              className={`image-container`}>
+                <img
+                  src={"/ai.jpg"}
+                  alt="content-of-the-day"
+                  className="imageClass"
+                />
+            </div>
           </div>
         </div>
       </div>
