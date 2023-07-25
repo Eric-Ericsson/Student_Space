@@ -6,19 +6,19 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import InputWithLabel from "@components/components/layout/inputWithLabel";
-import Link from "next/link";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  updateProfile,
 } from "firebase/auth";
 import { auth, db } from "@components/firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
+  const router = useRouter()
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -227,8 +227,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="bg-blue-600 w-full h-screen m-auto">
-      <div className="grid md:grid-cols-2">
+    <div className="bg-blue-600 w-full h-screen overflow-hidden m-auto">
+      <div className="md:grid grid-cols-2 h-screen">
         <div className="hidden relative md:block bg-[url('/signup_bg.jpg')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-90 w-full h-screen flex items-center justify-center">
             <div className="px-14 lg:px-20 text-white bg-opacity-90 w-full h-screen flex flex-col gap-4 items-center justify-center">
@@ -265,11 +265,9 @@ const Signup = () => {
                   </g>
                 </svg>
               </div>
-              <div className="flex flex-col gap-2 my-5">
-                <span className="font-[Poppins] text-center font-semibold text-xl sm:text-3xl opacity-95 md:opacity-90 text-white md:text-[#012E40]">
-                  Join Student Space today
-                </span>
-              </div>
+              <span className="font-[Poppins] text-center font-semibold text-lg sm:text-3xl opacity-95 md:opacity-90 text-white md:text-[#012E40]">
+                Join Student Space today
+              </span>
               <form
                 method="post"
                 action="/api/auth/callback/credentials"
@@ -303,9 +301,9 @@ const Signup = () => {
                   error={errors.username}
                 />
                 {suggestions.length > 0 && (
-                  <div className="flex flex-col">
+                  <div className="flex flex-col mx-4">
                     <span className="text-green-500">suggestions</span>
-                    <div className="flex gap-2">
+                    <div className="text-xs sm:text-sm text-white md:text-black flex gap-2 flex-wrap">
                       {suggestions.map((suggestion) => (
                         <span
                           onClick={() => {
@@ -313,7 +311,6 @@ const Signup = () => {
                             clearError("username");
                             setSuggestions([]);
                           }}
-                          className="text-white md:text-black flex-wrap text-sm"
                         >
                           {suggestion}
                         </span>
@@ -367,12 +364,12 @@ const Signup = () => {
                 {loading && (
                   <div className="w-8 h-8 border-4 border-t-transparent border-blue-200 rounded-full animate-spin"></div>
                 )}
-                <Link
-                  href={"/auth/login"}
+                <div
+                  onClick={() => router.replace("/auth/login")}
                   className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
                 >
-                  Already have an acouunt? Login
-                </Link>
+                  Already have an account? Login
+                </div>
               </form>
             </div>
           </div>

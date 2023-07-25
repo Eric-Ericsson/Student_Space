@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 import { navZIndex } from "@components/atom/modalAtom";
@@ -10,7 +10,6 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
   const { data: session } = useSession();
   const [openMenu, setOpenMenu] = useState(false);
   const [headerZIndex] = useRecoilState(navZIndex);
-
 
   const handleMenuButtonClick = () => {
     setOpenMenu(!openMenu);
@@ -51,12 +50,6 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
             </svg>
             <span className="font-semibold font-[Poppins]">Student Space</span>
           </div>
-          <div className={`${!isScrolled && "hidden"}`}>
-            <input
-              className="hidden lg:inline inputField inputFieldContainer placeholder:italic"
-              placeholder="What are you interested today?"
-            />
-          </div>
         </div>
         <button onClick={handleMenuButtonClick} className="md:hidden">
           <svg
@@ -92,7 +85,7 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
           <Link href={session ? "/space" : "/auth/signin"}>
             <span
               className={`hover:text-[#068B01] cursor-pointer ${
-                router.pathname == "/space" && "text-[#068B01]"
+                router.pathname == "/space" || router.asPath.includes('/profile/') && "text-[#068B01]"
               } hover:font-black`}
             >
               Space

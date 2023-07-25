@@ -4,8 +4,10 @@ import { auth } from "@components/firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 const Reset = () => {
+  const router = useRouter()
   const [email, setEmail] = useState("");
   const [errors, setErrors] = useState("");
   const [loading, setLoading] = useState(false);
@@ -117,12 +119,12 @@ const Reset = () => {
         {loading && (
           <div className="w-8 h-8 border-4 border-t-transparent border-blue-200 rounded-full animate-spin"></div>
         )}
-        <Link
-          href={"/auth/login"}
+        <div
+          onClick={() => router.replace('/auth/login')}
           className="text-xs text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
         >
           Back to login
-        </Link>
+        </div>
       </form>
     </div>
   );

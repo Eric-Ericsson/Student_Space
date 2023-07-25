@@ -1,7 +1,9 @@
-import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 function InputWithLabel({ label, type, value, onChange, error, ...rest }) {
+  const router = useRouter();
+
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -19,7 +21,7 @@ function InputWithLabel({ label, type, value, onChange, error, ...rest }) {
         className={`absolute left-4 transition-all duration-200 ${
           isFocused || value
             ? "-top-2 text-xs bg-[#2E4278] md:bg-white px-2"
-            : "top-1/2 -translate-y-1/2 text-sm"
+            : "top-1/2 -translate-y-1/2 text-xs"
         } ${isFocused || value ? "text-white md:text-gray-600" : "text-gray-300 md:text-gray-600"}`}
       >
         {label}
@@ -33,7 +35,7 @@ function InputWithLabel({ label, type, value, onChange, error, ...rest }) {
         value={value}
         onChange={onChange}
         />
-        {rest.id == 'login' && (<Link href={'/auth/reset'} className=" text-light opacity-90 md:text-black cursor-pointer text-xs absolute right-2 -bottom-5 hover:text-secondary">forgot password?</Link>)}
+        {rest.id == 'login' && (<div onClick={() => router.replace('/auth/reset')} className=" text-light opacity-90 md:text-black cursor-pointer text-xs absolute right-2 -bottom-5 hover:text-secondary">forgot password?</div>)}
          {error && (
         <p className="mt-1 text-red-500 text-xs absolute left-2 -bottom-9">{error}</p>
       )}

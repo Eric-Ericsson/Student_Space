@@ -3,7 +3,6 @@ import { auth, db } from "@components/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
@@ -92,7 +91,6 @@ const LoginPage = () => {
       password: passwordError,
       verified: emailVerifiedError,
     });
-
     if (!emailError && !passwordError && !emailVerifiedError) {
       const result = await signIn("credentials", {
         email,
@@ -102,7 +100,6 @@ const LoginPage = () => {
       if (result.error) {
         setLoading(false);
         toast.error("incorrect email or password");
-        console.log(result.error);
       } else {
         setLoading(false);
         toast.success("login successfull");
@@ -202,12 +199,12 @@ const LoginPage = () => {
                   {loading && (
                     <div className="w-8 h-8 border-4 border-t-transparent border-blue-200 rounded-full animate-spin"></div>
                   )}
-                  <Link
-                    href={"/auth/signup"}
-                    className="text-xs w-96 text-center text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
+                  <div
+                  onClick={() => router.replace("/auth/signup")}
+                  className="text-xs w-96 text-center text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
                   >
                     Don't have an account? Sign up
-                  </Link>
+                  </div>
                 </form>
               </div>
             </div>
