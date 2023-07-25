@@ -1,4 +1,7 @@
 import InputWithLabel from "@components/components/layout/inputWithLabel";
+import { auth, db } from "@components/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -43,19 +46,54 @@ const LoginPage = () => {
     clearError("password");
   };
 
+  // Function to check email availability
+  async function isemailTaken(email) {
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.size > 0;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setLoading(true);
     const emailError = validateEmail();
     const passwordError = validatePassword();
+    let emailVerifiedError = "";
+
+    if (await isemailTaken(email)) {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          if (user.emailVerified) {
+            emailVerifiedError = "";
+          } else {
+            setLoading(false);
+            emailVerifiedError =
+              "Incorrect email or password. Or verify your email if not verified";
+            toast.error(emailVerifiedError);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          console.log(error.message);
+        });
+    } else {
+      setLoading(false);
+      emailVerifiedError = "Incorrect email or password";
+      toast.error(emailVerifiedError);
+    }
 
     setErrors({
       email: emailError,
       password: passwordError,
+      verified: emailVerifiedError,
     });
 
-    if (!emailError && !passwordError) {
-      setLoading(true);
+    if (!emailError && !passwordError && !emailVerifiedError) {
       const result = await signIn("credentials", {
         email,
         password,
@@ -81,8 +119,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <div className="grid md:grid-cols-2">
+    <div className="w-full h-screen overflow-hidden">
+      <div className="md:grid grid-cols-2 h-screen">
         <div className="bg-[url('/signup_bg.jpg')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-95 md:bg-white w-full h-screen flex flex-cols items-center">
             <div className="flex flex-col items-center md:px-16 w-full">
@@ -134,7 +172,7 @@ const LoginPage = () => {
                   />
                   <InputWithLabel
                     label="Password"
-                    id='login'
+                    id="login"
                     type="password"
                     value={password}
                     onChange={handlePasswordChange}
@@ -166,16 +204,15 @@ const LoginPage = () => {
                   )}
                   <Link
                     href={"/auth/signup"}
-                    className="text-xs text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
+                    className="text-xs w-96 text-center text-white md:text-dark opacity-80 cursor-pointer md:hover:text-primary-800 hover:font-semibold"
                   >
-                    Don't have an acouunt? Sign up
+                    Don't have an account? Sign up
                   </Link>
                 </form>
               </div>
             </div>
           </div>
         </div>
-
         <div className="hidden relative md:block bg-[url('/signup_bg.jpg')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-90 w-full h-screen flex items-center justify-center">
             <div className="px-14 lg:px-20 text-white bg-opacity-90 w-full h-screen flex flex-col gap-4 items-center justify-center">

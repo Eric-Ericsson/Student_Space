@@ -10,10 +10,15 @@ import { getStorage } from 'firebase/storage'
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "twitter-v4-93513.firebaseapp.com",
-  projectId: "twitter-v4-93513",
-  storageBucket: "twitter-v4-93513.appspot.com",
-  messagingSenderId: "166954820204",
-  appId: "1:166954820204:web:1b539ace2c7ea7a14a2e49"
+  actionCodeSettings: {
+    // Other action code settings...
+    url: "https://twitter-v4-93513.firebaseapp.com/email-verification-success",
+  },
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  
 };
 
 // Initialize Firebase

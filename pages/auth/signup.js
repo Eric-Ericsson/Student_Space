@@ -1,23 +1,56 @@
-import { signIn } from "next-auth/react";
-import { doc, setDoc } from "firebase/firestore";
-import { useRouter } from "next/router";
+import {
+  doc,
+  setDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { useState, useEffect } from "react";
 import InputWithLabel from "@components/components/layout/inputWithLabel";
 import Link from "next/link";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  updateProfile,
+} from "firebase/auth";
 import { auth, db } from "@components/firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
-  const router = useRouter();
   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
+  // Function to check username availability
+  async function isUsernameTaken(username) {
+    const q = query(collection(db, "users"), where("username", "==", username));
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty;
+  }
+
+  // Function to generate unique username suggestions
+  async function generateUniqueUsernameSuggestions(username, count = 3) {
+    const suggestions = [];
+    for (let i = 1; i <= count; i++) {
+      let suggestion = `${username}_${Math.floor(Math.random() * 1000)}`;
+
+      // Check if the suggestion already exists in the database
+      while (await isUsernameTaken(suggestion)) {
+        suggestion = `${username}_${Math.floor(Math.random() * 1000)}`;
+      }
+      suggestions.push(suggestion);
+    }
+    return suggestions;
+  }
+
+  //validation of full name
   const validateFullName = () => {
     let error = "";
     const trimmedFullName = fullName.trim();
@@ -31,6 +64,23 @@ const Signup = () => {
     return error;
   };
 
+  //validation of username
+  const validateUsername = () => {
+    let error = "";
+    const trimmedUsername = username.trim();
+    if (!trimmedUsername) {
+      error = "username is required";
+    } else if (username.length < 3) {
+      error = "username is too short";
+    } else if (username.length > 50) {
+      error = "username is too long";
+    } else if (suggestions.length > 0) {
+      error = "username already in use";
+    }
+    return error;
+  };
+
+  //validation of email
   const validateEmail = () => {
     let error = "";
     if (!email) {
@@ -44,6 +94,7 @@ const Signup = () => {
     return error;
   };
 
+  //validatoin of password
   const validatePassword = () => {
     let error = "";
     if (!password) {
@@ -52,6 +103,7 @@ const Signup = () => {
     return error;
   };
 
+  //comfirmation of password
   const validateConfirmPassword = () => {
     let error = "";
     if (!confirmPassword) {
@@ -62,91 +114,111 @@ const Signup = () => {
     return error;
   };
 
+  //handle input change as user types fullName
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
     clearError("fullName");
   };
 
+  //handle input change as user types fullName
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+    clearError("username");
+  };
+
+  //handle input change as user types email
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
     clearError("email");
   };
 
+  //handle input change as user types password
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     clearError("password");
   };
 
+  //handle input change as user types confirm password
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
     clearError("confirmPassword");
   };
 
+  //Handle the Submit Button if user submits detaisls
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const fullNameError = validateFullName();
+    const usernameError = validateUsername();
     const emailError = validateEmail();
     const passwordError = validatePassword();
     const confirmPasswordError = validateConfirmPassword();
 
     setErrors({
       fullName: fullNameError,
+      username: usernameError,
       email: emailError,
       password: passwordError,
       confirmPassword: confirmPasswordError,
     });
-
     if (
       !fullNameError &&
+      !usernameError &&
       !emailError &&
       !passwordError &&
       !confirmPasswordError
     ) {
       try {
         setLoading(true);
-        const createUser = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const user = createUser.user;
-        if (user) {
-          updateProfile(user, {
-            displayName: fullName,
-          });
-          const userDocRef = doc(db, `users/${user.uid}`);
-          await setDoc(userDocRef, {
-            email: email,
-            name: fullName,
-            username: '@' + fullName.split(' ').join('').toLowerCase(),
-            interest: '',
-            phone: '',
-            profileImage: '',
-            bannerImage: '',
-            address: '',
-          });
-          await signIn("credentials", {
+        if (!(await isUsernameTaken(username))) {
+          // Proceed with sign-up process if username is not taken
+          const createUser = await createUserWithEmailAndPassword(
+            auth,
             email,
-            password,
-            redirect: false,
-          }).then(() => {
+            password
+          );
+          const user = createUser.user;
+          if (user) {
+            await sendEmailVerification(user);
+            // updateProfile(user, {
+            //   displayName: fullName,
+            // });
+            const userDocRef = doc(db, `users/${user.uid}`);
+            await setDoc(userDocRef, {
+              email: email,
+              name: fullName,
+              username: username.split(" ").join("_").toLowerCase(),
+              interest: "",
+              phone: "",
+              profileImage: "",
+              bannerImage: "",
+              address: "",
+            });
             setLoading(false);
-            toast.success("acoount created successfully");
-            router.push("/");
+            toast.success("Please check your email to verify your account.");
+          }
+        } else {
+          generateUniqueUsernameSuggestions(username, 3).then((suggestion) => {
+            setSuggestions(...suggestions, suggestion);
+            setLoading(false);
+            setErrors({ username: "username already in use" });
           });
         }
       } catch (error) {
+        setLoading(false);
         if (error.code == "auth/email-already-in-use") {
-          toast.error("email already in use");
+          toast.error(
+            "email already in use. Login or verify your account if this email belongs to you"
+          );
         } else if (error.code == "auth/weak-password") {
           toast.error("Password is too short");
-        }
-        toast.error("something went wrong");
+        } else toast.error("something went wrong");
+        console.log(error.message);
       }
     }
   };
 
+  //set error values to an empty string
   const clearError = (fieldName) => {
     setErrors((prevErrors) => ({
       ...prevErrors,
@@ -223,6 +295,33 @@ const Signup = () => {
                   onChange={handleFullNameChange}
                   error={errors.fullName}
                 />
+                <InputWithLabel
+                  label="username"
+                  type="text"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  error={errors.username}
+                />
+                {suggestions.length > 0 && (
+                  <div className="flex flex-col">
+                    <span className="text-green-500">suggestions</span>
+                    <div className="flex gap-2">
+                      {suggestions.map((suggestion) => (
+                        <span
+                          onClick={() => {
+                            setUsername(suggestion);
+                            clearError("username");
+                            setSuggestions([]);
+                          }}
+                          className="text-white md:text-black flex-wrap text-sm"
+                        >
+                          {suggestion}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 <InputWithLabel
                   label="Email"
                   type="email"
