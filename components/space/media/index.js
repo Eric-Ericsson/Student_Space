@@ -6,10 +6,9 @@ import {
   doc,
   query,
   onSnapshot,
-  collectionGroup,
   where,
   getDocs,
-  getDoc,
+  collection,
 } from "firebase/firestore";
 import { db } from "@components/firebase";
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,20 +16,19 @@ import LoadingState from "@components/components/space/loadingState";
 import Link from "next/link";
 import IdentityFormat from "../Posts/identityFormat";
 
-function LikeSection({ userId }) {
+function MediaSection({ userId }) {
   const router = useRouter();
-  const [showMore, setShowMore] = useState(false);
-  const contentRef = useRef(null);
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
       router.replace("/");
     },
   });
-  const [likedPosts, setLikedPosts] = useState([]);
+  const [showMore, setShowMore] = useState(false);
+  const contentRef = useRef(null);
+  const [userPosts, setUserPosts] = useState([]);
   const [postLoading, setPostLoading] = useState(true);
   const [user, setuser] = useState(null);
-  // const [postId, setPostId] = useState(null)
 
   //retrieving a single user
   useEffect(() => {
@@ -45,78 +43,26 @@ function LikeSection({ userId }) {
     }
   }, [db, session?.user?.uid]);
 
-  //retrieving likes of a particular user
+  //retrieving post that contains a media of a particular user
   useEffect(() => {
-    // const fetchLikedPosts = async () => {
-    //   try {
-    //     const likedPosts = [];
-    //     const q = query(
-    //       collectionGroup(db, "likes"),
-    //       where("userId", "==", userId)
-    //     );
-    //     const querySnapshot = await getDocs(q);
-
-    //     // Loop through the likes subcollections and get the parent post IDs
-    //     querySnapshot.forEach((likeDoc) => {
-    //          const postId = likeDoc.ref.parent.parent.id;
-    //          const postData = likeDoc.ref.parent.parent.data();
-    //       if (!likedPosts.includes(postId)) {
-    //         likedPosts.push({ id: postId, ...postData });
-    //       }
-    //     });
-
-    //     // Fetch the posts corresponding to the liked post IDs
-    //     const posts = await Promise.all(
-    //       likedPosts.map(async (postId) => {
-    //         const postDocRef = doc(db, "posts", postId);
-    //         const postDocSnapshot = await getDoc(postDocRef);
-    //         if (postDocSnapshot.exists()) {
-    //           return { id: postDocSnapshot.id, ...postDocSnapshot.data() };
-    //         }
-    //         return null;
-    //       })
-    //     );
-
-    //     const filteredPosts = posts.filter((post) => post !== null);
-    //     setPostLoading(false);
-    //     setLikedPosts(filteredPosts);
-    //   } catch (error) {
-    //     setLikedPosts([]);
-    //   }
-    // };
-    const fetchLikedPosts = async () => {
+    const fetchUserPostsWithImages = async () => {
       try {
-        const likedPosts = [];
-        const q = query(collectionGroup(db, "likes"), where("userId", "==", userId));
+        const q = query(collection(db, "posts"), where("id", "==", userId));
         const querySnapshot = await getDocs(q);
-    
-        // Loop through the likes subcollections and get the parent post IDs
-        querySnapshot.forEach((likeDoc) => {
-          const postId = likeDoc.ref.parent.parent.id;
-          if (!likedPosts.some((post) => post.id === postId)) {
-            likedPosts.push({ postId });
-          }
-        });
-    
-        // Fetch the posts corresponding to the liked post IDs
-        const postFetchPromises = likedPosts.map(async (post) => {
-          const postDocRef = doc(db, "posts", post.postId);
-          const postDocSnapshot = await getDoc(postDocRef);
-          if (postDocSnapshot.exists()) {
-            post.data = postDocSnapshot.data();
-          }
-        });
-    
-        await Promise.all(postFetchPromises); // Wait for all post data to be fetched
-    
+
+        const userPosts = querySnapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter((post) => post.image);
         setPostLoading(false);
-        setLikedPosts(likedPosts);
+        setUserPosts(userPosts);
+        //   return userPosts;
       } catch (error) {
-        setLikedPosts([]);
+        console.error(error.message);
+        return [];
       }
     };
-    
-    fetchLikedPosts();
+
+    fetchUserPostsWithImages();
   }, [userId]);
 
   //checking if text if being truncated
@@ -142,7 +88,7 @@ function LikeSection({ userId }) {
         <LoadingState />
       ) : (
         <AnimatePresence>
-          {likedPosts.map((likedPost, index) => (
+          {userPosts.map((likedPosts, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0 }}
@@ -152,7 +98,7 @@ function LikeSection({ userId }) {
               className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12"
             >
               <Link
-                href={`/profile/${userId}`}
+                href={`/profile/${likedPosts?.userId}`}
                 className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative"
               >
                 {user?.profileImage ? (
@@ -171,12 +117,12 @@ function LikeSection({ userId }) {
               </Link>
               <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
                 <IdentityFormat
-                  post={likedPost.data}
-                  id={likedPost.postId}
+                  post={likedPosts}
+                  id={likedPosts.id}
                   user={user}
                 />
                 <Link
-                  href={`/posts/${likedPost.postId}`}
+                  href={`/posts/${likedPosts.id}`}
                   className="flex flex-col gap-4 text-sm sm:text-[15px] "
                 >
                   <span>
@@ -188,7 +134,7 @@ function LikeSection({ userId }) {
                           : "line-clamp-5"
                       }`}
                     >
-                      {likedPost?.data.text}
+                      {likedPosts?.text}
                     </span>
                     {showMore && (
                       <span className="text-blue-600 text-opacity-70">
@@ -198,14 +144,14 @@ function LikeSection({ userId }) {
                   </span>
                   <div
                     className={`${
-                      likedPost?.data.image == ""
+                      likedPosts?.image == ""
                         ? "hidden"
                         : "image-container bg-gray-300"
                     } `}
                   >
-                    {likedPost?.data.image && (
+                    {likedPosts?.image && (
                       <img
-                        src={likedPost?.data.image}
+                        src={likedPosts?.image}
                         alt="Image"
                         className="imageClass"
                       />
@@ -221,4 +167,4 @@ function LikeSection({ userId }) {
   );
 }
 
-export default LikeSection;
+export default MediaSection;

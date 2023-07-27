@@ -24,6 +24,7 @@ import {
 } from "@components/atom/modalAtom";
 import LikeSection from "@components/components/space/likes";
 import ReplySection from "@components/components/space/replies";
+import MediaSection from "@components/components/space/media";
 
 function Profile() {
   const router = useRouter();
@@ -227,6 +228,7 @@ function Profile() {
           }
           {activeTab == 'likes' && <LikeSection userId={id}/>}
           {activeTab == 'reply' && <ReplySection userId={id}/>}
+          {activeTab == 'media' && <MediaSection userId={id}/>}
         </div>
       </div>
     </LayoutCover>

@@ -6,7 +6,7 @@ const IdentityFormat = ({ post, id, user }) => {
   return (
     <>
       <div className="hidden sm:flex items-center gap-2 line-climp-1 text-xs sm:text-[15px]">
-        <Link href={`/profile/${user?.id}`} className="flex gap-2 hover:underline">
+        <Link href={`/profile/${post?.id}`} className="flex gap-2 hover:underline">
         <div className="font-bold">{user?.name}</div>
         <div className="text-xs">{user?.username && '@' + user.username}</div>
         </Link>
