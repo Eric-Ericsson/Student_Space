@@ -22,6 +22,8 @@ import {
   imageCategory,
   profileModalState,
 } from "@components/atom/modalAtom";
+import LikeSection from "@components/components/space/likes";
+import ReplySection from "@components/components/space/replies";
 
 function Profile() {
   const router = useRouter();
@@ -153,7 +155,7 @@ function Profile() {
                 <span className="font-semibold text-base md:text-[20px]">
                   {user?.name}
                 </span>
-                <span>{user?.username}</span>
+                <span>{user?.username && '@' + user.username}</span>
               </div>
               <span className="text-xs">{user?.interest}</span>
             </div>
@@ -207,6 +209,7 @@ function Profile() {
               Likes
             </button>
           </div>
+          {activeTab == 'post' && 
           <AnimatePresence>
             {posts.map((post, index) => (
               <motion.div
@@ -221,6 +224,9 @@ function Profile() {
               </motion.div>
             ))}
           </AnimatePresence>
+          }
+          {activeTab == 'likes' && <LikeSection userId={id}/>}
+          {activeTab == 'reply' && <ReplySection userId={id}/>}
         </div>
       </div>
     </LayoutCover>

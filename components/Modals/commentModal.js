@@ -51,11 +51,9 @@ function CommentModal() {
   const sendComment = async () => {
     await addDoc(collection(db, "posts", postId, "comments"), {
       comment: postContent,
-      // name: session?.user?.name,
-      // username: session?.user?.username,
-      // userImg: session?.user?.image,
       timestamp: serverTimestamp(),
       userId: session?.user?.uid,
+      postId: postId,
     });
 
     setPostContent("");
@@ -190,18 +188,18 @@ function CommentModal() {
               </div>
               <div className="grid grid-cols-12 ">
                 <div className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
-                  {session?.user?.image === "" ? (
-                    <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                      {session?.user?.name.charAt(0)}
-                    </div>
-                  ) : (
+                  {session?.user?.image ? (
                     <Image
-                      className="rounded-lg"
-                      src={session?.user?.image}
-                      fill="true"
-                      sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                      alt="profile image"
-                    />
+                    className="rounded-lg"
+                    src={session?.user?.image}
+                    fill="true"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                    alt="profile image"
+                  />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
+                    {/* {session?.user?.name.charAt(0)} */}
+                  </div>
                   )}
                 </div>
                 <div className="col-span-11 ml-3 sm:ml-5 flex items-center">

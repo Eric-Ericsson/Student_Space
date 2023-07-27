@@ -205,7 +205,7 @@ useEffect(() => {
               {user?.name}
             </span>{" "}
             <span className="opacity-75 text-sm line-clamp-1">
-              {user?.username}
+              {user?.username && '@' + user.username}
             </span>
           </div>
         </div>

@@ -196,6 +196,7 @@ const Signup = () => {
             });
             setLoading(false);
             toast.success("Please check your email to verify your account.");
+            clearFields()
           }
         } else {
           generateUniqueUsernameSuggestions(username, 3).then((suggestion) => {
@@ -226,8 +227,16 @@ const Signup = () => {
     }));
   };
 
+  const clearFields = () => {
+    setFullName('');
+    setUsername('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
+  }
+
   return (
-    <div className="bg-blue-600 w-full h-screen overflow-hidden m-auto">
+    <div className="bg-blue-600 w-full min-h-screen overflow-hidden m-auto">
       <div className="md:grid grid-cols-2 h-screen">
         <div className="hidden relative md:block bg-[url('/signup_bg.jpg')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-90 w-full h-screen flex items-center justify-center">
@@ -248,7 +257,7 @@ const Signup = () => {
             </div>
           </div>
         </div>
-        <div className="bg-[url('/signup_bg.jpg')] bg-no-repeat bg-cover bg-center">
+        <div className="bg-[url('/signup_bg.jpg')]  bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-95 md:bg-white w-full h-screen flex flex-cols items-center">
             <div className="flex flex-col items-center md:px-16 w-full">
               <div>
@@ -272,7 +281,7 @@ const Signup = () => {
                 method="post"
                 action="/api/auth/callback/credentials"
                 onSubmit={handleSubmit}
-                className="flex flex-col items-center gap-8 w-full"
+                className="flex flex-col items-center gap-8 w-full "
               >
                 <ToastContainer
                   position="bottom-left"

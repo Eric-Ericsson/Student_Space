@@ -13,6 +13,10 @@ import {
   orderBy,
   query,
   onSnapshot,
+  collectionGroup,
+  where,
+  getDocs,
+  getDoc,
 } from "firebase/firestore";
 import { db, storage } from "@components/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -40,6 +44,7 @@ function Homepage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
   const [conZIndex] = useRecoilState(containerZIndex);
   const [postLoading, setPostLoading] = useState(true);
   const [user, setuser] = useState(null);

@@ -18,7 +18,7 @@ import IdentityFormat from "./identityFormat";
 
 const PostsData = ({ post, id }) => {
   const { data: session } = useSession();
-  const [hasLikded, setHasLikded] = useState(false);
+  const [hasLiked, setHasLiked] = useState(false);
   const [likes, setLikes] = useState([]);
   const [comments, setComments] = useState([]);
   const [openModal, setOpenModal] = useRecoilState(modalState);
@@ -29,17 +29,18 @@ const PostsData = ({ post, id }) => {
   const router = useRouter();
   const [user, setuser] = useState(null);
 
-
   //retrieving a single user
-useEffect(() => {
-  if (post?.data()?.id) {
-    const unsubscribe = onSnapshot(doc(db, "users", post?.data()?.id), (snapshot) => {
-      setuser(snapshot.data())
+  useEffect(() => {
+    if (post?.data()?.id) {
+      const unsubscribe = onSnapshot(
+        doc(db, "users", post?.data()?.id),
+        (snapshot) => {
+          setuser(snapshot.data());
+        }
+      );
+      return () => unsubscribe();
     }
-    );
-    return () => unsubscribe();
-  }
-}, [db, post?.data()?.id]);
+  }, [db, post?.data()?.id]);
 
   //retrieving likes on a particular post
   useEffect(() => {
@@ -63,7 +64,7 @@ useEffect(() => {
 
   //checking if user as already liked post content
   useEffect(() => {
-    setHasLikded(
+    setHasLiked(
       likes.findIndex((like) => like.id === session?.user.uid) !== -1
     );
   }, [likes, session?.user]);
@@ -71,11 +72,12 @@ useEffect(() => {
   //Adding a like if user has not liked post content already
   async function likePost() {
     if (session?.user) {
-      if (hasLikded) {
+      if (hasLiked) {
         await deleteDoc(doc(db, "posts", id, "likes", session?.user.uid));
       } else {
         await setDoc(doc(db, "posts", id, "likes", session?.user.uid), {
           userId: session?.user?.uid,
+          postId: id,
         });
       }
     } else signIn();
@@ -113,11 +115,7 @@ useEffect(() => {
           href={`/profile/${post?.data()?.id}`}
           className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative"
         >
-          {user?.profileImage === "" ? (
-            <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-              {user?.name.charAt(0)}
-            </div>
-          ) : (
+          {user?.profileImage ? (
             <Image
               className="rounded-lg"
               src={user?.profileImage}
@@ -125,34 +123,38 @@ useEffect(() => {
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
               alt="profile image"
             />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
+              {user?.name.charAt(0)}
+            </div>
           )}
         </Link>
         <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
-          <IdentityFormat post={post} id={id} user={user}/>
+          <IdentityFormat post={post.data()} id={id} user={user} />
           <Link
             href={`/posts/${id}`}
             className="flex flex-col gap-4 text-sm sm:text-[15px] "
           >
             <span>
-
-            <span
-              ref={contentRef}
-              className={`${
-                router.pathname.includes("/posts")
-                  ? "line-clamp-none"
-                  : "line-clamp-5"
-              }`}
-            >
-              {post?.data()?.text}
+              <span
+                ref={contentRef}
+                className={`${
+                  router.pathname.includes("/posts")
+                    ? "line-clamp-none"
+                    : "line-clamp-5"
+                }`}
+              >
+                {post?.data()?.text}
+              </span>
+              {showMore && (
+                <span className="text-blue-600 text-opacity-70">Show more</span>
+              )}
             </span>
-            {showMore && (
-              <span className="text-blue-600 text-opacity-70">Show more</span>
-            )}
-            </span>
-
             <div
               className={`${
-                post?.data()?.image == "" ? "hidden" : "image-container"
+                post?.data()?.image == ""
+                  ? "hidden"
+                  : "image-container bg-gray-300"
               } `}
             >
               {post?.data()?.image && (
@@ -190,12 +192,12 @@ useEffect(() => {
             </div>
             <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
               <button
-                onClick={() => likePost(post)}
+                onClick={() => likePost()}
                 className="group-hover:bg-red-200 p-2 rounded-full"
               >
                 <svg
                   className={`${
-                    hasLikded
+                    hasLiked
                       ? "fill-red-600 stroke-red-600"
                       : "fill-none stroke-current group-hover:stroke-red-600"
                   }`}
@@ -212,8 +214,8 @@ useEffect(() => {
                   />
                 </svg>
               </button>
-              {likes.length > 0 && (
-                <span className={`${hasLikded && "text-red-600"}`}>
+              {hasLiked > 0 && (
+                <span className={`${hasLiked && "text-red-600"}`}>
                   {likes.length}
                 </span>
               )}

@@ -19,12 +19,24 @@ const Comments = ({ comment, commentId, originalPostId }) => {
   const { data: session } = useSession();
   const [hasLikded, setHasLikded] = useState(false);
   const [likes, setLikes] = useState([]);
+  const [user, setuser] = useState(null);
   const [openModal, setOpenModal] = useRecoilState(modalState);
   const [postId, setPostId] = useRecoilState(postIdState);
 
   if (!session.user) {
     return router.push("/");
   }
+
+//retrieving a single user
+useEffect(() => {
+  if (comment?.data()?.userId) {
+    const unsubscribe = onSnapshot(doc(db, "users", comment?.data()?.userId), (snapshot) => {
+      setuser(snapshot.data())
+    }
+    );
+    return () => unsubscribe();
+  }
+}, [db, comment?.data()?.userId]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -85,38 +97,25 @@ const Comments = ({ comment, commentId, originalPostId }) => {
       <div className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
         <Link href={"/profile"}>
           <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative">
-            {comment?.data()?.userImg === "" ? (
-              <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                {comment?.data()?.name.charAt(0)}
-              </div>
-            ) : (
+            {user?.profileImage ? (
               <Image
-                className="rounded-lg"
-                src={comment?.data()?.userImg}
-                fill="true"
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                alt="profile image"
-              />
+              className="rounded-lg"
+              src={user?.profileImage}
+              fill="true"
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+              alt="profile image"
+            />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
+                {user?.name.charAt(0)}
+              </div>
             )}
           </div>
         </Link>
         <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
-          <IdentityFormat post={comment} />
+          <IdentityFormat post={comment.data()} id={originalPostId} user={user}/>
           <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
             <span className="line-clamp-5">{comment?.data()?.comment}</span>
-            <div
-              className={`${
-                comment?.data()?.image == "" ? "hidden" : "image-container"
-              } `}
-            >
-              {comment?.image && (
-                <img
-                  src={comment?.data()?.image}
-                  alt="Image"
-                  className="imageClass"
-                />
-              )}
-            </div>
           </div>
           <div className="flex gap-4">
             <div
