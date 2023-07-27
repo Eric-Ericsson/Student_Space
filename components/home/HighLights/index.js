@@ -74,7 +74,7 @@ const HighLights = () => {
         </div>
       </div>
        <div className="relative lg:h-[70%] mt-4 lg:mt-0 rounded-md h-[250px] sm:h-[300px] bg-white">
-        <Image src={'/partnerships.gif'} fill={true} sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw" alt="aside-image" style={{objectFit: "contain"}}/>
+        <Image src={'https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2FPartnerships.gif?alt=media&token=1f3a922e-75b0-49a2-b532-5d4ee1a366c8'} fill={true} sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw" alt="aside-image" style={{objectFit: "contain"}}/>
       </div>
     </div>
   );

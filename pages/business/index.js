@@ -1,72 +1,48 @@
-import Link from 'next/link'
 import Image from 'next/image'
+import { motion, AnimatePresence } from "framer-motion";
+
 import LayoutCover from '@components/components/layout/LayoutCover'
+import { useState } from 'react';
 
 const Business = () => {
-  const media = [
+  const [selectedId, setSelectedId] = useState(null);
+
+  const items = [
     {
       id: 1,
-      title: "Artificial Intelligence",
-      username: "Eric Ericsson",
-      image: "/ai.jpg",
-      data: "hello",
-      date: "12/02/2023",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fflip.jpg?alt=media&token=0a929e40-603b-4e91-a55c-9ad8fa1f39e2",
     },
     {
       id: 2,
-      title: "Fashionist",
-      username: "Ruth Doe",
-      image: "/fashion.jpg",
-      data: "hello",
-      date: "12/02/2023",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fkebab.jpg?alt=media&token=73bdd415-9321-464c-9502-862e1727f20f",
     },
     {
       id: 3,
-      title: "Art and Design",
-      username: "Michael Smith",
-      image: "/art_design.jpg",
-      data: "hello",
-      date: "12/02/2023",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Flaptop.jpg?alt=media&token=98d05f51-3eef-4552-8c36-56d0e52d3f21",
     },
     {
       id: 4,
-      title: "Artist",
-      username: "James Mensah",
-      image: "/artist.png",
-      data: "hello",
-      date: "12/02/2023",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fmid_sem_food.jpg?alt=media&token=94851bb3-72c7-4c6b-bf20-af8d39bfdac8",
     },
     {
       id: 5,
-      title: "Creative Writing",
-      username: "Patrick Akoto",
-      image: "/creative_writing.jpg",
-      data: "hello",
-      date: "12/02/2023",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fprime.jpg?alt=media&token=f636b756-3936-428e-824d-b9e8b3fd314c",
     },
     {
       id: 6,
-      title: "Web Development",
-      username: "Joe Quaye",
-      image: "/web_development.jpg",
-      data: "Web Development",
-      date: "12/02/2023",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Frepair_services.jpg?alt=media&token=17abedce-69ea-49df-bdc7-c0f7ec052c58",
     },
     {
       id: 7,
-      title: "Data Science",
-      username: "Mary Edger",
-      image: "/data_science.jpg",
-      data: "Data Science",
-      date: "12/02/2023",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fvotex.jpg?alt=media&token=7f26c96c-02fe-41b3-9d6b-ee8cb9f98ceb",
     },
     {
       id: 8,
-      title: "Mobile App Development",
-      username: "Kofi Asamoah",
-      image: "/app_development.jpg",
-      data: "Hello",
-      date: "12/02/2023",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fstorage_memory.jpg?alt=media&token=a6d94068-d38d-4b12-8719-fd1ceca28d98",
+    },
+    {
+      id: 9,
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fsobolo.jpg?alt=media&token=7cda8dde-5221-42c0-af10-744caa9035d8",
     },
   ];
 
@@ -75,7 +51,7 @@ const Business = () => {
       <div
         style={{
           backgroundImage:
-            "url('https://i.pinimg.com/564x/c6/7b/b9/c67bb954ceece0e88b7995c7c87ba090.jpg')",
+            "url('https://www.searchenginejournal.com/wp-content/uploads/2023/04/marketplace-ecommerce-sellers-6436a446a2a18-sej.png')",
         }}
         className="PageHeader_wrapper__1j1-M relative pt-28 h-96 bg-cover bg-center bg-no-repeat"
       >
@@ -87,24 +63,76 @@ const Business = () => {
       </div>
 
       <div className="layoutPadding mb-12 uppercase text-white md:mb-60">
-        <div className="mt-8 grid gap-7 text-center md:grid-cols-2 lg:grid-cols-3 md:gap-4 md:text-left lg:gap-7">
-          {media.map((slide, index) => (
-            <div
-              key={index}
-              className="bg-gray-300 relative h-[250px] rounded-2xl border-shadow-xl sm:h-[400px] md:h-[350px]"
-            >
-              <Image src={slide.image} fill={true} alt={slide.title} priority className="rounded-2xl" />
-              <div className="absolute inset-0 rounded-2xl">
-                <div className="absolute bottom-0 left-0 right-0 py-2 bg-black bg-opacity-30 flex flex-col font-semibold text-xs sm:text-sm md:text-base lg:px-4">
-                  <span>{slide.date}</span>
-                  <Link href={`/news/${slide.id}`}>
-                      <div dangerouslySetInnerHTML={{__html: slide.title}} className="text-sm sm:text-base" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+         <div className="mt-8 grid gap-7 text-center md:grid-cols-2 lg:grid-cols-3 md:gap-4 md:text-left lg:gap-7">
+      {items.map((slide) => (
+        <motion.div
+          key={slide.id}
+          layoutId={slide.id}
+          onClick={() => setSelectedId(slide.id)}
+          className={`bg-gray-300 relative h-[250px] rounded-2xl border-shadow-xl sm:h-[400px] md:h-[350px]`}
+        >
+          <Image
+            src={slide.image}
+            fill={true}
+            alt={slide.title}
+            priority
+            className="rounded-2xl"
+          />
+        </motion.div>
+      ))}
+
+      <AnimatePresence>
+        {selectedId && (
+          <motion.div
+            key={selectedId}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-80"
+            onClick={() => setSelectedId(null)}
+          >
+            {items.map((slide) => {
+              if (slide.id === selectedId) {
+                return (
+                  <motion.div
+                    layoutId={slide.id}
+                    key={slide.id}
+                    className="p-8 flex flex-col items-center relative h-[50%] w-[90%] md:h-[90%] md:w-[70%]"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Image
+                      src={slide.image}
+                      fill={true}
+                      alt={slide.title}
+                      priority
+                      className="rounded-2xl"
+                    />
+                    <button
+                      onClick={() => setSelectedId(null)}
+                      className="absolute right-16 top-5 text-white "
+                    >
+                      <svg
+                        className="absolute inset-2 cursor-pointer drop-shadow-md"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="30"
+                        height="30"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fill="white"
+                          d="M2.93 17.07A10 10 0 1 1 17.07 2.93A10 10 0 0 1 2.93 17.07zM11.4 10l2.83-2.83l-1.41-1.41L10 8.59L7.17 5.76L5.76 7.17L8.59 10l-2.83 2.83l1.41 1.41L10 11.41l2.83 2.83l1.41-1.41L11.41 10z"
+                        />
+                      </svg>
+                    </button>
+                  </motion.div>
+                );
+              }
+              return null;
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
       </div>
     </LayoutCover>
   )

@@ -87,6 +87,7 @@ useEffect(() => {
     }
 
     setPostContent("");
+    setTextareaRows(1);
     setSelectedFile(null);
     setLoading(false);
   };

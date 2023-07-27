@@ -8,7 +8,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     const colors = ["#012E40", "#3CA6A6", "#8C1F28"];
-    const images = ["/girl.png", "/chef.png", "/camera_girl.png"];
+    const images = ["https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fgirl.png?alt=media&token=495cc320-cd75-441a-a693-6baf4d11e505", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fchef.png?alt=media&token=8028389e-ff59-4945-a9d7-29c66fe3f722", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fcamera_girl.png?alt=media&token=b2637b92-565c-4c2e-b36a-764501e9e780"];
 
     let currentIndex = 0;
 

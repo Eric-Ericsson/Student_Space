@@ -67,7 +67,8 @@ const LoginPage = () => {
       )
         .then((userCredential) => {
           const user = userCredential.user;
-          if (user.emailVerified) {
+          if (user) {
+          // if (user.emailVerified) {
             emailVerifiedError = "";
           } else {
             setLoading(false);

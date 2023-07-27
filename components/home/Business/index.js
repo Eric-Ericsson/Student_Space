@@ -31,7 +31,7 @@ const Oftheday = () => {
                   }
                 >
                   <button
-                    className={`group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 hover:text-white h-10 border-[1px] border-solid px-8 rounded-3xl relative inline-flex items-center justify-center bg-white text-blue-600 border-blue-600`}
+                    className={`group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 hover:text-white h-10 border-[1px] border-solid px-8 rounded-3xl relative inline-flex items-center justify-center bg-white text-blue-600 border-blue-600 w-44`}
                   >
                     <strong className="font-medium text-xs sm:text-sm">
                       View Profile
