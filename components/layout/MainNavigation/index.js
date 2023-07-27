@@ -91,15 +91,6 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
               Space
             </span>
           </Link>
-          <Link href="/exhibit">
-            <span
-              className={`hover:text-[#068B01] ${
-                router.pathname == "/exhibit" && "text-[#068B01]"
-              } hover:font-black`}
-            >
-              Exhibit
-            </span>
-          </Link>
           <Link href="/business">
             <span
               className={`hover:text-[#068B01] ${
@@ -153,21 +144,12 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
             <Link href={session ? "/space" : "/auth/signin"}>
             <span
               className={`hover:text-[#068B01] cursor-pointer ${
-                router.pathname == "/space" && "text-[#068B01]"
+                router.pathname === "/space" | router.asPath.includes('/profile/') | router.asPath.includes('/posts/') && "text-[#068B01]"
               } hover:font-black`}
             >
               Space
             </span>
           </Link>
-            <Link href="/exhibit">
-              <span
-                className={`hover:text-[#068B01] ${
-                  router.pathname == "/exhibit" && "text-[#068B01]"
-                } hover:font-black`}
-              >
-                Exhibit
-              </span>
-            </Link>
             <Link href="/business">
               <span
                 className={`hover:text-[#068B01] ${
