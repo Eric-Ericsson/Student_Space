@@ -67,7 +67,7 @@ export default LayoutCover;
 
 LayoutCover.defaultProps = {
   title: "home | student space",
-  description: "Student Space",
-  keyword: "student space",
+  description: "Student Space: where students meet to be discovered and discover",
+  keyword: "student space, entrepreneurship, advert, sell, network",
   isScrolled: false,
 };

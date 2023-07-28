@@ -22,11 +22,11 @@ const Oftheday = () => {
               <span className="heading">Content of the Day</span>
               <div className="flex flex-col gap-2 text-lg sm:text-xl md:text-2xl">
                 <span className="font-[playball]">Artificial Intilligence</span>
-                <span className="">James White</span>
+                <span className="">Eric Ericsson</span>
                 <Link
                   href={
                     session
-                      ? `/profile/LDGXjZXNctdjYXGxMn1HJTi5NZj2`
+                      ? `/profile/gfBfeljvmyUwLhCNyU0w8P3VFk72`
                       : "/auth/signin"
                   }
                 >
@@ -45,7 +45,7 @@ const Oftheday = () => {
           <div className="relative md:col-span-2 w-[100%] sm:w-[80%] md:w-full lg:w-[700px] h-80 sm:h-96 md:h-[400px] lg:h-[500px] rounded-3xl bg-gray-100">
             <div className={`image-container`}>
               <img
-                src={"/ai.jpg"}
+                src={"https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2FdILjkOMsUCsAAM1ILknQ%2Fimage?alt=media&token=f3e0c19e-a62e-46db-bc5a-5bab623539a8"}
                 alt="content-of-the-day"
                 className="imageClass"
               />

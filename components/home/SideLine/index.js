@@ -1,6 +1,9 @@
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 const SideLine = () => {
+  const { data: session } = useSession();
+
   return (
     <div className="contain-content mb-10 h-60 sm:h-96 flex items-center bg-[#024959] text-light rounded-md">
       <div className="flex items-center justify-between w-full px-4 md:px-10">
@@ -9,7 +12,7 @@ const SideLine = () => {
             Suddenly, It's All Within{" "}
             <span className="font-[playball]">reach</span>
           </span>
-          <Link href={"/auth/signin"}>
+          <Link href={`${session?.user ? '/space' : '/auth/signin'}`}>
           <button
               className={`group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 hover:text-white h-10 border-[1px] border-solid px-8 rounded-3xl relative inline-flex items-center justify-center bg-white text-blue-600 border-blue-600`}
             >
