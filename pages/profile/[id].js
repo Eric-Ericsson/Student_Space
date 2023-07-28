@@ -7,14 +7,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import PostsData from "@components/components/space/Posts";
 import {
   collection,
+  deleteDoc,
   doc,
   getDocs,
   onSnapshot,
   query,
+  setDoc,
   where,
 } from "firebase/firestore";
-import { db } from "@components/firebase";
-import { useSession } from "next-auth/react";
+import { db, storage } from "@components/firebase";
+import { signIn, useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
 import {
   contactInfoModalState,
@@ -26,18 +28,22 @@ import {
 import LikeSection from "@components/components/space/likes";
 import ReplySection from "@components/components/space/replies";
 import MediaSection from "@components/components/space/media";
+import { deleteObject, ref } from "firebase/storage";
 
 function Profile() {
   const router = useRouter();
   const { id } = router.query;
   const [activeTab, SetActiveTab] = useState("post");
   const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [hasLiked, setHasLiked] = useState(false);
+
   const [user, setuser] = useState(null);
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      router.replace('/')
-    }
+      router.replace("/");
+    },
   });
   const [conZIndex] = useRecoilState(containerZIndex);
   const [openModal, setOpenModal] = useRecoilState(contactInfoModalState);
@@ -61,16 +67,18 @@ function Profile() {
   //Get posts for a particular user
   const getPostsForUser = async (id) => {
     try {
-      const q = query(collection(db, "posts"), where("id", "==", id)); // Create a query to filter posts with matching userId
-      const querySnapshot = await getDocs(q); // Get the snapshot of matching posts
-  
-      const posts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      const q = query(collection(db, "posts"), where("id", "==", id)); // Change "id" to "userId" to match the "userId" field in the posts collection
+      const querySnapshot = await getDocs(q);
+
+      const posts = querySnapshot.docs.map((doc) => ({
+        postId: doc.id,
+        ...doc.data(),
+      })); // Add "postId" field to the object
       return posts;
     } catch (error) {
       return [];
     }
-  }
-
+  };
 
   //Calling the get post with a useEffect
   useEffect(() => {
@@ -84,23 +92,23 @@ function Profile() {
   };
 
   return (
-    <LayoutCover title='profile | student space'>
+    <LayoutCover title="profile | student space">
       <div
         className={`relative mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen ${conZIndex}`}
       >
-        <SideNav path={'/profile'} session={session} />
+        <SideNav path={"/profile"} session={session} />
         {/* Profile Section */}
         <div className="mt-14 sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div className="relative w-full bg-gray-100 h-28 sm:h-44">
             {/* cover image */}
             <div className="bg-blue-200 opacity-80 w-full h-full absolute">
-               {user && user?.bannerImage ? (
+              {user && user?.bannerImage ? (
                 <Image
-                src={user?.bannerImage}
-                fill="true"
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                alt="image banner"
-              />
+                  src={user?.bannerImage}
+                  fill="true"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                  alt="image banner"
+                />
               ) : (
                 <div className="bg-blue-200 opacity-80 w-full h-full"></div>
               )}
@@ -127,39 +135,44 @@ function Profile() {
               </button>
             )}
             <div
-            
-              onClick={() => { session?.user?.uid == id && (setOpenImageBannerModal(!openImageBannerModal),
-                setImageCat("profileImage"))
+              onClick={() => {
+                session?.user?.uid == id &&
+                  (setOpenImageBannerModal(!openImageBannerModal),
+                  setImageCat("profileImage"));
               }}
-              className={`relative top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-md bg-white ${session?.user?.uid == id && 'cursor-pointer'}`}
+              className={`relative top-[60%] sm:top-[50%] left-5 w-20 sm:w-44 h-20 sm:h-44 rounded-md bg-white ${
+                session?.user?.uid == id && "cursor-pointer"
+              }`}
             >
               {user && user?.profileImage ? (
                 <Image
-                className="rounded-lg p-1"
-                src={user?.profileImage}
-                fill="true"
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
-                alt="profile image"
-              />
+                  className="rounded-lg p-1"
+                  src={user?.profileImage}
+                  fill="true"
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+                  alt="profile image"
+                />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
                   {user?.name.charAt(0)}
                 </div>
               )}
             </div>
-            {session?.user?.uid == id && 
-            <div className="absolute -bottom-16 right-4 sm:right-10">
-              <div className="max-w-md mx-auto space-y-6 flex justify-center">
-                <button
-                  onClick={() => setOpenProfileModal(!openProfileModal)}
-                  className="group font-medium tracking-wide select-none text-base relative inline-flex items-center justify-center cursor-pointer h-10 border-2 border-solid py-0 px-2 rounded-md overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 bg-blue-500 text-white border-blue-500 hover:text-blue-500 focus:text-blue-500"
-                >
-                  <strong className="font-medium text-sm">Edit Profile</strong>
-                  <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1] group-focus:w-[105%]"></span>
-                </button>
+            {session?.user?.uid == id && (
+              <div className="absolute -bottom-16 right-4 sm:right-10">
+                <div className="max-w-md mx-auto space-y-6 flex justify-center">
+                  <button
+                    onClick={() => setOpenProfileModal(!openProfileModal)}
+                    className="group font-medium tracking-wide select-none text-base relative inline-flex items-center justify-center cursor-pointer h-10 border-2 border-solid py-0 px-2 rounded-md overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 bg-blue-500 text-white border-blue-500 hover:text-blue-500 focus:text-blue-500"
+                  >
+                    <strong className="font-medium text-sm">
+                      Edit Profile
+                    </strong>
+                    <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1] group-focus:w-[105%]"></span>
+                  </button>
+                </div>
               </div>
-            </div>
-            }
+            )}
           </div>
           <div className="mt-20 sm:mt-28 grid grid-cols-6 mx-2 text-sm sm:text-[15px]">
             <div className="col-span-4 flex flex-col gap-2 sm:ml-6">
@@ -167,11 +180,11 @@ function Profile() {
                 <span className="font-semibold text-base md:text-[20px]">
                   {user?.name}
                 </span>
-                <span>{user?.username && '@' + user.username}</span>
+                <span>{user?.username && "@" + user.username}</span>
               </div>
               <span className="text-xs">{user?.interest}</span>
             </div>
-        
+
             <div className="col-span-2">
               <span
                 onClick={() => {
@@ -221,25 +234,25 @@ function Profile() {
               Likes
             </button>
           </div>
-          {activeTab == 'post' && 
-          <AnimatePresence>
-            {posts.map((post, index) => (
-              <motion.div
-                className="sm:mb-0"
-                key={index}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-              >
-                <PostsData post={post} id={post.id} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-          }
-          {activeTab == 'likes' && <LikeSection userId={id}/>}
-          {activeTab == 'reply' && <ReplySection userId={id}/>}
-          {activeTab == 'media' && <MediaSection userId={id}/>}
+          {activeTab == "post" && (
+            <AnimatePresence>
+              {posts.map((post, index) => (
+                <motion.div
+                  className="sm:mb-0"
+                  key={index}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 1 }}
+                >
+                  <PostsData post={post} id={post.postId} />
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          )}
+          {activeTab == "likes" && <LikeSection userId={id} />}
+          {activeTab == "reply" && <ReplySection userId={id} />}
+          {activeTab == "media" && <MediaSection userId={id} />}
         </div>
       </div>
     </LayoutCover>

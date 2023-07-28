@@ -1,48 +1,57 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { containerZIndex } from "@components/atom/modalAtom";
-import { useRecoilState } from "recoil"
+import {
+  containerZIndex,
+  postModal,
+  ueser_id,
+} from "@components/atom/modalAtom";
+import { useRecoilState } from "recoil";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "@components/firebase";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
-
-
 const SideNav = ({ path, session }) => {
   const [activeButton, setActiveButton] = useState(path);
   const [conZIndex] = useRecoilState(containerZIndex);
+  const [openModal, setOpenModal] = useRecoilState(postModal);
+  const [id, setUserId] = useRecoilState(ueser_id);
+
   const [user, setuser] = useState(null);
   const router = useRouter();
 
-//retrieving a single user
-useEffect(() => {
-  if (session?.user?.uid) {
-    const unsubscribe = onSnapshot(doc(db, "users", session?.user?.uid), (snapshot) => {
-      setuser(snapshot.data())
+  //retrieving a single user
+  useEffect(() => {
+    if (session?.user?.uid) {
+      const unsubscribe = onSnapshot(
+        doc(db, "users", session?.user?.uid),
+        (snapshot) => {
+          setuser(snapshot.data());
+        }
+      );
+      return () => unsubscribe();
     }
-    );
-    return () => unsubscribe();
-  }
-}, [db, session?.user?.uid]);
+  }, [db, session?.user?.uid]);
 
-  const handleButtonClick = async(buttonId) => {
+  const handleButtonClick = async (buttonId) => {
     setActiveButton(buttonId);
   };
 
   const signOutUser = async () => {
     if (session) {
-      if(window.confirm('You are about to sign out')){
+      if (window.confirm("You are about to sign out")) {
         await signOut();
       }
     } else {
-      router.replace("/auth/signin")
+      router.replace("/auth/signin");
     }
-  }
+  };
 
   return (
-    <div className={`${conZIndex} w-full sm:border-r-[1px] sm:w-16 md:w-24 lg:w-56 bg-white sm:h-screen fixed bottom-0 sm:bottom-auto flex sm:flex-col sm:gap-5 items-center lg:items-start sm:border-l-[1px] sm:mt-12 md:mt-20 py-1 text-xl font-thin`}>
+    <div
+      className={`${conZIndex} w-full sm:border-r-[1px] sm:w-16 md:w-24 lg:w-56 bg-white sm:h-screen fixed bottom-0 sm:bottom-auto flex sm:flex-col sm:gap-5 items-center lg:items-start sm:border-l-[1px] sm:mt-12 md:mt-20 py-1 text-xl font-thin`}
+    >
       {/*Home button */}
       <Link
         href="/space"
@@ -140,7 +149,13 @@ useEffect(() => {
         onClick={() => handleButtonClick("/posts")}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
-        <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
+        <div
+          onClick={() => {
+            setOpenModal(true);
+            setUserId(session?.user?.uid);
+          }}
+          className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2"
+        >
           <svg
             className={`${
               activeButton == "/posts"
@@ -176,20 +191,22 @@ useEffect(() => {
       </div>
       {/* User button*/}
       <div
-        onClick={() => { handleButtonClick("user"); signOutUser() }}
+        onClick={() => {
+          handleButtonClick("user");
+          signOutUser();
+        }}
         className="w-full hidden sm:flex absolute bottom-24 group cursor-pointer items-center justify-center lg:justify-start"
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-2 p-2 text-base">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg">
             {user?.profileImage ? (
-                <Image
+              <Image
                 className="rounded-lg"
                 src={user?.profileImage}
                 fill="true"
                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
                 alt="profile image"
               />
-            
             ) : (
               <div className="w-full h-full flex items-center justify-center text-2xl rounded-md font-semibold bg-blue-600 text-white">
                 {user?.name.charAt(0)}
@@ -201,11 +218,9 @@ useEffect(() => {
               activeButton == "user" && "font-bold"
             }`}
           >
-            <span className="font-bold line-clamp-1">
-              {user?.name}
-            </span>{" "}
+            <span className="font-bold line-clamp-1">{user?.name}</span>{" "}
             <span className="opacity-75 text-sm line-clamp-1">
-              {user?.username && '@' + user.username}
+              {user?.username && "@" + user.username}
             </span>
           </div>
         </div>

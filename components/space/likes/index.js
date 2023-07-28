@@ -21,75 +21,31 @@ function LikeSection({ userId }) {
   const router = useRouter();
   const [showMore, setShowMore] = useState(false);
   const contentRef = useRef(null);
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      router.replace("/");
-    },
-  });
   const [likedPosts, setLikedPosts] = useState([]);
   const [postLoading, setPostLoading] = useState(true);
   const [user, setuser] = useState(null);
-  // const [postId, setPostId] = useState(null)
 
   //retrieving a single user
   useEffect(() => {
     if (userId) {
-      const unsubscribe = onSnapshot(
-        doc(db, "users", userId),
-        (snapshot) => {
-          setuser(snapshot.data());
-        }
-      );
+      const unsubscribe = onSnapshot(doc(db, "users", userId), (snapshot) => {
+        setuser(snapshot.data());
+      });
       return () => unsubscribe();
     }
   }, [db, userId]);
 
   //retrieving likes of a particular user
   useEffect(() => {
-    // const fetchLikedPosts = async () => {
-    //   try {
-    //     const likedPosts = [];
-    //     const q = query(
-    //       collectionGroup(db, "likes"),
-    //       where("userId", "==", userId)
-    //     );
-    //     const querySnapshot = await getDocs(q);
-
-    //     // Loop through the likes subcollections and get the parent post IDs
-    //     querySnapshot.forEach((likeDoc) => {
-    //          const postId = likeDoc.ref.parent.parent.id;
-    //          const postData = likeDoc.ref.parent.parent.data();
-    //       if (!likedPosts.includes(postId)) {
-    //         likedPosts.push({ id: postId, ...postData });
-    //       }
-    //     });
-
-    //     // Fetch the posts corresponding to the liked post IDs
-    //     const posts = await Promise.all(
-    //       likedPosts.map(async (postId) => {
-    //         const postDocRef = doc(db, "posts", postId);
-    //         const postDocSnapshot = await getDoc(postDocRef);
-    //         if (postDocSnapshot.exists()) {
-    //           return { id: postDocSnapshot.id, ...postDocSnapshot.data() };
-    //         }
-    //         return null;
-    //       })
-    //     );
-
-    //     const filteredPosts = posts.filter((post) => post !== null);
-    //     setPostLoading(false);
-    //     setLikedPosts(filteredPosts);
-    //   } catch (error) {
-    //     setLikedPosts([]);
-    //   }
-    // };
     const fetchLikedPosts = async () => {
       try {
         const likedPosts = [];
-        const q = query(collectionGroup(db, "likes"), where("userId", "==", userId));
+        const q = query(
+          collectionGroup(db, "likes"),
+          where("userId", "==", userId)
+        );
         const querySnapshot = await getDocs(q);
-    
+
         // Loop through the likes subcollections and get the parent post IDs
         querySnapshot.forEach((likeDoc) => {
           const postId = likeDoc.ref.parent.parent.id;
@@ -97,7 +53,7 @@ function LikeSection({ userId }) {
             likedPosts.push({ postId });
           }
         });
-    
+
         // Fetch the posts corresponding to the liked post IDs
         const postFetchPromises = likedPosts.map(async (post) => {
           const postDocRef = doc(db, "posts", post.postId);
@@ -106,16 +62,16 @@ function LikeSection({ userId }) {
             post.data = postDocSnapshot.data();
           }
         });
-    
+
         await Promise.all(postFetchPromises); // Wait for all post data to be fetched
-    
+
         setPostLoading(false);
         setLikedPosts(likedPosts);
       } catch (error) {
         setLikedPosts([]);
       }
     };
-    
+
     fetchLikedPosts();
   }, [userId]);
 

@@ -32,12 +32,9 @@ const PostsData = ({ post, id }) => {
   //retrieving a single user
   useEffect(() => {
     if (post?.id) {
-      const unsubscribe = onSnapshot(
-        doc(db, "users", post?.id),
-        (snapshot) => {
-          setuser(snapshot.data());
-        }
-      );
+      const unsubscribe = onSnapshot(doc(db, "users", post?.id), (snapshot) => {
+        setuser(snapshot.data());
+      });
       return () => unsubscribe();
     }
   }, [db, post?.id]);
@@ -50,7 +47,7 @@ const PostsData = ({ post, id }) => {
         (snapshot) => setLikes(snapshot.docs)
       );
     }
-  }, [db]);
+  }, [db, likePost]);
 
   //retrieving commemts on a particular post
   useEffect(() => {
@@ -152,17 +149,11 @@ const PostsData = ({ post, id }) => {
             </span>
             <div
               className={`${
-                post?.image == ""
-                  ? "hidden"
-                  : "image-container bg-gray-300"
+                post?.image == "" ? "hidden" : "image-container bg-gray-300"
               } `}
             >
               {post?.image && (
-                <img
-                  src={post?.image}
-                  alt="Image"
-                  className="imageClass"
-                />
+                <img src={post?.image} alt="Image" className="imageClass" />
               )}
             </div>
           </Link>
@@ -214,7 +205,7 @@ const PostsData = ({ post, id }) => {
                   />
                 </svg>
               </button>
-              {hasLiked > 0 && (
+              {likes.length > 0 && (
                 <span className={`${hasLiked && "text-red-600"}`}>
                   {likes.length}
                 </span>
