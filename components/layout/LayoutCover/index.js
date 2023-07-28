@@ -7,6 +7,7 @@ import ContactInfoModal from "@components/components/Modals/contactInfo";
 import ProfileModal from "@components/components/Modals/profileModal";
 import ImageBannerModal from "@components/components/Modals/profileImageModal";
 import PostModal from "@components/components/Modals/postModal";
+import BusinessModal from "@components/components/Modals/businessModal";
 
 const LayoutCover = ({ title, keyword, description, children }) => {
   const router = useRouter();
@@ -41,6 +42,7 @@ const LayoutCover = ({ title, keyword, description, children }) => {
   return (
     <>
       <CommentModal />
+      <BusinessModal />
       <PostModal />
       <ContactInfoModal />
       <ProfileModal />

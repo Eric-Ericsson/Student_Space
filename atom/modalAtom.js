@@ -15,6 +15,11 @@ export const postModal = atom({
   default: false,
 });
 
+export const businessModal = atom({
+  key: "businessModal",
+  default: false,
+});
+
 export const profileModalState = atom({
   key: "profileModalState",
   default: false,
