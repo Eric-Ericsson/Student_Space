@@ -8,9 +8,10 @@ import PostsData from "@components/components/space/Posts";
 import {
   collection,
   doc,
+  getDocs,
   onSnapshot,
-  orderBy,
   query,
+  where,
 } from "firebase/firestore";
 import { db } from "@components/firebase";
 import { useSession } from "next-auth/react";
@@ -57,16 +58,26 @@ function Profile() {
     }
   }, [db, id]);
 
-  useEffect(() => {
+  //Get posts for a particular user
+  const getPostsForUser = async (id) => {
     try {
-      onSnapshot(
-        query(collection(db, "posts"), orderBy("timestamp", "desc")),
-        (snapshot) => {
-          setPosts(snapshot.docs);
-        }
-      );
-    } catch (error) {}
-  }, []);
+      const q = query(collection(db, "posts"), where("id", "==", id)); // Create a query to filter posts with matching userId
+      const querySnapshot = await getDocs(q); // Get the snapshot of matching posts
+  
+      const posts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      return posts;
+    } catch (error) {
+      return [];
+    }
+  }
+
+
+  //Calling the get post with a useEffect
+  useEffect(() => {
+    getPostsForUser(id).then((userPosts) => {
+      setPosts(userPosts);
+    });
+  }, [id]);
 
   const handleActiveTab = (activetab) => {
     SetActiveTab(activetab);

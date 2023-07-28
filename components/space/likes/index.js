@@ -34,16 +34,16 @@ function LikeSection({ userId }) {
 
   //retrieving a single user
   useEffect(() => {
-    if (session?.user?.uid) {
+    if (userId) {
       const unsubscribe = onSnapshot(
-        doc(db, "users", session?.user?.uid),
+        doc(db, "users", userId),
         (snapshot) => {
           setuser(snapshot.data());
         }
       );
       return () => unsubscribe();
     }
-  }, [db, session?.user?.uid]);
+  }, [db, userId]);
 
   //retrieving likes of a particular user
   useEffect(() => {

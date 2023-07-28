@@ -285,7 +285,7 @@ useEffect(() => {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1 }}
                 >
-                  <PostsData post={post} id={post.id} />
+                  <PostsData post={post.data()} id={post.id} />
                 </motion.div>
               ))}
             </AnimatePresence>

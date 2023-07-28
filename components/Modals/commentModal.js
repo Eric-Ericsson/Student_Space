@@ -46,16 +46,18 @@ function CommentModal() {
       return () => unsubscribe();
     }
   }, [db, id]);
+  // console.log(session)
 
   //sending user comment
   const sendComment = async () => {
+    setLoading(true)
     await addDoc(collection(db, "posts", postId, "comments"), {
       comment: postContent,
       timestamp: serverTimestamp(),
       userId: session?.user?.uid,
       postId: postId,
     });
-
+    setLoading(false)
     setPostContent("");
     setOpenCommentmodal(false);
     router.push(`/posts/${postId}`);
@@ -198,7 +200,7 @@ function CommentModal() {
                   />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-lg sm:text-2xl rounded-md sm:font-semibold bg-blue-600 text-white">
-                    {/* {session?.user?.name.charAt(0)} */}
+                    {session?.user?.name.charAt(0)}
                   </div>
                   )}
                 </div>

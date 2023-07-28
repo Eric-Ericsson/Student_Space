@@ -31,16 +31,16 @@ const PostsData = ({ post, id }) => {
 
   //retrieving a single user
   useEffect(() => {
-    if (post?.data()?.id) {
+    if (post?.id) {
       const unsubscribe = onSnapshot(
-        doc(db, "users", post?.data()?.id),
+        doc(db, "users", post?.id),
         (snapshot) => {
           setuser(snapshot.data());
         }
       );
       return () => unsubscribe();
     }
-  }, [db, post?.data()?.id]);
+  }, [db, post?.id]);
 
   //retrieving likes on a particular post
   useEffect(() => {
@@ -86,7 +86,7 @@ const PostsData = ({ post, id }) => {
   //deleting a particular post content
   async function deletePost() {
     deleteDoc(doc(db, "posts", id));
-    if (post.data().image) {
+    if (post.image) {
       deleteObject(ref(storage, `posts/${id}/image`));
     }
   }
@@ -112,7 +112,7 @@ const PostsData = ({ post, id }) => {
     <>
       <div className="hover:bg-gray-100 cursor-pointer border-t-[1px] sm:border-collapse py-4 sm:py-8 border-gray-300 sm:px-10 px-2 grid grid-cols-12">
         <Link
-          href={`/profile/${post?.data()?.id}`}
+          href={`/profile/${post?.id}`}
           className="w-8 h-8 sm:w-12 sm:h-12 rounded-lg relative"
         >
           {user?.profileImage ? (
@@ -130,7 +130,7 @@ const PostsData = ({ post, id }) => {
           )}
         </Link>
         <div className="col-span-11 ml-2 sm:ml-5 flex flex-col sm:gap-4">
-          <IdentityFormat post={post.data()} id={id} user={user} />
+          <IdentityFormat post={post} id={id} user={user} />
           <Link
             href={`/posts/${id}`}
             className="flex flex-col gap-4 text-sm sm:text-[15px] "
@@ -144,7 +144,7 @@ const PostsData = ({ post, id }) => {
                     : "line-clamp-5"
                 }`}
               >
-                {post?.data()?.text}
+                {post?.text}
               </span>
               {showMore && (
                 <span className="text-blue-600 text-opacity-70">Show more</span>
@@ -152,14 +152,14 @@ const PostsData = ({ post, id }) => {
             </span>
             <div
               className={`${
-                post?.data()?.image == ""
+                post?.image == ""
                   ? "hidden"
                   : "image-container bg-gray-300"
               } `}
             >
-              {post?.data()?.image && (
+              {post?.image && (
                 <img
-                  src={post?.data()?.image}
+                  src={post?.image}
                   alt="Image"
                   className="imageClass"
                 />
@@ -170,7 +170,7 @@ const PostsData = ({ post, id }) => {
             <div
               onClick={() => {
                 setPostId(id);
-                setUserId(post?.data()?.id);
+                setUserId(post?.id);
                 setOpenModal(!openModal);
               }}
               className="flex items-center text-sm gap-1 group cursor-pointer opacity-80"
@@ -220,7 +220,7 @@ const PostsData = ({ post, id }) => {
                 </span>
               )}
             </div>
-            {session?.user.uid === post?.data()?.id && (
+            {session?.user.uid === post?.id && (
               <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
                 <button
                   onClick={deletePost}

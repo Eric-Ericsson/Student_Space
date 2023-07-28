@@ -12,6 +12,7 @@ import InputWithLabel from "@components/components/layout/inputWithLabel";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  updateProfile,
 } from "firebase/auth";
 import { auth, db } from "@components/firebase";
 import { ToastContainer, toast } from "react-toastify";
@@ -180,9 +181,9 @@ const Signup = () => {
           const user = createUser.user;
           if (user) {
             await sendEmailVerification(user);
-            // updateProfile(user, {
-            //   displayName: fullName,
-            // });
+            updateProfile(user, {
+              displayName: fullName,
+            });
             const userDocRef = doc(db, `users/${user.uid}`);
             await setDoc(userDocRef, {
               email: email,
