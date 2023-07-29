@@ -18,12 +18,6 @@ import IdentityFormat from "../Posts/identityFormat";
 
 function ReplySection({ userId }) {
   const router = useRouter();
-  const { data: session } = useSession({
-    required: true,
-    onUnauthenticated() {
-      router.replace("/");
-    },
-  });
   const [showMore, setShowMore] = useState(false);
   const contentRef = useRef(null);
   const [userComments, setUserComments] = useState([]);

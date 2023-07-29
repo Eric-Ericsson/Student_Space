@@ -46,7 +46,6 @@ function CommentModal() {
       return () => unsubscribe();
     }
   }, [db, id]);
-  // console.log(session)
 
   //sending user comment
   const sendComment = async () => {
@@ -60,7 +59,6 @@ function CommentModal() {
     setLoading(false)
     setPostContent("");
     setOpenCommentmodal(false);
-    router.push(`/posts/${postId}`);
   };
 
   //retrieving a particular post item
@@ -68,7 +66,7 @@ function CommentModal() {
     onSnapshot(doc(db, "posts", postId), (snapshort) => {
       setPost(snapshort);
     });
-  }, [postId, db]);
+  }, [postId, db, sendComment]);
 
   //increasing the height of the textarea whiles the user types
   useEffect(() => {

@@ -10,7 +10,7 @@ const OtherWorks = () => {
         <div>
           <div className="relative w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] text-light rounded-md">
             <Image
-              src={"/wordpress.png"}
+              src={"https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fwordpress.png?alt=media&token=fb45ac62-d75f-4aa5-9aa7-a741fff40818"}
               fill={true}
               alt="wordpress-image-cover"
               className="absolute rounded-md"
@@ -33,7 +33,7 @@ const OtherWorks = () => {
         <div>
           <div className="relative w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] rounded-md text-light">
             <Image
-              src={"/logo_design.jpg"}
+              src={"https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Flogo_design.jpg?alt=media&token=75e71038-6251-458f-ab87-cd1dfa9d103c"}
               fill={true}
               alt="logo-design"
               className="absolute rounded-md"
@@ -54,7 +54,7 @@ const OtherWorks = () => {
         <div>
           <div className="relative w-[100%] h-60 md:h-52 lg:h-60 bg-[#c7ebeb] rounded-md text-light">
             <Image
-              src={"/digital_market.png"}
+              src={"https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fdigital_market.png?alt=media&token=fcb45185-b24f-4c6b-b1ad-ab21ce97da03"}
               fill={true}
               alt="online-business"
               className="absolute rounded-md"

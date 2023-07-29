@@ -1,4 +1,4 @@
-import Business from "@components/components/home/Business";
+import Business from "@components/components/home/ConentOfTheDay";
 import Footer from "@components/components/home/Footer";
 import HighLights from "@components/components/home/HighLights";
 import LandingPage from "@components/components/home/LandingPage";

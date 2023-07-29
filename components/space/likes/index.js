@@ -68,6 +68,7 @@ function LikeSection({ userId }) {
         setPostLoading(false);
         setLikedPosts(likedPosts);
       } catch (error) {
+
         setLikedPosts([]);
       }
     };
