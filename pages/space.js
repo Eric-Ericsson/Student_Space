@@ -13,10 +13,6 @@ import {
   orderBy,
   query,
   onSnapshot,
-  collectionGroup,
-  where,
-  getDocs,
-  getDoc,
 } from "firebase/firestore";
 import { db, storage } from "@components/firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
@@ -44,7 +40,6 @@ function Homepage() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
-  const [likedPosts, setLikedPosts] = useState([]);
   const [conZIndex] = useRecoilState(containerZIndex);
   const [postLoading, setPostLoading] = useState(true);
   const [user, setuser] = useState(null);
@@ -134,18 +129,6 @@ useEffect(() => {
     };
   };
 
-
-  //show the state of the active tab when clicked on
-  const handleActiveTab = (tab) => {
-    if (tab == "space") {
-      SetActiveTabSPace(true);
-      SetActiveTabFollowing(false);
-    } else {
-      SetActiveTabSPace(false);
-      SetActiveTabFollowing(true);
-    }
-  };
-
   return (
     <LayoutCover title='space | student space'>
       <div
@@ -155,23 +138,12 @@ useEffect(() => {
         {/* Main content */}
         <div className="sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div
-            className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 grid grid-cols-2 border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]`}
+            className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 flex justify-center border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]`}
           >
             <button
-              onClick={() => handleActiveTab("space")}
-              className={`font-semibold self-end pt-10 pb-3 ${
-                activeTabSPace ? "underline font-semibold" : "font-normal"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
+              className={`font-semibold pt-16 text-lg underline underline-offset-[8px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
             >
               Space
-            </button>
-            <button
-              onClick={handleActiveTab}
-              className={`font-semibold self-end pt-10 hover:bg-slate-100 hover:bg-opacity-70 pb-3 ${
-                activeTabFollowing ? "underline font-semibold" : "font-normal"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px]`}
-            >
-              Following
             </button>
           </div>
 
