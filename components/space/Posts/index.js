@@ -130,7 +130,7 @@ const PostsData = ({ post, id }) => {
           <IdentityFormat post={post} id={id} user={user} />
           <Link
             href={`/posts/${id}`}
-            className="flex flex-col gap-4 text-sm sm:text-[15px] "
+            className="flex flex-col gap-4 text-sm mb-5 sm:mb-0 sm:text-[15px] "
           >
             <span>
               <span
@@ -166,7 +166,7 @@ const PostsData = ({ post, id }) => {
               }}
               className="flex items-center text-sm gap-1 group cursor-pointer opacity-80"
             >
-              <button className="group-hover:bg-blue-200 p-2 rounded-full">
+              <button className="sm:group-hover:bg-blue-200 p-2 rounded-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -184,7 +184,7 @@ const PostsData = ({ post, id }) => {
             <div className="flex items-center text-sm gap-1 group cursor-pointer opacity-80">
               <button
                 onClick={() => likePost()}
-                className="group-hover:bg-red-200 p-2 rounded-full"
+                className="sm:group-hover:bg-red-200 p-2 rounded-full"
               >
                 <svg
                   className={`${

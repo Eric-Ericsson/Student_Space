@@ -52,7 +52,7 @@ function PostPage() {
   return (
     <LayoutCover>
       <div
-        className={`relative ${conZIndex} mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen`}
+        className={`relative ${conZIndex} mx-2 sm:mx-8 mb-10 sm:mb-0 md:mx-20 lg:mx-40 border-[1px] min-h-screen`}
       >
         <SideNav path={'/posts'} session={session} />
         {/* Main content */}
@@ -61,7 +61,7 @@ function PostPage() {
             className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 flex justify-center border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]`}
           >
             <button
-              className={`font-semibold pt-16 text-lg underline underline-offset-[8px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
+              className={`font-bold pt-12 sm:pt-16  text-lg underline underline-offset-[8px] decoration-sky-500 decoration-[5px] sm:hover:bg-slate-100 hover:bg-opacity-70`}
             >
               Post
             </button>

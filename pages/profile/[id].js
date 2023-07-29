@@ -94,7 +94,7 @@ function Profile() {
   return (
     <LayoutCover title="profile | student space">
       <div
-        className={`relative mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen ${conZIndex}`}
+        className={`relative mx-2 sm:mx-8 mb-10 sm:mb-0 md:mx-20 lg:mx-40 border-[1px] min-h-screen ${conZIndex}`}
       >
         <SideNav path={"/profile"} session={session} />
         {/* Profile Section */}
@@ -163,12 +163,12 @@ function Profile() {
                 <div className="max-w-md mx-auto space-y-6 flex justify-center">
                   <button
                     onClick={() => setOpenProfileModal(!openProfileModal)}
-                    className="group font-medium tracking-wide select-none text-base relative inline-flex items-center justify-center cursor-pointer h-10 border-2 border-solid py-0 px-2 rounded-md overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 bg-blue-500 text-white border-blue-500 hover:text-blue-500 focus:text-blue-500"
+                    className="group font-medium tracking-wide select-none text-base relative inline-flex items-center justify-center cursor-pointer h-10 border-2 border-solid py-0 px-2 rounded-md overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 bg-blue-500 text-white border-blue-500 sm:hover:text-blue-500 sm:focus:text-blue-500"
                   >
                     <strong className="font-medium text-sm">
                       Edit Profile
                     </strong>
-                    <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1] group-focus:w-[105%]"></span>
+                    <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 sm:group-hover:w-[105%] -z-[1] sm:group-focus:w-[105%]"></span>
                   </button>
                 </div>
               </div>
@@ -205,7 +205,7 @@ function Profile() {
               onClick={() => handleActiveTab("post")}
               className={`font-semibold self-end pt-4 pb-3 ${
                 activeTab == "post" ? "underline font-semibold" : "font-normal"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
+              } underline-offset-[13px] decoration-sky-500 decoration-[5px] sm:hover:bg-slate-100 hover:bg-opacity-70`}
             >
               Post
             </button>
@@ -213,7 +213,7 @@ function Profile() {
               onClick={() => handleActiveTab("reply")}
               className={`font-semibold self-end pt-4 pb-3 ${
                 activeTab == "reply" ? "underline font-semibold" : "font-normal"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
+              } underline-offset-[13px] decoration-sky-500 decoration-[5px] sm:hover:bg-slate-100 hover:bg-opacity-70`}
             >
               Replies
             </button>
@@ -221,13 +221,13 @@ function Profile() {
               onClick={() => handleActiveTab("media")}
               className={`font-semibold self-end pt-4 pb-3 ${
                 activeTab == "media" ? "underline font-semibold" : "font-normal"
-              } underline-offset-[13px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
+              } underline-offset-[13px] decoration-sky-500 decoration-[5px] sm:hover:bg-slate-100 hover:bg-opacity-70`}
             >
               Media
             </button>
             <button
               onClick={() => handleActiveTab("likes")}
-              className={`font-semibold self-end pt-4 hover:bg-slate-100 hover:bg-opacity-70 pb-3 ${
+              className={`font-semibold self-end pt-4 sm:hover:bg-slate-100 hover:bg-opacity-70 pb-3 ${
                 activeTab == "likes" ? "underline font-semibold" : "font-normal"
               } underline-offset-[13px] decoration-sky-500 decoration-[5px]`}
             >

@@ -51,9 +51,9 @@ const Business = () => {
           {!postLoading &&
             businessFlyers?.map((slide, index) => (
               <motion.div
-                key={index}
-                layoutId={index}
-                onClick={() => setSelectedId(index)}
+                key={index + 1}
+                layoutId={index + 1}
+                onClick={() => setSelectedId(index + 1)}
                 className={`bg-gray-300 relative h-[250px] rounded-2xl border-shadow-xl sm:h-[400px] md:h-[350px]`}
               >
                 <Image
@@ -76,11 +76,11 @@ const Business = () => {
                 onClick={() => setSelectedId(null)}
               >
                 {businessFlyers?.map((slide, index) => {
-                  if (index === selectedId) {
+                  if (index + 1 === selectedId) {
                     return (
                       <motion.div
-                        layoutId={index}
-                        key={index}
+                        layoutId={index + 1}
+                        key={index + 1}
                         className="p-8 flex flex-col items-center relative h-[50%] w-[90%] md:h-[90%] md:w-[70%]"
                         onClick={(e) => e.stopPropagation()}
                       >

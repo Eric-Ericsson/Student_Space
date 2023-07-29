@@ -136,12 +136,12 @@ useEffect(() => {
       >
         <SideNav path={router.pathname} session={session} />
         {/* Main content */}
-        <div className="sm:ml-16 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
+        <div className="sm:ml-16 mb-14 sm:mb-0 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div
             className={`backdrop-blur-lg bg-white/30 sticky top-2 sm:top-5 z-10 flex justify-center border-b-[1px] border-gray-300 pt-2 h-24 sm:h-28 w-full text-[15px]`}
           >
             <button
-              className={`font-semibold pt-16 text-lg underline underline-offset-[8px] decoration-sky-500 decoration-[5px] hover:bg-slate-100 hover:bg-opacity-70`}
+              className={`font-bold pt-12 sm:pt-16 cursor-default text-lg underline underline-offset-[8px] decoration-sky-500 decoration-[5px] sm:hover:bg-slate-100 sm:hover:bg-opacity-70`}
             >
               Space
             </button>
@@ -203,7 +203,7 @@ useEffect(() => {
                   <div className="flex justify-between">
                     <div className="flex gap-2 sm:gap-5">
                       <div onClick={() => filePickerRef.current.click()}>
-                        <button className="hover:bg-blue-200 p-2 gap-1 text-xs rounded-full flex items-center justify-center">
+                        <button className="sm:hover:bg-blue-200 p-2 gap-1 text-xs rounded-full flex items-center justify-center">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="24"
@@ -232,11 +232,11 @@ useEffect(() => {
                       className={`${
                         postContent.trim() == ""
                           ? "cursor-not-allowed disabled"
-                          : "group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 hover:text-blue-500 focus:text-blue-500"
+                          : "group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 sm:hover:text-blue-500 sm:focus:text-blue-500"
                       } h-10 border-2 border-solid px-8 rounded-md relative inline-flex items-center justify-center bg-blue-500 text-white border-blue-500`}
                     >
                       <strong className="font-medium text-base">Post</strong>
-                      <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1] group-focus:w-[105%]"></span>
+                      <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 sm:group-hover:w-[105%] -z-[1] sm:group-focus:w-[105%]"></span>
                     </button>
                   </div>
                 )}

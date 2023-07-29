@@ -122,7 +122,7 @@ function ReplySection({ userId }) {
                 />
                 <Link
                   href={`/posts/${likedPosts.postId}`}
-                  className="flex flex-col gap-4 text-sm sm:text-[15px] "
+                  className="flex flex-col gap-4 mb-5 sm:mb-0 text-sm sm:text-[15px] "
                 >
                   <span>
                     {likedPosts.comment}

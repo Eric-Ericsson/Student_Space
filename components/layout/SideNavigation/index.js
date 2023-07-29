@@ -58,7 +58,7 @@ const SideNav = ({ path, session }) => {
         onClick={() => handleButtonClick("/space")}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
-        <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
+        <div className="lg:inline-flex flex items-center justify-center gap-3 sm:group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
               activeButton == "/space"
@@ -86,7 +86,7 @@ const SideNav = ({ path, session }) => {
         onClick={() => handleButtonClick("/explore")}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
-        <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
+        <div className="lg:inline-flex flex items-center justify-center gap-3 sm:group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
               activeButton == "/explore"
@@ -115,7 +115,7 @@ const SideNav = ({ path, session }) => {
         onClick={() => handleButtonClick(`/profile`)}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
-        <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
+        <div className="lg:inline-flex flex items-center justify-center gap-3 sm:group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
               activeButton === `/profile`
@@ -154,7 +154,7 @@ const SideNav = ({ path, session }) => {
             setOpenModal(true);
             setUserId(session?.user?.uid);
           }}
-          className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2"
+          className="lg:inline-flex flex items-center justify-center gap-3 sm:group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2"
         >
           <svg
             className={`${
@@ -197,7 +197,7 @@ const SideNav = ({ path, session }) => {
         }}
         className="w-full hidden sm:flex absolute bottom-24 group cursor-pointer items-center justify-center lg:justify-start"
       >
-        <div className="lg:inline-flex flex items-center justify-center gap-3 group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-2 p-2 text-base">
+        <div className="lg:inline-flex flex items-center justify-center gap-3 sm:group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-2 p-2 text-base">
           <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-lg">
             {user?.profileImage ? (
               <Image
