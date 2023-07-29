@@ -23,18 +23,16 @@ function ContactInfoModal() {
   const [openContactInfoModal, setOpenContactInfoModal] = useRecoilState(
     contactInfoModalState
   );
-  const [aModalIsOpened, setAModalIsOpened] = useRecoilState(
-    aModalOpened
-  );
-  const [openProfileoModal, setOpenProfileoModal] = useRecoilState(
-    profileModalState
-);
+  const [aModalIsOpened, setAModalIsOpened] = useRecoilState(aModalOpened);
+  const [openProfileoModal, setOpenProfileoModal] =
+    useRecoilState(profileModalState);
   const [headerZIndex, setheaderZIndex] = useRecoilState(navZIndex);
   const [conZIndex, setConZIndex] = useRecoilState(containerZIndex);
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState(" ");
+  const [address, setAddress] = useState(" ");
   const [error, setError] = useState();
   const [editComponent, setEditComponent] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // retrieving a single user
   useEffect(() => {
@@ -68,26 +66,35 @@ function ContactInfoModal() {
   };
 
   const handleContactInfoUpdate = async (e) => {
+    setLoading(true);
     e.preventDefault();
     validatePhoneNumber();
     if (!error) {
       try {
-        await updateDoc(doc(db, "users", id), {
-          phone: phoneNumber,
-          address: address,
-        });
-        toast.success('contact info updated successfully')
+        if (address) {
+          await updateDoc(doc(db, "users", id), {
+            phone: phoneNumber,
+            address: address,
+          });
+        } else {
+          await updateDoc(doc(db, "users", id), {
+            phone: phoneNumber,
+          });
+        }
+        setLoading(false);
+        toast.success("contact info updated successfully");
       } catch (error) {
-        toast.error(error.message)
+        setLoading(false);
+        toast.error('info was not able to update');
       }
     }
   };
   const handleOtherModalIsOpen = () => {
-    if(aModalIsOpened){
-      setOpenProfileoModal(!openProfileoModal)
-      setAModalIsOpened(!aModalIsOpened)
+    if (aModalIsOpened) {
+      setOpenProfileoModal(!openProfileoModal);
+      setAModalIsOpened(!aModalIsOpened);
     }
-  }
+  };
 
   return (
     <>
@@ -120,8 +127,8 @@ function ContactInfoModal() {
             window.scrollTo(0, parseInt(scrollY || "0") * -1);
             setConZIndex("z-10");
             setheaderZIndex("z-50");
-            setEditComponent(false)
-            handleOtherModalIsOpen()
+            setEditComponent(false);
+            handleOtherModalIsOpen();
           }}
           onRequestClose={() => setOpenContactInfoModal(false)}
           className={
@@ -130,9 +137,14 @@ function ContactInfoModal() {
         >
           <div className="p-1 border-[1px] border-gray-300">
             <div className="flex items-center justify-between border-b-[1px] p-2 ">
-              <span className="font-semibold">{!editComponent ? user?.name : 'Edit contact Info'}</span>
+              <span className="font-semibold">
+                {!editComponent ? user?.name : "Edit contact Info"}
+              </span>
               <svg
-                onClick={() => {setOpenContactInfoModal(false); handleOtherModalIsOpen()}}
+                onClick={() => {
+                  setOpenContactInfoModal(false);
+                  handleOtherModalIsOpen();
+                }}
                 className="cursor-pointer hover:bg-gray-200 rounded-full p-2 opacity-75"
                 xmlns="http://www.w3.org/2000/svg"
                 width="38"
@@ -150,38 +162,39 @@ function ContactInfoModal() {
               </svg>
             </div>
             <ToastContainer
-                  position="bottom-left"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="light"
-                />
+              position="bottom-left"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
             {!editComponent && (
               <div className="p-5 flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                   <span className="font-medium text-lg">Contact Info</span>
-                  {session?.user?.uid == id && 
-                  <svg onClick={() =>setEditComponent(true)}
-                    className="cursor-pointer"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0L5 16ZM15 6l3 3m-5 11h8"
-                    />
-                  </svg>
-                  }
+                  {session?.user?.uid == id && (
+                    <svg
+                      onClick={() => setEditComponent(true)}
+                      className="cursor-pointer"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m5 16l-1 4l4-1L19.586 7.414a2 2 0 0 0 0-2.828l-.172-.172a2 2 0 0 0-2.828 0L5 16ZM15 6l3 3m-5 11h8"
+                      />
+                    </svg>
+                  )}
                 </div>
                 <div className="flex flex-col">
                   <div className="grid grid-cols-12 items-center">
@@ -264,7 +277,6 @@ function ContactInfoModal() {
             {/* Edit contact Info */}
             {editComponent && (
               <div className="p-5 flex flex-col gap-3">
-                
                 <div className="flex flex-col">
                   <div className="">Your Profile</div>
                   <div className="text-sm text-blue-600 cursor-pointer">
@@ -301,15 +313,17 @@ function ContactInfoModal() {
                     />
                   </div>
                 </div>
-                <div className="flex justify-end mt-3">
-                  <button
-                    onClick={handleContactInfoUpdate}
-                    className={`${"group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 sm:hover:text-blue-500 sm:focus:text-blue-500"} h-10 border-2 border-solid px-8 rounded-md relative inline-flex items-center justify-center bg-blue-500 text-white border-blue-500`}
-                  >
-                    <strong className="font-medium text-base">Save</strong>
-                    <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 sm:group-hover:w-[105%] -z-[1] sm:group-focus:w-[105%]"></span>
-                  </button>
-                </div>
+                {!loading && (
+                  <div className="flex justify-end mt-3">
+                    <button
+                      onClick={handleContactInfoUpdate}
+                      className={`${"group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 sm:hover:text-blue-500 sm:focus:text-blue-500"} h-10 border-2 border-solid px-8 rounded-md relative inline-flex items-center justify-center bg-blue-500 text-white border-blue-500`}
+                    >
+                      <strong className="font-medium text-base">Save</strong>
+                      <span className="absolute bg-white bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 sm:group-hover:w-[105%] -z-[1] sm:group-focus:w-[105%]"></span>
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </div>
