@@ -45,49 +45,49 @@ const Works = () => {
       id: 'step-into-the-world-of-artificial-intelligence',
       title: "Artificial Intelligence",
       username: "Eric Ericsson",
-      image: "/ai.jpg",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2FdILjkOMsUCsAAM1ILknQ%2Fimage?alt=media&token=f3e0c19e-a62e-46db-bc5a-5bab623539a8",
     },
     {
       id: 'i-am-thrilled-to-share-my-passion',
       title: "Fashionist",
       username: "Esther Amoah",
-      image: "/fashion.jpg",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2F8EMeCctooOSiOqN7Hncm%2Fimage?alt=media&token=426d8964-2772-472a-a9aa-0f35ae927bcc"
     },
     {
       id: 'welcome-to-my-world-of-creativity-and-inspiration',
       title: "Art and Design",
       username: "Michael Owens",
-      image: "/art_design.jpg",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2FoZeogdCvpgAT7jk8T1cc%2Fimage?alt=media&token=3b7f2b7a-df23-4b71-b81f-6ea2c34d2bde",
     },
     {
       id: 'creative-writing-is-a-magical-journey-that-takes-us',
       title: "Creative Writing",
       username: "Maxwell",
-      image: "/creative_writing.jpg",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2FzNGr83Qd1yuRRuAErAMA%2Fimage?alt=media&token=45ff9234-5e97-47de-bec8-ca03d8951b63",
     },
     {
       id: 'where-lines-of-code-build-bridges-between-imagination-and-reality',
       title: "Web Development",
       username: "James White",
-      image: "/web_development.jpg",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2FWOHFd8lBTi6uJv5XGR50%2Fimage?alt=media&token=70214a2a-72c1-477e-b1f4-4a7a48f2325d",
     },
     {
       id: 'data-science-about-understanding-the-context-and-painting-a-vivid-picture-with-data-driven',
       title: 'Data Science',
       username: "Mary Edger",
-      image: "/data_science.jpg",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2FfTR0WZjs32cAMlRaLQMP%2Fimage?alt=media&token=e9fdf00a-b0a9-49c8-8071-33c7e9ee6ef0",
     },
     {
       id: 'mobile-app-development-ideas-come-to-life-and-innovations',
       title: "Mobile App Development",
       username: "Kofi Asamoah",
-      image: "/app_development.jpg",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2FC7fTZv67TpcRI89BclPm%2Fimage?alt=media&token=e92ff3c5-0668-47fc-85bd-8ad87c8103c1",
     },
     {
       id: 'We-are-dedicated-to-providing-fast-efficient-and-reliable-solutions',
       title: "Delivery Service",
       username: "Ebenezer Annan",
-      image: "/artist.png",
+      image: "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/posts%2FDLwvZ0Ut0mIAE4DFsoWh%2Fimage?alt=media&token=8a380b43-898e-4cdd-86dc-f024bd15406f",
     },
   ];
 
