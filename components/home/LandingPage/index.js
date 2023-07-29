@@ -8,7 +8,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     const colors = ["#012E40", "#3CA6A6", "#8C1F28"];
-    const images = ["https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fgirl-min.png?alt=media&token=e67c3b29-6603-497b-b933-a743ae412f23", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fchef-min.png?alt=media&token=40419cef-8e2b-4d27-a865-da102fbf54d7", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fcamera_girl-min.png?alt=media&token=23b33ac7-6dd1-4d71-bcee-92c2f42ccd2f"];
+    const images = ["https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fgirl-min.png?alt=media&token=7617ad1c-7bb2-4db3-8b87-6fd9c0fbd50e", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fchef-min.png?alt=media&token=bf087f2e-3666-4644-8e9b-b083c1ec1917", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fcamera_girl-min.png?alt=media&token=c8deb920-f74d-43f9-830f-7883681879ba"];
 
     let currentIndex = 0;
 
@@ -33,12 +33,12 @@ const LandingPage = () => {
     >
       <div className="relative h-[450px] bg-[#024864] md:hidden"></div>
       <div className="hidden absolute -right-20 bottom-0 md:flex lg:h-[90%] lg:w-[650px] w-[500px] h-[500px]">
-        {backgroundImage ? (  <Image
+        {backgroundImage && (  <Image
           src={backgroundImage}
           fill={true}
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
           alt="landing-page-background-image"
-        />) : (<span></span>)}
+        />)}
       </div>
       <Content />
     </div>
