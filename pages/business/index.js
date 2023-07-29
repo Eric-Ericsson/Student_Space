@@ -34,7 +34,7 @@ const Business = () => {
       <div
         style={{
           backgroundImage:
-            "url('https://www.searchenginejournal.com/wp-content/uploads/2023/04/marketplace-ecommerce-sellers-6436a446a2a18-sej.png')",
+            "url('https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fbusiness-background.jpg?alt=media&token=baaf4d1c-0a19-45c7-854f-19c892113b7e')",
         }}
         className="PageHeader_wrapper__1j1-M relative pt-28 h-96 bg-cover bg-center bg-no-repeat"
       >
