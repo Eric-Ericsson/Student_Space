@@ -1,3 +1,4 @@
+import { showPassword } from "@components/atom/modalAtom";
 import InputWithLabel from "@components/components/layout/inputWithLabel";
 import { auth, db } from "@components/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -7,12 +8,14 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRecoilState } from "recoil";
 
 const LoginPage = () => {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPass, setShowPass] = useRecoilState(showPassword);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -171,7 +174,7 @@ const LoginPage = () => {
                   <InputWithLabel
                     label="Password"
                     id="login"
-                    type="password"
+                    type={showPass ? "password" : "text"}
                     value={password}
                     onChange={handlePasswordChange}
                     error={errors.password}

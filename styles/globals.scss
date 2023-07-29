@@ -13,7 +13,7 @@ body {
     color: #fff !important;
     -webkit-text-fill-color: #fff !important;
     background-color: transparent !important;
-    padding-right: 20px !important;
+    padding-right: 35px !important;
     -webkit-background-clip: text !important;
     background-clip: text !important;
   }
@@ -31,7 +31,7 @@ body {
 }
 
 .inputField {
-  @apply w-full h-7 sm:h-10 bg-white rounded-3xl hover:border-2 hover:border-primary-200 border-[1px] md:border-primary-200 focus:outline-none focus:border-secondary pl-4 pr-4 text-xs sm:text-base;
+  @apply w-full h-7 sm:h-10 bg-white rounded-3xl hover:border-2 hover:border-primary-200 border-[1px] md:border-primary-200 focus:outline-none focus:border-secondary pl-4 pr-8 text-xs sm:text-base;
 }
 
 .inputFieldContainer {

@@ -17,6 +17,8 @@ import {
 import { auth, db } from "@components/firebase";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRecoilState } from "recoil";
+import { showConfirmPassword, showPassword } from "@components/atom/modalAtom";
 
 const Signup = () => {
   const router = useRouter()
@@ -25,10 +27,13 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPass, setShowPass] = useRecoilState(showPassword);
+  const [showConPassword, setShowConPassword] =useRecoilState(showConfirmPassword);
   const [suggestions, setSuggestions] = useState([]);
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
+  // console.log(showPass + ' show password')
   // Function to check username availability
   async function isUsernameTaken(username) {
     const q = query(collection(db, "users"), where("username", "==", username));
@@ -304,7 +309,7 @@ const Signup = () => {
                   error={errors.fullName}
                 />
                 <InputWithLabel
-                  label="username"
+                  label="Username"
                   type="text"
                   value={username}
                   onChange={handleUsernameChange}
@@ -338,14 +343,14 @@ const Signup = () => {
                 />
                 <InputWithLabel
                   label="Password"
-                  type="password"
+                  type={showPass ? "password" : "text"}
                   value={password}
                   onChange={handlePasswordChange}
                   error={errors.password}
                 />
-                <InputWithLabel
+                <InputWithLabel 
                   label="Confirm Password"
-                  type="password"
+                  type={showConPassword ? "password" : "text"}
                   value={confirmPassword}
                   onChange={handleConfirmPasswordChange}
                   error={errors.confirmPassword}

@@ -59,3 +59,13 @@ export const containerZIndex = atom({
   key: "containerZIndex",
   default: "z-10",
 });
+
+export const showPassword = atom({
+  key: "showPassword",
+  default: true,
+});
+
+export const showConfirmPassword = atom({
+  key: "showConfirmPassword",
+  default: true,
+});
