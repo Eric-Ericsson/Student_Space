@@ -3,7 +3,7 @@ import { Content } from "./content";
 import Image from "next/image";
 
 const LandingPage = () => {
-  const [backgroundImage, setBackgroundImage] = useState("/girl.png");
+  const [backgroundImage, setBackgroundImage] = useState("https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fgirl-min.png?alt=media&token=7617ad1c-7bb2-4db3-8b87-6fd9c0fbd50e");
   const [backgroundColor, setBackgroundColor] = useState("#012E40");
 
   useEffect(() => {
