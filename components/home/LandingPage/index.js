@@ -16,7 +16,6 @@ const LandingPage = () => {
     const changeBackground = () => {
       setBackgroundColor(colors[currentIndex]);
       setBackgroundImage(images[currentIndex]);
-      // console.log(backgroundImage)
       currentIndex = (currentIndex + 1) % colors.length;
     };
 
@@ -34,12 +33,12 @@ const LandingPage = () => {
     >
       <div className="relative h-[450px] bg-[#024864] md:hidden"></div>
       <div className="hidden absolute -right-20 bottom-0 md:flex lg:h-[90%] lg:w-[650px] w-[500px] h-[500px]">
-        <Image
+        {backgroundImage ? (  <Image
           src={backgroundImage}
           fill={true}
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
           alt="landing-page-background-image"
-        />
+        />) : (<span></span>)}
       </div>
       <Content />
     </div>

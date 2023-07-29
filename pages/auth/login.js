@@ -119,7 +119,7 @@ const LoginPage = () => {
   return (
     <div className="w-full h-screen overflow-hidden">
       <div className="md:grid grid-cols-2 h-screen">
-        <div className="bg-[url('/signup_bg.jpg')] bg-no-repeat bg-cover bg-center">
+        <div className="bg-[url('https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fsocial_network_bg.jpg?alt=media&token=5e96950a-bfa5-4bfd-8a31-945260e371a0')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-95 md:bg-white w-full h-screen flex flex-cols items-center">
             <div className="flex flex-col items-center md:px-16 w-full">
               <div className="flex flex-col items-center md:px-16 w-full">
@@ -211,7 +211,7 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-        <div className="hidden relative md:block bg-[url('/signup_bg.jpg')] bg-no-repeat bg-cover bg-center">
+        <div className="hidden relative md:block bg-[url('https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fsocial_network_bg.jpg?alt=media&token=5e96950a-bfa5-4bfd-8a31-945260e371a0')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-90 w-full h-screen flex items-center justify-center">
             <div className="px-14 lg:px-20 text-white bg-opacity-90 w-full h-screen flex flex-col gap-4 items-center justify-center">
               <span className="text-2xl font-semibold">
