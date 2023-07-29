@@ -32,6 +32,8 @@ export const authOptions = {
     signIn: "/auth/signin",
   },
 
+  secret: process.env.SECRET,
+
   callbacks: {
     async redirect({ url, baseUrl }) {
       // Allows relative callback URLs
