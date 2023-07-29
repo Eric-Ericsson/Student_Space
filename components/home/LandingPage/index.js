@@ -8,7 +8,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     const colors = ["#012E40", "#3CA6A6", "#8C1F28"];
-    const images = ["https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fgirl-compressed.jpg?alt=media&token=582b90c9-5057-4299-befd-38fa969c0127", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fchef-compressed.jpg?alt=media&token=f1918dbe-fda0-43c7-92f8-bcfb1b8aacda", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fcamera_girl-compressed.jpg?alt=media&token=9834fa47-b38b-4be2-a774-d31d48be762e"];
+    const images = ["https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fgirl-min.png?alt=media&token=e67c3b29-6603-497b-b933-a743ae412f23", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fchef-min.png?alt=media&token=40419cef-8e2b-4d27-a865-da102fbf54d7", "https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fcamera_girl-min.png?alt=media&token=23b33ac7-6dd1-4d71-bcee-92c2f42ccd2f"];
 
     let currentIndex = 0;
 
