@@ -36,6 +36,7 @@ const LandingPage = () => {
         {backgroundImage && (  <Image
           src={backgroundImage}
           fill={true}
+          priority
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
           alt="landing-page-background-image"
         />)}
