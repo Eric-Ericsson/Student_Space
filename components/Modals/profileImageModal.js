@@ -81,8 +81,7 @@ const [imageCat] = useRecoilState(imageCategory)
             }
           >
             <div className="p-1 border-[1px] border-gray-300">
-              <div className="flex items-center justify-between border-b-[1px] p-2 ">
-                <span className="font-semibold">Update profile image</span>
+              <div className="flex items-center gap-5 border-b-[1px] p-2 ">
                 <svg
                   onClick={() => setOpenImageBannerModal(!openImageBannerModal)}
                   className="cursor-pointer hover:bg-gray-200 rounded-full p-2 opacity-75"
@@ -100,6 +99,7 @@ const [imageCat] = useRecoilState(imageCategory)
                     d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"
                   />
                 </svg>
+                <span className="text-xl font-semibold cursor-default">Update profile image</span>
               </div>
               <ToastContainer
                     position="bottom-left"

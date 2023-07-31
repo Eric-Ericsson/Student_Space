@@ -134,7 +134,7 @@ useEffect(() => {
       <div
         className={`relative ${conZIndex} mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen`}
       >
-        <SideNav path={router.pathname} session={session} />
+        <SideNav path='/space' session={session} />
         {/* Main content */}
         <div className="sm:ml-16 mb-14 sm:mb-0 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div

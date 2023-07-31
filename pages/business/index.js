@@ -8,9 +8,11 @@ import { useRecoilState } from "recoil";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { db } from "@components/firebase";
 import LoadingState from "@components/components/space/loadingState";
+import { useRouter } from "next/router";
 
 const Business = () => {
   const { data: session } = useSession();
+  const router = useRouter()
   const [selectedId, setSelectedId] = useState(null);
   const [businessFlyers, setBusinessFlyers] = useState();
   const [postLoading, setPostLoading] = useState(true);
@@ -119,9 +121,9 @@ const Business = () => {
         </div>
       </div>
 
-      {session?.user && (
+      {/* {session?.user && ( */}
         <button
-          onClick={() => setOpenModal(true)}
+          onClick={() => session?.user ? setOpenModal(true) : router.push('auth/signin')}
           className="fixed bottom-8 left-10 w-12 h-12 bg-green-600 drop-shadow-2xl shadow-2xl flex items-center justify-center rounded-full"
         >
           <svg
@@ -133,7 +135,7 @@ const Business = () => {
             <path fill="#fff" d="M20 14h-6v6h-4v-6H4v-4h6V4h4v6h6v4Z" />
           </svg>
         </button>
-      )}
+      {/* )} */}
     </LayoutCover>
   );
 };

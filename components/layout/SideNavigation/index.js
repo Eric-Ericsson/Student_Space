@@ -82,14 +82,14 @@ const SideNav = ({ path, session }) => {
         </div>
       </Link>
       {/*Explore button */}
-      <div
-        onClick={() => handleButtonClick("/explore")}
+      <Link href={'/search'}
+        onClick={() => handleButtonClick("/search")}
         className="w-full group flex items-center justify-center lg:justify-start cursor-pointer"
       >
         <div className="lg:inline-flex flex items-center justify-center gap-3 sm:group-hover:bg-gray-300 group-hover:rounded-3xl lg:pl-3 lg:pr-6 lg:py-3 p-2">
           <svg
             className={`${
-              activeButton == "/explore"
+              activeButton == "/search"
                 ? "fill-[#012432]"
                 : "fill-none stroke-[#012432]"
             } `}
@@ -102,13 +102,13 @@ const SideNav = ({ path, session }) => {
           </svg>
           <span
             className={`hidden lg:inline ${
-              activeButton == "/explore" && "font-bold"
+              activeButton == "/search" && "font-bold"
             }`}
           >
-            Explore
+            Search
           </span>
         </div>
-      </div>
+      </Link>
       {/*Profile button */}
       <Link
         href={`/profile/${session?.user?.uid}`}

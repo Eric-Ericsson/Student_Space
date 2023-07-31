@@ -126,7 +126,7 @@ function CommentModal() {
           }
         >
           <div className="p-1 border-[1px] border-gray-300">
-            <div className="border-b-[1px] p-2 ">
+            <div className="border-b-[1px] p-2 flex items-center gap-5">
               <svg
                 onClick={() => setOpenCommentmodal(false)}
                 className="cursor-pointer hover:bg-gray-200 rounded-full p-2 opacity-75"
@@ -144,6 +144,10 @@ function CommentModal() {
                   d="M21.4 23L16 17.6L10.6 23L9 21.4l5.4-5.4L9 10.6L10.6 9l5.4 5.4L21.4 9l1.6 1.6l-5.4 5.4l5.4 5.4z"
                 />
               </svg>
+              <span className="text-xl font-semibold cursor-default">
+
+              Comment
+              </span>
             </div>
             <div className="flex flex-col p-3">
               <div
@@ -166,7 +170,7 @@ function CommentModal() {
                 </div>
                 <div className="col-span-11 ml-3 sm:ml-5 flex flex-col gap-2 line-climp-1 text-xs sm:text-[15px]">
                   <div className="sticky top-0 py-3 backdrop-blur-md bg-white/30 flex items-center gap-2 line-climp-1 text-xs sm:text-[15px]">
-                    <IdentityFormat post={post} user={user}/>
+                    <IdentityFormat post={post.data()} id={postId} user={user} />
                   </div>
                   <div className="flex flex-col gap-4 text-sm sm:text-[15px] ">
                     <span className="line-clamp-5">{post?.data()?.text}</span>

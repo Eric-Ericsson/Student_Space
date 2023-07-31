@@ -193,6 +193,8 @@ const Signup = () => {
             await setDoc(userDocRef, {
               email: email,
               name: fullName,
+              userId: user.uid,
+              nameLowerCase: fullName.toLowerCase(),
               username: username.split(" ").join("_").toLowerCase(),
               interest: "",
               phone: "",
@@ -244,7 +246,7 @@ const Signup = () => {
   return (
     <div className="bg-blue-600 w-full min-h-screen overflow-hidden m-auto">
       <div className="md:grid grid-cols-2 h-screen">
-        <div className="hidden relative md:block bg-[url('https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fsignup_bg-compressed.jpg?alt=media&token=080a01d8-d024-4598-9c66-b32f72f715aa')] bg-no-repeat bg-cover bg-center">
+        <div className="hidden relative md:block bg-[url('https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fsocial_network_bg-compressed.jpg?alt=media&token=884bca9c-655b-4933-b1e4-97334a493823')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-90 w-full h-screen flex items-center justify-center">
             <div className="px-14 lg:px-20 text-white bg-opacity-90 w-full h-screen flex flex-col gap-4 items-center justify-center">
               <span className="text-2xl font-semibold">
@@ -263,7 +265,7 @@ const Signup = () => {
             </div>
           </div>
         </div>
-        <div className="bg-[url('https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fsignup_bg-compressed.jpg?alt=media&token=080a01d8-d024-4598-9c66-b32f72f715aa')]  bg-no-repeat bg-cover bg-center">
+        <div className="bg-[url('https://firebasestorage.googleapis.com/v0/b/twitter-v4-93513.appspot.com/o/myProjectImages%2Fsocial_network_bg-compressed.jpg?alt=media&token=884bca9c-655b-4933-b1e4-97334a493823')] bg-no-repeat bg-cover bg-center">
           <div className="bg-[#243b76] bg-opacity-95 md:bg-white w-full h-screen flex flex-cols items-center">
             <div className="flex flex-col items-center md:px-16 w-full">
               <div>

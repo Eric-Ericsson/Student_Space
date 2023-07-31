@@ -87,7 +87,7 @@ const MainNavigation = ({ isScrolled, iconColor }) => {
           <Link href={session ? "/space" : "/auth/signin"}>
             <span
               className={`hover:text-[#068B01] cursor-pointer ${
-                router.pathname === "/space" | router.asPath.includes('/profile/') | router.asPath.includes('/posts/') && "text-[#068B01]"
+                router.pathname === "/space" | router.asPath.includes('/profile/') | router.pathname == '/search' | router.asPath.includes('/posts/') && "text-[#068B01]"
               } hover:font-black`}
             >
               Space
