@@ -222,7 +222,7 @@ const LoginPage = () => {
                 discovery
               </span>
               <div className="flex flex-col space-y-3 opacity-80">
-                <span className="list-item">Fellow your interest</span>
+                <span className="list-item">Follow your interest</span>
                 <span className="list-item">
                   Hear what people are talking about
                 </span>

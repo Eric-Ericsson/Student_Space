@@ -228,11 +228,11 @@ useEffect(() => {
                     </div>
                     <button
                       onClick={sendPost}
-                      disabled={!postContent.trim()}
+                      disabled={!postContent.trim() || selectedFile == null}
                       className={`${
-                        postContent.trim() == ""
+                        postContent.trim() == "" && selectedFile == null
                           ? "cursor-not-allowed disabled"
-                          : "group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 sm:hover:text-blue-500 sm:focus:text-blue-500"
+                          : "cursor-pointer group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 sm:hover:text-blue-500 sm:focus:text-blue-500"
                       } h-10 border-2 border-solid px-8 rounded-md relative inline-flex items-center justify-center bg-blue-500 text-white border-blue-500`}
                     >
                       <strong className="font-medium text-base">Post</strong>

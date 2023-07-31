@@ -144,7 +144,7 @@ const PostsData = ({ post, id }) => {
                 {post?.text}
               </span>
               {showMore && (
-                <span className="text-blue-600 text-opacity-70">Show more</span>
+                <span className="text-blue-600 font-semibold text-opacity-70">Show more</span>
               )}
             </span>
             <div

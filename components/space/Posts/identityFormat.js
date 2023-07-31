@@ -18,7 +18,7 @@ const IdentityFormat = ({ post, id, user }) => {
           className="text-xs font-thin hover:underline"
         >
           <TimeAgo
-            date={moment(post?.timestamp?.toDate().toLocaleString()).fromNow()}
+            date={moment(post?.timestamp?.toDate()).fromNow()}
           />
         </Link>
       </div>
@@ -34,8 +34,8 @@ const IdentityFormat = ({ post, id, user }) => {
           </div>
           <div className="text-xs">
             {user?.username?.length >= 11
-              ? user?.username?.slice(0, 5) + "..."
-              : user?.username}
+              ? '@' + user?.username?.slice(0, 5) + "..."
+              : '@' + user?.username}
           </div>
         </Link>
         <Link
