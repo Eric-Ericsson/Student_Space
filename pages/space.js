@@ -20,7 +20,7 @@ import PostsData from "@components/components/space/Posts";
 import { AnimatePresence, motion } from "framer-motion";
 import { containerZIndex } from "@components/atom/modalAtom";
 import { useRecoilState } from "recoil";
-import LoadingState from "@components/components/space/loadingState"
+import LoadingState from "@components/components/space/loadingState";
 import Link from "next/link";
 
 function Homepage() {
@@ -29,12 +29,10 @@ function Homepage() {
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      router.replace('/')
-    }
+      router.replace("/");
+    },
   });
   const textareaRef = useRef(null);
-  const [activeTabSPace, SetActiveTabSPace] = useState(true);
-  const [activeTabFollowing, SetActiveTabFollowing] = useState(false);
   const [postContent, setPostContent] = useState("");
   const [textareaRows, setTextareaRows] = useState(1);
   const [selectedFile, setSelectedFile] = useState(null);
@@ -44,29 +42,27 @@ function Homepage() {
   const [postLoading, setPostLoading] = useState(true);
   const [user, setuser] = useState(null);
 
-
-//retrieving a single user
-useEffect(() => {
-  if (session?.user?.uid) {
-    const unsubscribe = onSnapshot(doc(db, "users", session?.user?.uid), (snapshot) => {
-      setuser(snapshot.data())
+  //retrieving a single user
+  useEffect(() => {
+    if (session?.user?.uid) {
+      const unsubscribe = onSnapshot(
+        doc(db, "users", session?.user?.uid),
+        (snapshot) => {
+          setuser(snapshot.data());
+        }
+      );
+      return () => unsubscribe();
     }
-    );
-    return () => unsubscribe();
-  }
-}, [db, session?.user?.uid]);
+  }, [db, session?.user?.uid]);
 
-//sending a post content to firebase
+  //sending a post content to firebase
   const sendPost = async () => {
     if (loading) return;
     setLoading(true);
     const docRef = await addDoc(collection(db, "posts"), {
       id: session?.user?.uid,
       text: postContent,
-      // userImg: user?.profileImage,
       timestamp: serverTimestamp(),
-      // name: user?.name,
-      // username: user?.username,
     });
 
     const imageRef = ref(storage, `posts/${docRef.id}/image`);
@@ -130,11 +126,11 @@ useEffect(() => {
   };
 
   return (
-    <LayoutCover title='space | student space'>
+    <LayoutCover title="space | student space">
       <div
         className={`relative ${conZIndex} mx-2 sm:mx-8 md:mx-20 lg:mx-40 border-[1px] min-h-screen`}
       >
-        <SideNav path='/space' session={session} />
+        <SideNav path="/space" session={session} />
         {/* Main content */}
         <div className="sm:ml-16 mb-14 sm:mb-0 md:ml-24 lg:ml-56 border-b-[1px] border-gray-300">
           <div
@@ -148,9 +144,12 @@ useEffect(() => {
           </div>
 
           <div className="mb-5 sm:mb-0 sm:mx-10 mx-2 grid grid-cols-12 mt-6 sm:mt-14">
-            <Link href={`/profile/${session?.user?.uid}`} className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg">
+            <Link
+              href={`/profile/${session?.user?.uid}`}
+              className="relative w-8 h-8 sm:w-12 sm:h-12 rounded-lg"
+            >
               {user?.profileImage ? (
-                  <Image
+                <Image
                   className="rounded-lg"
                   src={user?.profileImage}
                   fill="true"
@@ -228,7 +227,7 @@ useEffect(() => {
                     </div>
                     <button
                       onClick={sendPost}
-                      disabled={!postContent.trim() || selectedFile == null}
+                      disabled={!postContent.trim() && selectedFile == null}
                       className={`${
                         postContent.trim() == "" && selectedFile == null
                           ? "cursor-not-allowed disabled"
@@ -243,7 +242,7 @@ useEffect(() => {
               </div>
             </div>
           </div>
-         
+
           {postLoading || loading ? (
             <LoadingState />
           ) : (
@@ -262,7 +261,6 @@ useEffect(() => {
               ))}
             </AnimatePresence>
           )}
-          
         </div>
       </div>
     </LayoutCover>

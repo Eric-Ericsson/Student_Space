@@ -79,6 +79,7 @@ const LoginPage = () => {
               "Incorrect email or password. Or verify your email if not verified";
             toast.error(emailVerifiedError);
           }
+        // }
         })
         .catch((error) => {
           setLoading(false);

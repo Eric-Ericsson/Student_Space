@@ -2,35 +2,27 @@ import {
     businessModal,
     containerZIndex,
     navZIndex,
-    postIdState,
     ueser_id,
   } from "@components/atom/modalAtom";
   import { useSession } from "next-auth/react";
   import { useRecoilState } from "recoil";
   import Modal from "react-modal";
   import { useEffect, useState, useRef } from "react";
-  import { useRouter } from "next/router";
   import {
     addDoc,
     collection,
     doc,
     onSnapshot,
-    orderBy,
-    query,
     serverTimestamp,
     updateDoc,
   } from "firebase/firestore";
   import { db, storage } from "@components/firebase";
-  import Image from "next/image";
-  import Link from "next/link";
   import { getDownloadURL, ref, uploadString } from "firebase/storage";
   
   function BusinessModal() {
     const { data: session } = useSession();
     const filePickerRef = useRef();
-    const textareaRef = useRef(null);
     const [openModal, setOpenModal] = useRecoilState(businessModal);
-    const [postId] = useRecoilState(postIdState);
     const [id] = useRecoilState(ueser_id);
     const [headerZIndex, setheaderZIndex] = useRecoilState(navZIndex);
     const [conZIndex, setConZIndex] = useRecoilState(containerZIndex);
@@ -50,13 +42,12 @@ import {
       }
     }, [db, id]);
   
-    //sending a post content to firebase
+    //sending a business flyer to firebase
     const sendPost = async () => {
       if (loading) return;
       setLoading(true);
       const docRef = await addDoc(collection(db, "businesses"), {
         userId: session?.user?.uid,
-        text: postContent,
         timestamp: serverTimestamp(),
       });
   
@@ -215,7 +206,7 @@ import {
                           disabled={!selectedFile}
                           className={`${
                             !selectedFile
-                              ? "cursor-not-allowed disabled"
+                              ? "cursor-not-allowed disabled bg-opacity-60"
                               : "group font-medium tracking-wide select-none overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 sm:hover:text-blue-500 sm:focus:text-blue-500"
                           } h-10 border-2 border-solid px-8 rounded-md relative inline-flex items-center justify-center bg-blue-500 text-white border-blue-500`}
                         >

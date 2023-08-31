@@ -7,16 +7,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import PostsData from "@components/components/space/Posts";
 import {
   collection,
-  deleteDoc,
   doc,
   getDocs,
   onSnapshot,
   query,
-  setDoc,
   where,
 } from "firebase/firestore";
-import { db, storage } from "@components/firebase";
-import { signIn, useSession } from "next-auth/react";
+import { db } from "@components/firebase";
+import { useSession } from "next-auth/react";
 import { useRecoilState } from "recoil";
 import {
   contactInfoModalState,
@@ -28,16 +26,12 @@ import {
 import LikeSection from "@components/components/space/likes";
 import ReplySection from "@components/components/space/replies";
 import MediaSection from "@components/components/space/media";
-import { deleteObject, ref } from "firebase/storage";
 
 function Profile() {
   const router = useRouter();
   const { id } = router.query;
   const [activeTab, SetActiveTab] = useState("post");
   const [posts, setPosts] = useState([]);
-  const [likes, setLikes] = useState([]);
-  const [hasLiked, setHasLiked] = useState(false);
-
   const [user, setuser] = useState(null);
   const { data: session } = useSession({
     required: true,
@@ -67,13 +61,13 @@ function Profile() {
   //Get posts for a particular user
   const getPostsForUser = async (id) => {
     try {
-      const q = query(collection(db, "posts"), where("id", "==", id)); // Change "id" to "userId" to match the "userId" field in the posts collection
+      const q = query(collection(db, "posts"), where("id", "==", id));
       const querySnapshot = await getDocs(q);
 
       const posts = querySnapshot.docs.map((doc) => ({
         postId: doc.id,
         ...doc.data(),
-      })); // Add "postId" field to the object
+      })); 
       return posts;
     } catch (error) {
       return [];

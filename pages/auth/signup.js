@@ -220,7 +220,7 @@ const Signup = () => {
             "email already in use. Login or verify your account if this email belongs to you"
           );
         } else if (error.code == "auth/weak-password") {
-          toast.error("Password is too short");
+          toast.error("Use a strong password");
         } else toast.error("something went wrong");
         console.log(error.message);
       }
